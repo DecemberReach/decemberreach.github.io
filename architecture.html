@@ -49,7 +49,7 @@
         <div class="u-fixed-width">
           <h1 id="page-title">auroraADE architecture</h1>
           <p>Technical notes on the platform boundaries documented in the reachOS repository.</p>
-          <p>This page separates the role of auroraADE from the technical contracts documented in the reachOS repository. It is a reference for project structure, boot, memory, devices and display—not a claim that the full desktop environment is already implemented.</p>
+          <p>These notes describe the platform contracts documented in reachOS and how they relate to auroraADE.</p>
         </div>
       </section>
 
@@ -91,8 +91,6 @@
             </tbody>
           </table>
 
-          <h3>How to read the architecture notes</h3>
-          <p>The technical sections below refer to components and contracts described in the current public reachOS source. They provide context for the environment auroraADE belongs to; they are not a claim that every platform component is an auroraADE user-facing feature.</p>
         </div>
       </section>
 
@@ -113,6 +111,10 @@
               <tr>
                 <th scope="row"><a href="https://github.com/critical-dummy/reachOS/tree/main/src/app">src/app/</a></th>
                 <td>Angular host shell and the bridge between the browser application and the platform runtime.</td>
+              </tr>
+              <tr>
+                <th scope="row"><a href="https://github.com/critical-dummy/reachOS/tree/main/src/fabric-dessert">src/fabric-dessert/</a></th>
+                <td>Platform runtime, lifecycle management and the public export boundary.</td>
               </tr>
               <tr>
                 <th scope="row"><a href="https://github.com/critical-dummy/reachOS/tree/main/src/fabric-dessert/board">board/</a></th>
@@ -196,9 +198,7 @@
         <div class="u-fixed-width">
           <hr class="p-rule">
           <h2 id="scope-title">Scope and current evidence</h2>
-          <p>This page is based on the public reachOS README and the source areas linked above. It records the project separation and technical contracts documented there, rather than filling gaps with hypothetical product features.</p>
-          <p>The reviewed documentation does not establish the implementation status or behavior of an auroraADE desktop shell, window manager, panel or dock, file manager, launcher, or bundled application set. Those are intentionally not listed here as completed features. The x86_64 target is documented as a direction, not used as proof that every part of the desktop environment is complete.</p>
-          <p>As the implementation and its specifications become more explicit, this page can describe those details against their actual source files instead of relying on a generic list of desktop-environment features.</p>
+          <p>This page documents the platform architecture visible in the public reachOS source. It does not specify the implementation status of auroraADE\u2019s window manager, panel, dock, file manager or bundled applications, so it does not present those as completed features.</p>
         </div>
       </section>
 
