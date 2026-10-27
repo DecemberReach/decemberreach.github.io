@@ -4,8 +4,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#211f28">
-    <meta name="description" content="auroraADE is the x86_64-targeted desktop environment direction within reachOS by December Reach.">
-    <title>auroraADE — December Reach</title>
+    <meta name="description" content="auroraADE is an Aesthetic Desktop Environment project for reachOS, targeting x86_64.">
+    <title>auroraADE — Aesthetic Desktop Environment</title>
     <link rel="stylesheet" href="https://assets.ubuntu.com/v1/vanilla_framework_version_4.61.0.min.css">
     <style>
       .p-navigation__tagged-logo .p-navigation__logo-tag {
@@ -35,7 +35,7 @@
         </div>
         <nav id="primary-navigation" class="p-navigation__nav" aria-label="Primary site links">
           <ul class="p-navigation__items">
-            <li class="p-navigation__item"><a class="p-navigation__link" href="#overview">Project</a></li>
+            <li class="p-navigation__item"><a class="p-navigation__link" href="#overview">About auroraADE</a></li>
             <li class="p-navigation__item"><a class="p-navigation__link" href="./architecture.html">Architecture</a></li>
             <li class="p-navigation__item"><a class="p-navigation__link" href="https://github.com/critical-dummy/reachOS">reachOS source</a></li>
           </ul>
@@ -44,51 +44,56 @@
     </header>
 
     <main id="main-content">
-      <section id="top" class="p-section--hero" aria-labelledby="page-title">
-        <div class="u-fixed-width">
-          <h1 id="page-title">auroraADE</h1>
-          <p>Aesthetic Desktop Environment for reachOS, targeting x86_64.</p>
+      <section id="top" class="p-strip is-dark is-deep" aria-labelledby="page-title">
+        <div class="row--75-25">
+          <div class="col">
+            <h1 id="page-title">auroraADE</h1>
+            <p class="p-heading--4">Aesthetic Desktop Environment</p>
+            <p>A desktop environment for reachOS, with x86_64 as its target architecture.</p>
+            <p><a class="p-link--external" href="https://github.com/critical-dummy/reachOS">Explore reachOS</a></p>
+          </div>
+          <div class="col">
+            <hr class="p-rule">
+            <p class="p-heading--2">x86_64</p>
+            <p>Target architecture</p>
+            <hr class="p-rule">
+            <p class="p-heading--4">reachOS</p>
+            <p>Operating-system platform</p>
+          </div>
         </div>
       </section>
 
       <section id="overview" class="p-section" aria-labelledby="overview-title">
         <div class="u-fixed-width">
           <hr class="p-rule">
-          <h2 id="overview-title">Project structure</h2>
-          <table class="p-table">
-            <thead>
-              <tr>
-                <th scope="col">Project</th>
-                <th scope="col">Responsibility</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <th scope="row"><a href="https://github.com/critical-dummy/reachOS">reachOS</a></th>
-                <td>The wider operating-system project.</td>
-              </tr>
-              <tr>
-                <th scope="row"><a href="https://github.com/critical-dummy/reachOS/tree/main/src/fabric-dessert">Fabric Dessert</a></th>
-                <td>The virtual hardware platform and board architecture documented in the reachOS repository.</td>
-              </tr>
-              <tr>
-                <th scope="row">auroraADE</th>
-                <td>The desktop environment direction, targeting x86_64.</td>
-              </tr>
-            </tbody>
-          </table>
+          <div class="grid-row--50-50">
+            <div class="grid-col">
+              <h2 id="overview-title">A desktop environment within reachOS</h2>
+            </div>
+            <div class="grid-col">
+              <p>auroraADE is December Reach's desktop environment project for reachOS. The name stands for Aesthetic Desktop Environment, and the project targets x86_64.</p>
+            </div>
+          </div>
         </div>
       </section>
 
-      <section id="references" class="p-section" aria-labelledby="references-title">
+      <section id="explore" class="p-section" aria-labelledby="explore-title">
         <div class="u-fixed-width">
           <hr class="p-rule">
-          <h2 id="references-title">References</h2>
-          <ul>
-            <li><a href="./architecture.html">Architecture and platform notes</a> — boot, CPU boundary, memory, devices and display pipeline.</li>
-            <li><a href="https://github.com/critical-dummy/reachOS">reachOS repository</a> — source for the wider project.</li>
-            <li><a href="https://github.com/DecemberReach/decemberreach.github.io">Website source</a> — this site's HTML and assets.</li>
-          </ul>
+          <div class="grid-row--50-50">
+            <div class="grid-col">
+              <h2 id="explore-title">Explore the project</h2>
+              <p>Follow the platform that auroraADE is being designed for, or read the separate technical notes.</p>
+            </div>
+            <div class="grid-col">
+              <h3>reachOS</h3>
+              <p>The wider operating-system project and platform source.</p>
+              <p><a class="p-link--external" href="https://github.com/critical-dummy/reachOS">View the reachOS repository</a></p>
+              <h3>Architecture and platform notes</h3>
+              <p>Background on the CPU boundary, memory, devices and display pipeline.</p>
+              <p><a href="./architecture.html">Read the architecture notes</a></p>
+            </div>
+          </div>
         </div>
       </section>
     </main>
@@ -97,7 +102,6 @@
       <div class="u-fixed-width">
         <hr class="p-rule">
         <p><strong>December Reach</strong> · auroraADE</p>
-        <p><small>Built with <a href="https://vanillaframework.io/docs">Canonical Vanilla Framework</a>.</small></p>
       </div>
     </footer>
 
@@ -143,7 +147,6 @@
             openMenu();
           }
         });
-
 
         document.addEventListener("keydown", function (event) {
           if (event.key === "Escape" && navigation.classList.contains("has-menu-open")) {
