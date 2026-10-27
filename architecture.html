@@ -1,0 +1,276 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#211f28">
+    <meta name="description" content="Architecture and project notes for auroraADE and the reachOS platform it belongs to.">
+    <title>auroraADE — Architecture and project notes</title>
+    <link rel="stylesheet" href="https://assets.ubuntu.com/v1/vanilla_framework_version_4.61.0.min.css">
+    <style>
+      .p-navigation__tagged-logo .p-navigation__logo-tag {
+        background-color: #fff;
+      }
+    </style>
+  </head>
+  <body class="is-paper">
+    <a class="p-link--skip" href="#main-content">Skip to main content</a>
+
+    <header id="navigation" class="p-navigation--sliding is-dark">
+      <div class="p-navigation__row--25-75">
+        <div class="p-navigation__banner">
+          <div class="p-navigation__tagged-logo">
+            <a class="p-navigation__link" href="./index.html" aria-label="December Reach home">
+              <div class="p-navigation__logo-tag">
+                <img class="p-navigation__logo-icon" src="./logo.svg" alt="">
+              </div>
+              <span class="p-navigation__logo-title">December Reach</span>
+            </a>
+          </div>
+          <ul class="p-navigation__items">
+            <li class="p-navigation__item">
+              <button class="js-menu-button p-navigation__link" type="button" aria-controls="primary-navigation" aria-pressed="false">Menu</button>
+            </li>
+          </ul>
+        </div>
+        <nav id="primary-navigation" class="p-navigation__nav" aria-label="Primary navigation">
+          <ul class="p-navigation__items">
+            <li class="p-navigation__item"><a class="p-navigation__link" href="./index.html">Home</a></li>
+            <li class="p-navigation__item"><a class="p-navigation__link" href="#architecture">Architecture</a></li>
+            <li class="p-navigation__item"><a class="p-navigation__link" href="#display">Display pipeline</a></li>
+            <li class="p-navigation__item"><a class="p-navigation__link" href="#source">Source</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main-content">
+      <section id="top" class="p-strip is-dark" aria-labelledby="page-title">
+        <div class="u-fixed-width">
+          <p class="p-text--small-caps">DECEMBER REACH / ARCHITECTURE</p>
+          <h1 id="page-title">auroraADE architecture</h1>
+          <p class="p-heading--2">Project boundaries and platform implementation notes.</p>
+          <p>This page separates the role of auroraADE from the technical contracts documented in the reachOS repository. It is a reference for project structure, boot, memory, devices and display—not a claim that the full desktop environment is already implemented.</p>
+        </div>
+      </section>
+
+      <section id="overview" class="p-section" aria-labelledby="overview-title">
+        <div class="u-fixed-width">
+          <h2 id="overview-title">Names and responsibilities</h2>
+          <p>These names describe related parts of the project, but they do not mean the same thing. In particular, the virtual hardware platform's CPU integration boundary and auroraADE's target architecture describe different layers.</p>
+
+          <table class="p-table">
+            <thead>
+              <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Role</th>
+                <th scope="col">What that means</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row"><a href="https://github.com/critical-dummy/reachOS">reachOS</a></th>
+                <td>Operating-system project</td>
+                <td>The wider project in which the virtual platform and desktop environment sit.</td>
+              </tr>
+              <tr>
+                <th scope="row"><a href="https://github.com/critical-dummy/reachOS/tree/main/src/fabric-dessert">Fabric Dessert</a></th>
+                <td>Virtual hardware platform</td>
+                <td>The board and hardware foundation documented in the reachOS repository, including CPU boundaries, physical memory, device bus, boot substrate and display path.</td>
+              </tr>
+              <tr>
+                <th scope="row"><a href="https://github.com/critical-dummy/reachOS/tree/main/src/fabric-dessert/arch/frt64">FRT64</a></th>
+                <td>CPU integration boundary</td>
+                <td>The documented boundary is designed to accommodate ARM 32-bit, ARM 64-bit, x86 32-bit and x86 64-bit CPU integrations.</td>
+              </tr>
+              <tr>
+                <th scope="row">auroraADE</th>
+                <td>Desktop environment direction</td>
+                <td>ADE stands for Aesthetic Desktop Environment. auroraADE's target is x86_64; it should not be described as targeting every architecture supported at the broader platform boundary.</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h3>How to read the architecture notes</h3>
+          <p>The technical sections below refer to components and contracts described in the current public reachOS source. They provide context for the environment auroraADE belongs to; they are not a claim that every platform component is an auroraADE user-facing feature.</p>
+        </div>
+      </section>
+
+      <section id="architecture" class="p-strip is-deep" aria-labelledby="architecture-title">
+        <div class="u-fixed-width">
+          <h2 id="architecture-title">Platform architecture</h2>
+          <p>The reachOS README describes a separation between the browser-facing host shell and the Fabric Dessert platform runtime. The host provides integration with the browser; the platform code owns the virtual board and its subsystems.</p>
+
+          <pre><code>Browser / host environment
+└── Angular host shell (src/app/)
+    └── Fabric Dessert runtime (src/fabric-dessert/)
+        ├── Board and boot substrate
+        ├── FRT64 CPU boundary
+        ├── Physical address space and sparse RAM
+        ├── Device bus, MMIO and IRQ routing
+        └── Display device, framebuffer and renderer</code></pre>
+
+          <table class="p-table">
+            <thead>
+              <tr>
+                <th scope="col">Source area</th>
+                <th scope="col">Documented responsibility</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row"><a href="https://github.com/critical-dummy/reachOS/tree/main/src/app">src/app/</a></th>
+                <td>Angular host shell and the bridge between the browser application and the platform runtime.</td>
+              </tr>
+              <tr>
+                <th scope="row"><a href="https://github.com/critical-dummy/reachOS/tree/main/src/fabric-dessert/board">board/</a></th>
+                <td>Board configuration and boot ROM/reset-vector contract.</td>
+              </tr>
+              <tr>
+                <th scope="row"><a href="https://github.com/critical-dummy/reachOS/tree/main/src/fabric-dessert/arch/frt64">arch/frt64/</a></th>
+                <td>CPU-boundary types and execution integration points.</td>
+              </tr>
+              <tr>
+                <th scope="row"><a href="https://github.com/critical-dummy/reachOS/tree/main/src/fabric-dessert/memory">memory/</a></th>
+                <td>Physical address space, memory backing and memory-access context.</td>
+              </tr>
+              <tr>
+                <th scope="row"><a href="https://github.com/critical-dummy/reachOS/tree/main/src/fabric-dessert/device">device/</a></th>
+                <td>Device interfaces and the bus used to manage MMIO windows and interrupt lines.</td>
+              </tr>
+              <tr>
+                <th scope="row"><a href="https://github.com/critical-dummy/reachOS/tree/main/src/fabric-dessert/display">display/</a></th>
+                <td>Display device, framebuffer, system renderer, canvas backend and console font.</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <p>The platform is intended to keep its internal runtime separate from direct Angular and DOM dependencies. The browser integration is handled at the host boundary rather than being mixed into the platform's device and memory models.</p>
+        </div>
+      </section>
+
+      <section id="boot" class="p-section" aria-labelledby="boot-title">
+        <div class="u-fixed-width">
+          <h2 id="boot-title">Boot and CPU boundary</h2>
+          <p>The documented reset path is a platform contract, not a generic description of every CPU's boot behavior.</p>
+          <ol>
+            <li>The board begins its reset sequence and resets the device bus while propagating the configured reset vector.</li>
+            <li>The primary boot CPU enters the reset state, with its program counter set to the configured Fabric Dessert reset vector.</li>
+            <li>Secondary CPUs are parked until future operating-system SMP bring-up.</li>
+            <li>Instruction fetch crosses the CPU boundary into the physical address space and accesses the Boot ROM with execute permissions enforced.</li>
+          </ol>
+          <p>The repository documents the Boot ROM and reset vector at <code>0x00000000</code> as the Fabric Dessert board contract. That address is not presented as an ISA-wide or Linux-specific rule.</p>
+          <p>FRT64 defines the CPU integration boundary. Its presence should not be read as a claim that a complete instruction set implementation for every listed architecture is already supplied by the same boundary module.</p>
+        </div>
+      </section>
+
+      <section id="memory" class="p-strip is-paper is-deep" aria-labelledby="memory-title">
+        <div class="u-fixed-width">
+          <h2 id="memory-title">Physical memory and devices</h2>
+          <div class="grid-row grid-row--50-50">
+            <div class="grid-col">
+              <h3>Memory model</h3>
+              <p>The platform's physical address space uses 64-bit <code>bigint</code> addresses. Sparse physical backing is allocated in 64 KiB chunks, rather than eagerly allocating the entire configured RAM range.</p>
+              <p>Region mapping includes conflict checks and access-boundary validation. Memory-mapped device access is dispatched through the address-space/device model.</p>
+            </div>
+            <div class="grid-col">
+              <h3>Device model</h3>
+              <p><code>DeviceBus</code> manages MMIO address windows, alignment, interrupt-vector assignments and device enumeration. Device interfaces provide a common boundary for controllers, timers, display devices and other peripherals.</p>
+              <p>These contracts describe how platform components connect; they do not, by themselves, define the user-facing behavior of an application or desktop shell.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="display" class="p-section" aria-labelledby="display-title">
+        <div class="u-fixed-width">
+          <h2 id="display-title">Display pipeline</h2>
+          <p>The reachOS README documents a display path with explicit responsibilities for the virtual device, pixel storage, rendering coordination and browser-canvas presentation.</p>
+          <ol>
+            <li><strong>Display device.</strong> Exposes control registers and a framebuffer memory aperture through MMIO. The documented register magic value is <code>0x53494446</code>.</li>
+            <li><strong>Framebuffer.</strong> Uses a 1080 × 2424 pixel surface with RGBA8888 pixels, totalling 10,471,680 bytes of pixel storage.</li>
+            <li><strong>System renderer.</strong> Coordinates platform-side presentation and is documented as having no direct DOM or browser dependency.</li>
+            <li><strong>Canvas backend.</strong> Bridges the pixel buffer to the host canvas with a deterministic 1:1 coordinate mapping, without interpolation or layout-driven scaling.</li>
+            <li><strong>Console font.</strong> The documented default is <code>font_sun_8x16</code>, a 256-glyph, 4096-byte bitmap font for the bootloader and kernel console.</li>
+          </ol>
+          <p>This is the documented platform display pipeline. It should not be mistaken for a screenshot of auroraADE or proof of a finished desktop session running on it.</p>
+        </div>
+      </section>
+
+      <section id="scope" class="p-strip is-paper is-deep" aria-labelledby="scope-title">
+        <div class="u-fixed-width">
+          <h2 id="scope-title">Scope and current evidence</h2>
+          <p>This page is based on the public reachOS README and the source areas linked above. It records the project separation and technical contracts documented there, rather than filling gaps with hypothetical product features.</p>
+          <p>The reviewed documentation does not establish the implementation status or behavior of an auroraADE desktop shell, window manager, panel or dock, file manager, launcher, or bundled application set. Those are intentionally not listed here as completed features. The x86_64 target is documented as a direction, not used as proof that every part of the desktop environment is complete.</p>
+          <p>As the implementation and its specifications become more explicit, this page can describe those details against their actual source files instead of relying on a generic list of desktop-environment features.</p>
+        </div>
+      </section>
+
+      <section id="source" class="p-section" aria-labelledby="source-title">
+        <div class="u-fixed-width">
+          <h2 id="source-title">Source and references</h2>
+          <p>The reachOS repository is the primary reference for the platform architecture described on this page.</p>
+          <ul>
+            <li><a href="https://github.com/critical-dummy/reachOS">reachOS repository</a> — project source.</li>
+            <li><a href="https://github.com/critical-dummy/reachOS/blob/main/README.md">reachOS README</a> — architecture overview, reset topology and subsystem notes.</li>
+            <li><a href="https://github.com/critical-dummy/reachOS/tree/main/src/fabric-dessert">Fabric Dessert source</a> — platform implementation.</li>
+            <li><a href="https://github.com/DecemberReach/decemberreach.github.io">Website source</a> — source for this project page.</li>
+            <li><a href="https://vanillaframework.io/docs">Canonical Vanilla Framework documentation</a> — the CSS framework used by this site.</li>
+          </ul>
+        </div>
+      </section>
+    </main>
+
+    <footer class="p-strip is-shallow">
+      <div class="u-fixed-width">
+        <div class="grid-row grid-row--50-50">
+          <div class="grid-col">
+            <p><strong>December Reach</strong></p>
+            <p><small>auroraADE / project notes</small></p>
+          </div>
+          <div class="grid-col">
+            <p><small>Built with <a href="https://vanillaframework.io/docs">Canonical Vanilla Framework</a>.</small></p>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      (function () {
+        const navigation = document.querySelector("#navigation");
+        if (!navigation) return;
+
+        const menuButton = navigation.querySelector(".js-menu-button");
+        const menu = navigation.querySelector("#primary-navigation");
+        if (!menuButton || !menu) return;
+
+        function closeMenu() {
+          navigation.classList.remove("has-menu-open");
+          menuButton.setAttribute("aria-pressed", "false");
+          menuButton.textContent = "Menu";
+        }
+
+        menuButton.addEventListener("click", function () {
+          const isOpen = navigation.classList.toggle("has-menu-open");
+          menuButton.setAttribute("aria-pressed", String(isOpen));
+          menuButton.textContent = isOpen ? "Close menu" : "Menu";
+        });
+
+        menu.querySelectorAll("a").forEach(function (link) {
+          link.addEventListener("click", closeMenu);
+        });
+
+        document.addEventListener("keydown", function (event) {
+          if (event.key === "Escape" && navigation.classList.contains("has-menu-open")) {
+            closeMenu();
+            menuButton.focus();
+          }
+        });
+
+        window.addEventListener("resize", function () {
+          if (window.matchMedia("(min-width: 1036px)").matches) closeMenu();
+        });
+      })();
+    </script>
+  </body>
+</html>
