@@ -1,0 +1,415 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#211f28">
+    <meta name="description" content="auroraADE is the desktop environment direction within reachOS, a project by December Reach.">
+    <title>auroraADE — A desktop environment for reachOS</title>
+
+    <!-- Canonical's official Vanilla Framework stylesheet; supported hotlink method. -->
+    <link rel="stylesheet" href="https://assets.ubuntu.com/v1/vanilla_framework_version_4.59.0.min.css">
+    <style>
+      :root {
+        color-scheme: light;
+        --aurora-ink: #211f28;
+        --aurora-paper: #fbfaf8;
+        --aurora-orange: #e95420;
+        --aurora-violet: #8a78e6;
+        --aurora-muted: #66636c;
+        --aurora-line: #e8e5e1;
+      }
+
+      html { scroll-behavior: smooth; scroll-padding-top: 5rem; }
+      body { margin: 0; background: var(--aurora-paper); color: var(--aurora-ink); }
+      a { text-underline-offset: 0.2em; }
+      a:focus-visible, button:focus-visible { outline: 3px solid #9d8df2; outline-offset: 3px; }
+
+      .site-navigation { background: var(--aurora-ink); border-bottom: 1px solid #ffffff20; }
+      .site-navigation .p-navigation__row--25-75 { max-width: 1280px; margin-inline: auto; padding-inline: 1.5rem; }
+      .site-navigation .p-navigation__link,
+      .site-navigation .p-navigation__logo-title { color: #fff; }
+      .site-navigation .p-navigation__logo-title { font-weight: 650; letter-spacing: -0.02em; }
+      .aurora-mark {
+        display: inline-grid;
+        width: 2rem;
+        height: 2rem;
+        place-items: center;
+        border-radius: 0.65rem;
+        background: linear-gradient(135deg, var(--aurora-orange), #f29b65 48%, var(--aurora-violet));
+        color: #fff;
+        font-size: 1.25rem;
+        font-weight: 800;
+        line-height: 1;
+      }
+      .site-navigation .p-navigation__logo-tag { display: grid; place-items: center; }
+      .site-navigation .p-navigation__link:hover { color: #ffc4aa; }
+      .site-navigation .p-navigation__item { white-space: nowrap; }
+      .nav-toggle { display: none; color: #fff !important; border-color: #ffffff65 !important; }
+
+      .hero {
+        position: relative;
+        isolation: isolate;
+        overflow: hidden;
+        background: var(--aurora-ink);
+        color: #f8f7f5;
+      }
+      .hero::before {
+        position: absolute;
+        z-index: -1;
+        top: -17rem;
+        right: -14rem;
+        width: min(72vw, 68rem);
+        aspect-ratio: 1;
+        border-radius: 50%;
+        background: radial-gradient(circle at 38% 37%, #df6d4a75 0, #a18aed45 30%, #211f2800 67%);
+        content: "";
+        pointer-events: none;
+      }
+      .site-container { max-width: 1280px; margin-inline: auto; padding-inline: clamp(1.25rem, 4vw, 3rem); }
+      .hero-inner { padding-block: clamp(4rem, 8vw, 7.5rem); }
+      .hero-grid { align-items: center; gap: clamp(2.5rem, 5vw, 5rem); }
+      .hero-copy { position: relative; z-index: 1; }
+      .eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.65rem;
+        margin: 0 0 1.25rem;
+        color: var(--aurora-orange);
+        font-size: 0.78rem;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        line-height: 1.4;
+        text-transform: uppercase;
+      }
+      .eyebrow::before { width: 1.5rem; height: 2px; background: currentColor; content: ""; }
+      .hero h1 {
+        max-width: 10ch;
+        margin: 0 0 1.5rem;
+        color: #fff;
+        font-size: clamp(3.25rem, 6.4vw, 6.25rem);
+        font-weight: 650;
+        letter-spacing: -0.065em;
+        line-height: 0.99;
+      }
+      .hero-lede { max-width: 34rem; margin: 0; color: #dedbe3; font-size: clamp(1.1rem, 1.6vw, 1.35rem); line-height: 1.6; }
+      .hero-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 0.8rem; margin-top: 2rem; }
+      .site-button-primary {
+        border-color: var(--aurora-orange) !important;
+        background: var(--aurora-orange) !important;
+        color: #fff !important;
+      }
+      .site-button-primary:hover { border-color: #c74314 !important; background: #c74314 !important; }
+      .site-button-secondary { border-color: #ffffff68 !important; color: #fff !important; }
+      .site-button-secondary:hover { border-color: #fff !important; }
+      .hero-note { margin-top: 1.35rem; color: #aaa6b3; font-size: 0.875rem; }
+
+      .desktop-art { position: relative; max-width: 38rem; margin: 0 auto; padding: 1rem; }
+      .desktop-art::before, .desktop-art::after {
+        position: absolute;
+        z-index: -1;
+        border: 1px solid #ffffff22;
+        border-radius: 50%;
+        content: "";
+        pointer-events: none;
+      }
+      .desktop-art::before { inset: -8% -3% 4% 6%; transform: rotate(-16deg); }
+      .desktop-art::after { inset: 8% 6% -8% -4%; transform: rotate(12deg); }
+      .desktop-shell {
+        overflow: hidden;
+        border: 1px solid #ffffff45;
+        border-radius: 1rem;
+        background: #17161c;
+        box-shadow: 0 2.5rem 6rem #0007;
+        transform: rotate(1.5deg);
+      }
+      .desktop-topbar { display: flex; min-height: 3rem; align-items: center; justify-content: space-between; gap: 0.6rem; padding: 0 1rem; background: #292730; color: #eceaf2; font-size: 0.69rem; }
+      .desktop-dots { display: flex; gap: 0.35rem; }
+      .desktop-dots span { width: 0.48rem; height: 0.48rem; border-radius: 50%; background: #77727f; }
+      .desktop-name { font-weight: 700; letter-spacing: 0.04em; }
+      .desktop-content { display: grid; min-height: 21rem; grid-template-columns: 3.5rem minmax(0, 1fr); }
+      .desktop-dock { display: flex; flex-direction: column; align-items: center; gap: 0.8rem; padding: 1rem 0.45rem; background: #222129; }
+      .app-glyph { display: grid; width: 2rem; aspect-ratio: 1; place-items: center; border: 1px solid #ffffff28; border-radius: 0.65rem; background: #37333f; color: #f8f4ff; font-size: 0.95rem; }
+      .app-glyph--active { background: var(--aurora-orange); border-color: var(--aurora-orange); }
+      .desktop-wallpaper {
+        position: relative;
+        overflow: hidden;
+        min-width: 0;
+        padding: 1.4rem;
+        background:
+          radial-gradient(ellipse at 75% 20%, #d1a4b8 0, #b27eac00 36%),
+          radial-gradient(ellipse at 30% 85%, #ef8b60 0, #ed8b6000 43%),
+          linear-gradient(135deg, #5e559d, #302d48 55%, #22202e);
+      }
+      .workspace-label { position: relative; z-index: 1; max-width: 12rem; color: #fff; }
+      .workspace-label small { display: block; margin-bottom: 0.8rem; color: #ffffffbd; font-size: 0.58rem; letter-spacing: 0.15em; }
+      .workspace-label strong { display: block; font-size: clamp(1.5rem, 3vw, 2.4rem); font-weight: 600; letter-spacing: -0.06em; line-height: 0.98; }
+      .sample-window { position: absolute; right: 1rem; bottom: 1rem; width: 59%; overflow: hidden; border: 1px solid #ffffff70; border-radius: 0.6rem; background: #f8f6f5ed; box-shadow: 0 1.25rem 2.5rem #17131c55; color: #292530; }
+      .sample-window__bar { display: flex; justify-content: space-between; padding: 0.55rem 0.7rem; border-bottom: 1px solid #e3dfe5; font-size: 0.55rem; font-weight: 700; }
+      .sample-window__body { display: grid; grid-template-columns: 1fr 1.1fr; gap: 0.55rem; padding: 0.7rem; }
+      .sample-block { min-height: 3rem; border-radius: 0.35rem; background: #e7e2ef; }
+      .sample-block--accent { background: linear-gradient(135deg, #ed9a71, #8778d6); }
+      .sample-lines { display: grid; gap: 0.35rem; align-content: center; }
+      .sample-lines span { height: 0.28rem; border-radius: 1rem; background: #d1cdd8; }
+      .sample-lines span:nth-child(2) { width: 75%; }
+      .sample-lines span:nth-child(3) { width: 52%; }
+      .art-caption { margin: 1.1rem 0 0; color: #b5b0bd; font-size: 0.75rem; text-align: center; }
+
+      .section { padding-block: clamp(4rem, 7vw, 6.5rem); }
+      .section-heading { max-width: 45rem; margin-bottom: 2.5rem; }
+      .section-heading h2 { max-width: 18ch; margin: 0 0 1rem; font-size: clamp(2rem, 4vw, 3.25rem); letter-spacing: -0.055em; line-height: 1.08; }
+      .section-heading p { max-width: 42rem; margin: 0; color: var(--aurora-muted); font-size: 1.125rem; line-height: 1.65; }
+      .section .eyebrow { margin-bottom: 1rem; }
+      .feature-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; }
+      .feature-card {
+        height: 100%;
+        box-sizing: border-box;
+        padding: 1.6rem;
+        border: 1px solid var(--aurora-line);
+        border-top: 3px solid var(--aurora-orange);
+        border-radius: 0.25rem;
+        background: #fff;
+      }
+      .feature-index { display: block; margin-bottom: 2.25rem; color: var(--aurora-orange); font-size: 0.78rem; font-weight: 700; letter-spacing: 0.1em; }
+      .feature-card h3 { margin: 0 0 0.7rem; font-size: 1.35rem; letter-spacing: -0.03em; }
+      .feature-card p { margin: 0; color: var(--aurora-muted); line-height: 1.65; }
+      .direction-section { background: #f0ede9; }
+      .direction-grid { align-items: center; gap: clamp(2rem, 5vw, 5rem); }
+      .direction-copy h2 { max-width: 15ch; margin: 0 0 1rem; font-size: clamp(2.2rem, 4vw, 3.5rem); letter-spacing: -0.06em; line-height: 1.05; }
+      .direction-copy p { max-width: 38rem; color: #5d5962; line-height: 1.7; }
+      .project-panel { padding: clamp(1.5rem, 3vw, 2.5rem); border: 1px solid #ded9d3; border-radius: 0.35rem; background: #fbfaf8; }
+      .project-panel__label { margin: 0 0 1rem; color: var(--aurora-muted); font-size: 0.78rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; }
+      .project-line { display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; padding-block: 1.1rem; border-top: 1px solid var(--aurora-line); }
+      .project-line strong { display: block; margin-bottom: 0.25rem; font-size: 1.1rem; }
+      .project-line p { margin: 0; color: var(--aurora-muted); font-size: 0.92rem; line-height: 1.5; }
+      .project-arrow { flex: 0 0 auto; color: var(--aurora-orange); font-size: 1.4rem; }
+      .source-section { padding-block: 3rem; background: #fff; border-top: 1px solid var(--aurora-line); }
+      .source-inner { display: flex; align-items: center; justify-content: space-between; gap: 2rem; }
+      .source-inner h2 { margin: 0 0 0.5rem; font-size: 1.6rem; letter-spacing: -0.04em; }
+      .source-inner p { margin: 0; color: var(--aurora-muted); line-height: 1.6; }
+      .source-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 0.7rem; }
+      .site-footer { padding-block: 1.7rem; background: var(--aurora-ink); color: #d8d5de; font-size: 0.85rem; }
+      .footer-inner { display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
+      .site-footer p { margin: 0; }
+      .site-footer a { color: #fff; }
+      .footer-meta { color: #aaa6b3; }
+
+      @media (max-width: 767px) {
+        html { scroll-padding-top: 1rem; }
+        .site-navigation .p-navigation__row--25-75 { display: flex; flex-wrap: wrap; padding-inline: 1rem; }
+        .site-navigation .p-navigation__banner { width: 100%; justify-content: space-between; }
+        .nav-toggle { display: inline-flex; align-items: center; margin: 0.4rem 0; }
+        .site-navigation .p-navigation__nav { display: none; width: 100%; padding-block: 0.4rem 0.9rem; }
+        .site-navigation .p-navigation__nav.is-open { display: block; }
+        .site-navigation .p-navigation__items { display: flex; flex-direction: column; gap: 0.2rem; }
+        .site-navigation .p-navigation__item { padding-block: 0.3rem; }
+        .hero-grid, .direction-grid { grid-template-columns: minmax(0, 1fr); }
+        .hero-inner { padding-block: 3.8rem 4rem; }
+        .hero h1 { font-size: clamp(3.1rem, 14vw, 5rem); }
+        .desktop-art { margin-top: 0.5rem; padding: 0.45rem; }
+        .desktop-content { min-height: 17rem; }
+        .desktop-wallpaper { padding: 1rem; }
+        .sample-window { right: 0.65rem; bottom: 0.65rem; }
+        .feature-grid { grid-template-columns: minmax(0, 1fr); }
+        .feature-index { margin-bottom: 1.2rem; }
+        .source-inner, .footer-inner { align-items: flex-start; flex-direction: column; }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        html { scroll-behavior: auto; }
+        *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+      }
+    </style>
+  </head>
+  <body>
+    <a class="p-link--skip" href="#main-content">Skip to main content</a>
+
+    <header id="navigation" class="p-navigation is-dark site-navigation">
+      <div class="p-navigation__row--25-75">
+        <div class="p-navigation__banner">
+          <div class="p-navigation__tagged-logo">
+            <a class="p-navigation__link" href="#top" aria-label="December Reach home">
+              <span class="p-navigation__logo-tag"><span class="aurora-mark" aria-hidden="true">a</span></span>
+              <span class="p-navigation__logo-title">December Reach</span>
+            </a>
+          </div>
+          <button class="p-button nav-toggle" type="button" aria-expanded="false" aria-controls="primary-navigation">Menu</button>
+        </div>
+        <nav class="p-navigation__nav" id="primary-navigation" aria-label="Primary navigation">
+          <ul class="p-navigation__items">
+            <li class="p-navigation__item"><a class="p-navigation__link" href="#overview">Overview</a></li>
+            <li class="p-navigation__item"><a class="p-navigation__link" href="#direction">Project direction</a></li>
+            <li class="p-navigation__item"><a class="p-navigation__link" href="https://github.com/critical-dummy/reachOS">reachOS on GitHub ↗</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main-content">
+      <section class="hero" id="top" aria-labelledby="hero-title">
+        <div class="site-container hero-inner">
+          <div class="grid-row grid-row--50-50 hero-grid">
+            <div class="grid-col hero-copy">
+              <p class="eyebrow">A desktop environment for reachOS</p>
+              <h1 id="hero-title">Meet auroraADE.</h1>
+              <p class="hero-lede">A desktop environment with its own visual direction, designed as part of the reachOS project by December Reach.</p>
+              <div class="hero-actions">
+                <a class="p-button site-button-primary" href="#overview">Explore auroraADE</a>
+                <a class="p-button site-button-secondary" href="https://github.com/critical-dummy/reachOS">Explore reachOS ↗</a>
+              </div>
+              <p class="hero-note">ADE stands for Aesthetic Desktop Environment.</p>
+            </div>
+
+            <div class="grid-col">
+              <div class="desktop-art">
+                <div class="desktop-shell" role="img" aria-label="Illustrative auroraADE desktop concept with a side dock, gradient workspace and floating app window">
+                  <div class="desktop-topbar">
+                    <div class="desktop-dots" aria-hidden="true"><span></span><span></span><span></span></div>
+                    <span class="desktop-name">auroraADE</span>
+                    <span>09:41&nbsp;&nbsp; ◌</span>
+                  </div>
+                  <div class="desktop-content">
+                    <aside class="desktop-dock" aria-hidden="true">
+                      <span class="app-glyph app-glyph--active">a</span>
+                      <span class="app-glyph">▦</span>
+                      <span class="app-glyph">⌕</span>
+                      <span class="app-glyph">⚙</span>
+                    </aside>
+                    <div class="desktop-wallpaper">
+                      <div class="workspace-label">
+                        <small>WORKSPACE 01</small>
+                        <strong>make room<br>for ideas.</strong>
+                      </div>
+                      <div class="sample-window" aria-hidden="true">
+                        <div class="sample-window__bar"><span>Workspace</span><span>— &nbsp; □ &nbsp; ×</span></div>
+                        <div class="sample-window__body">
+                          <div class="sample-block sample-block--accent"></div>
+                          <div class="sample-lines"><span></span><span></span><span></span></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <p class="art-caption">Illustrative interface study · not a product screenshot</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="p-strip section" id="overview" aria-labelledby="overview-title">
+        <div class="site-container">
+          <div class="section-heading">
+            <p class="eyebrow">The idea</p>
+            <h2 id="overview-title">A desktop environment, within a bigger system.</h2>
+            <p>reachOS is the operating-system project. auroraADE is its desktop environment direction: a separate layer focused on the desktop experience, not a different name for the whole OS.</p>
+          </div>
+
+          <div class="feature-grid">
+            <article class="feature-card p-card">
+              <span class="feature-index">01 / DESKTOP</span>
+              <h3>Made for the desktop</h3>
+              <p>auroraADE is the desktop-focused environment within the reachOS ecosystem, with the desktop experience as its centre of attention.</p>
+            </article>
+            <article class="feature-card p-card">
+              <span class="feature-index">02 / ARCHITECTURE</span>
+              <h3>An x86_64 direction</h3>
+              <p>The project direction for auroraADE is x86_64-based, keeping its intended desktop target distinct from reachOS as a whole.</p>
+            </article>
+            <article class="feature-card p-card">
+              <span class="feature-index">03 / IDENTITY</span>
+              <h3>Aesthetic by design</h3>
+              <p>The name says what it is about: an aesthetic desktop environment with its own identity, within the wider reachOS project.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="p-strip section direction-section" id="direction" aria-labelledby="direction-title">
+        <div class="site-container">
+          <div class="grid-row grid-row--50-50 direction-grid">
+            <div class="grid-col direction-copy">
+              <p class="eyebrow">The reachOS connection</p>
+              <h2 id="direction-title">One project. Distinct layers.</h2>
+              <p>auroraADE is not presented as a standalone operating system. It belongs to reachOS, while keeping a focused role as the desktop environment.</p>
+              <p>The visual language here takes inspiration from Ubuntu’s clear, confident web presentation. The site itself uses Canonical’s Vanilla Framework, rather than merely imitating its appearance.</p>
+            </div>
+            <div class="grid-col">
+              <div class="project-panel">
+                <p class="project-panel__label">Project map</p>
+                <div class="project-line">
+                  <div>
+                    <strong>reachOS</strong>
+                    <p>The operating-system project</p>
+                  </div>
+                  <span class="project-arrow" aria-hidden="true">↗</span>
+                </div>
+                <div class="project-line">
+                  <div>
+                    <strong>auroraADE</strong>
+                    <p>The desktop environment · x86_64 direction</p>
+                  </div>
+                  <span class="project-arrow" aria-hidden="true">✳</span>
+                </div>
+                <p style="margin: 1.25rem 0 0; color: #66636c; font-size: 0.82rem; line-height: 1.55;">This page describes the project direction; the desktop illustration above is conceptual, not a claim of a released build.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="source-section" aria-labelledby="source-title">
+        <div class="site-container source-inner">
+          <div>
+            <h2 id="source-title">Built in the open.</h2>
+            <p>Follow the operating-system project or inspect the source of this website.</p>
+          </div>
+          <div class="source-actions">
+            <a class="p-button site-button-primary" href="https://github.com/critical-dummy/reachOS">reachOS repository ↗</a>
+            <a class="p-button" href="https://github.com/DecemberReach/decemberreach.github.io">Website source ↗</a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="site-container footer-inner">
+        <p>© 2026 December Reach · auroraADE / reachOS</p>
+        <p class="footer-meta">Styled with <a href="https://vanillaframework.io/docs">Vanilla Framework</a> by Canonical.</p>
+      </div>
+    </footer>
+
+    <script>
+      (function () {
+        const toggle = document.querySelector(".nav-toggle");
+        const navigation = document.querySelector("#primary-navigation");
+
+        if (!toggle || !navigation) return;
+
+        function setMenuOpen(open) {
+          toggle.setAttribute("aria-expanded", String(open));
+          toggle.textContent = open ? "Close menu" : "Menu";
+          navigation.classList.toggle("is-open", open);
+        }
+
+        toggle.addEventListener("click", function () {
+          setMenuOpen(toggle.getAttribute("aria-expanded") !== "true");
+        });
+
+        navigation.querySelectorAll("a").forEach(function (link) {
+          link.addEventListener("click", function () {
+            setMenuOpen(false);
+          });
+        });
+
+        document.addEventListener("keydown", function (event) {
+          if (event.key === "Escape") setMenuOpen(false);
+        });
+
+        window.addEventListener("resize", function () {
+          if (window.matchMedia("(min-width: 768px)").matches) setMenuOpen(false);
+        });
+      })();
+    </script>
+  </body>
+</html>
