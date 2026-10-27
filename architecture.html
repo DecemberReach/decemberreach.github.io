@@ -36,7 +36,7 @@
         <nav id="primary-navigation" class="p-navigation__nav" aria-label="Primary">
           <ul class="p-navigation__items">
             <li class="p-navigation__item"><a class="p-navigation__link" href="./index.html">Home</a></li>
-            <li class="p-navigation__item is-selected"><a class="p-navigation__link" href="#architecture" aria-current="page">Architecture</a></li>
+            <li class="p-navigation__item is-selected"><a class="p-navigation__link" href="./architecture.html" aria-current="page">Architecture</a></li>
             <li class="p-navigation__item"><a class="p-navigation__link" href="#display">Display pipeline</a></li>
             <li class="p-navigation__item"><a class="p-navigation__link" href="#source">Source</a></li>
           </ul>
@@ -48,14 +48,15 @@
       <section id="top" class="p-section--hero" aria-labelledby="page-title">
         <div class="u-fixed-width">
           <h1 id="page-title">auroraADE architecture</h1>
-          <p class="p-heading--2">Project boundaries and platform implementation notes.</p>
+          <p>Technical notes on the platform boundaries documented in the reachOS repository.</p>
           <p>This page separates the role of auroraADE from the technical contracts documented in the reachOS repository. It is a reference for project structure, boot, memory, devices and display—not a claim that the full desktop environment is already implemented.</p>
         </div>
       </section>
 
       <section id="overview" class="p-section" aria-labelledby="overview-title">
         <div class="u-fixed-width">
-          <hr class="p-rule">\n          <h2 id="overview-title">Names and responsibilities</h2>
+          <hr class="p-rule">
+          <h2 id="overview-title">Names and responsibilities</h2>
           <p>These names describe related parts of the project, but they do not mean the same thing. In particular, the virtual hardware platform's CPU integration boundary and auroraADE's target architecture describe different layers.</p>
 
           <table class="p-table">
@@ -101,15 +102,6 @@
           <h2 id="architecture-title">Platform architecture</h2>
           <p>The reachOS README describes a separation between the browser-facing host shell and the Fabric Dessert platform runtime. The host provides integration with the browser; the platform code owns the virtual board and its subsystems.</p>
 
-          <pre><code>Browser / host environment
-└── Angular host shell (src/app/)
-    └── Fabric Dessert runtime (src/fabric-dessert/)
-        ├── Board and boot substrate
-        ├── FRT64 CPU boundary
-        ├── Physical address space and sparse RAM
-        ├── Device bus, MMIO and IRQ routing
-        └── Display device, framebuffer and renderer</code></pre>
-
           <table class="p-table">
             <thead>
               <tr>
@@ -151,7 +143,8 @@
 
       <section id="boot" class="p-section" aria-labelledby="boot-title">
         <div class="u-fixed-width">
-          <hr class="p-rule">\n          <h2 id="boot-title">Boot and CPU boundary</h2>
+          <hr class="p-rule">
+          <h2 id="boot-title">Boot and CPU boundary</h2>
           <p>The documented reset path is a platform contract, not a generic description of every CPU's boot behavior.</p>
           <ol>
             <li>The board begins its reset sequence and resets the device bus while propagating the configured reset vector.</li>
@@ -166,7 +159,8 @@
 
       <section id="memory" class="p-section" aria-labelledby="memory-title">
         <div class="u-fixed-width">
-          <hr class="p-rule">\n          <h2 id="memory-title">Physical memory and devices</h2>
+          <hr class="p-rule">
+          <h2 id="memory-title">Physical memory and devices</h2>
           <div class="grid-row grid-row--50-50">
             <div class="grid-col">
               <h3>Memory model</h3>
@@ -184,7 +178,8 @@
 
       <section id="display" class="p-section" aria-labelledby="display-title">
         <div class="u-fixed-width">
-          <hr class="p-rule">\n          <h2 id="display-title">Display pipeline</h2>
+          <hr class="p-rule">
+          <h2 id="display-title">Display pipeline</h2>
           <p>The reachOS README documents a display path with explicit responsibilities for the virtual device, pixel storage, rendering coordination and browser-canvas presentation.</p>
           <ol>
             <li><strong>Display device.</strong> Exposes control registers and a framebuffer memory aperture through MMIO. The documented register magic value is <code>0x53494446</code>.</li>
@@ -199,7 +194,8 @@
 
       <section id="scope" class="p-section" aria-labelledby="scope-title">
         <div class="u-fixed-width">
-          <hr class="p-rule">\n          <h2 id="scope-title">Scope and current evidence</h2>
+          <hr class="p-rule">
+          <h2 id="scope-title">Scope and current evidence</h2>
           <p>This page is based on the public reachOS README and the source areas linked above. It records the project separation and technical contracts documented there, rather than filling gaps with hypothetical product features.</p>
           <p>The reviewed documentation does not establish the implementation status or behavior of an auroraADE desktop shell, window manager, panel or dock, file manager, launcher, or bundled application set. Those are intentionally not listed here as completed features. The x86_64 target is documented as a direction, not used as proof that every part of the desktop environment is complete.</p>
           <p>As the implementation and its specifications become more explicit, this page can describe those details against their actual source files instead of relying on a generic list of desktop-environment features.</p>
@@ -208,7 +204,8 @@
 
       <section id="source" class="p-section" aria-labelledby="source-title">
         <div class="u-fixed-width">
-          <hr class="p-rule">\n          <h2 id="source-title">Source and references</h2>
+          <hr class="p-rule">
+          <h2 id="source-title">Source and references</h2>
           <p>The reachOS repository is the primary reference for the platform architecture described on this page.</p>
           <ul>
             <li><a href="https://github.com/critical-dummy/reachOS">reachOS repository</a> — project source.</li>
@@ -223,15 +220,9 @@
 
     <footer class="p-section--shallow">
       <div class="u-fixed-width">
-        <div class="grid-row grid-row--50-50">
-          <div class="grid-col">
-            <p><strong>December Reach</strong></p>
-            <p><small>auroraADE / project notes</small></p>
-          </div>
-          <div class="grid-col">
-            <p><small>Built with <a href="https://vanillaframework.io/docs">Canonical Vanilla Framework</a>.</small></p>
-          </div>
-        </div>
+        <hr class="p-rule">
+        <p><strong>December Reach</strong> · <a href="./index.html">auroraADE</a> / architecture</p>
+        <p><small>Built with <a href="https://vanillaframework.io/docs">Canonical Vanilla Framework</a>.</small></p>
       </div>
     </footer>
 
@@ -267,9 +258,7 @@
         }
 
         function syncNavigationState() {
-          if (desktopNavigation.matches) {
-            closeMenu();
-          } else if (!navigation.classList.contains("has-menu-open")) {
+          if (desktopNavigation.matches || !navigation.classList.contains("has-menu-open")) {
             closeMenu();
           }
         }
