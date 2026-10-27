@@ -47,16 +47,14 @@
       <section id="top" class="p-section--hero" aria-labelledby="page-title">
         <div class="u-fixed-width">
           <h1 id="page-title">auroraADE</h1>
-          <p class="p-heading--2">Aesthetic Desktop Environment</p>
-          <p>auroraADE is the desktop environment direction within reachOS. Its target architecture is x86_64.</p>
-          <p>reachOS is the wider operating-system project. Fabric Dessert is the virtual hardware platform and board architecture described in the reachOS source.</p>
+          <p>Aesthetic Desktop Environment for reachOS, targeting x86_64.</p>
         </div>
       </section>
 
       <section id="overview" class="p-section" aria-labelledby="overview-title">
         <div class="u-fixed-width">
           <hr class="p-rule">
-          <h2 id="overview-title">Project responsibilities</h2>
+          <h2 id="overview-title">Project structure</h2>
           <table class="p-table">
             <thead>
               <tr>
@@ -71,7 +69,7 @@
               </tr>
               <tr>
                 <th scope="row"><a href="https://github.com/critical-dummy/reachOS/tree/main/src/fabric-dessert">Fabric Dessert</a></th>
-                <td>The virtual hardware platform and board architecture in the reachOS repository.</td>
+                <td>The virtual hardware platform and board architecture documented in the reachOS repository.</td>
               </tr>
               <tr>
                 <th scope="row">auroraADE</th>
@@ -85,11 +83,11 @@
       <section id="references" class="p-section" aria-labelledby="references-title">
         <div class="u-fixed-width">
           <hr class="p-rule">
-          <h2 id="references-title">Project references</h2>
+          <h2 id="references-title">References</h2>
           <ul>
-            <li><a href="./architecture.html">Architecture and platform notes</a> — boot topology, CPU boundary, memory, devices and display pipeline.</li>
-            <li><a href="https://github.com/critical-dummy/reachOS">reachOS repository</a> — implementation and project source.</li>
-            <li><a href="https://github.com/DecemberReach/decemberreach.github.io">Website source</a> — HTML and site assets.</li>
+            <li><a href="./architecture.html">Architecture and platform notes</a> — boot, CPU boundary, memory, devices and display pipeline.</li>
+            <li><a href="https://github.com/critical-dummy/reachOS">reachOS repository</a> — source for the wider project.</li>
+            <li><a href="https://github.com/DecemberReach/decemberreach.github.io">Website source</a> — this site's HTML and assets.</li>
           </ul>
         </div>
       </section>
@@ -135,9 +133,7 @@
         }
 
         function syncNavigationState() {
-          if (desktopNavigation.matches) {
-            closeMenu();
-          } else if (!navigation.classList.contains("has-menu-open")) {
+          if (desktopNavigation.matches || !navigation.classList.contains("has-menu-open")) {
             closeMenu();
           }
         }
