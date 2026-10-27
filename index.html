@@ -4,8 +4,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#211f28">
-    <meta name="description" content="auroraADE is the Aesthetic Desktop Environment direction within reachOS, targeting x86_64.">
-    <title>auroraADE — Aesthetic Desktop Environment</title>
+    <meta name="description" content="auroraADE is the x86_64-targeted desktop environment direction within reachOS by December Reach.">
+    <title>auroraADE — December Reach</title>
     <link rel="stylesheet" href="https://assets.ubuntu.com/v1/vanilla_framework_version_4.61.0.min.css">
     <style>
       .p-navigation__tagged-logo .p-navigation__logo-tag {
@@ -44,85 +44,64 @@
     </header>
 
     <main id="main-content">
-      <section id="top" class="p-strip is-dark is-deep" aria-labelledby="hero-title">
+      <section id="top" class="p-strip is-dark is-deep" aria-labelledby="page-title">
         <div class="u-fixed-width">
-          <div class="grid-row grid-row--50-50">
-            <div class="grid-col">
-              <p class="p-text--small-caps">DECEMBER REACH / DESKTOP ENVIRONMENT</p>
-              <h1 id="hero-title" class="p-heading--display">auroraADE</h1>
-              <p class="p-heading--2">Aesthetic Desktop Environment</p>
-            </div>
-            <div class="grid-col">
-              <p>auroraADE is the desktop environment direction within reachOS. Its target is x86_64, with a focus on the desktop layer rather than the whole operating-system platform.</p>
-              <p><a class="p-button--positive" href="./architecture.html">Explore the architecture</a></p>
-              <p><a href="https://github.com/critical-dummy/reachOS">View the reachOS source</a></p>
-            </div>
-          </div>
+          <p class="p-text--small-caps">DECEMBER REACH / DESKTOP ENVIRONMENT</p>
+          <h1 id="page-title" class="p-heading--display">auroraADE</h1>
+          <p class="p-heading--2">Aesthetic Desktop Environment</p>
+          <p>auroraADE is the desktop environment direction within reachOS. Its target architecture is x86_64. It describes the desktop layer of the project, rather than the virtual hardware platform beneath it.</p>
         </div>
       </section>
 
       <section id="overview" class="p-section" aria-labelledby="overview-title">
         <div class="u-fixed-width">
-          <div class="grid-row grid-row--50-50">
-            <div class="grid-col">
-              <h2 id="overview-title" class="p-heading--2">A desktop environment has its own place in the system.</h2>
-            </div>
-            <div class="grid-col">
-              <p>auroraADE is the name for the desktop-facing environment direction. reachOS is the wider operating-system project, while Fabric Dessert is the virtual hardware platform described in the reachOS source.</p>
-              <p>Keeping these responsibilities separate helps distinguish the desktop experience from the lower-level platform that hosts it.</p>
-            </div>
-          </div>
+          <h2 id="overview-title">Project structure</h2>
+          <p>These names describe separate responsibilities within the wider project.</p>
+          <table class="p-table">
+            <thead>
+              <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Role</th>
+                <th scope="col">Scope</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row"><a href="https://github.com/critical-dummy/reachOS">reachOS</a></th>
+                <td>Operating-system project</td>
+                <td>The wider project these components belong to.</td>
+              </tr>
+              <tr>
+                <th scope="row"><a href="https://github.com/critical-dummy/reachOS/tree/main/src/fabric-dessert">Fabric Dessert</a></th>
+                <td>Virtual hardware platform</td>
+                <td>Board and platform infrastructure documented in the reachOS source.</td>
+              </tr>
+              <tr>
+                <th scope="row">auroraADE</th>
+                <td>Desktop environment direction</td>
+                <td>The desktop-facing environment, targeting x86_64.</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </section>
 
-      <section class="p-strip--highlighted is-deep" aria-labelledby="layers-title">
+      <section id="documentation" class="p-strip is-deep" aria-labelledby="documentation-title">
         <div class="u-fixed-width">
-          <h2 id="layers-title">Where auroraADE fits</h2>
-          <div class="grid-row grid-row--25-75">
-            <div class="grid-col"><h3>reachOS</h3></div>
-            <div class="grid-col"><p>The wider operating-system project.</p></div>
-          </div>
-          <hr>
-          <div class="grid-row grid-row--25-75">
-            <div class="grid-col"><h3>Fabric Dessert</h3></div>
-            <div class="grid-col"><p>The virtual hardware platform and board architecture built for reachOS.</p></div>
-          </div>
-          <hr>
-          <div class="grid-row grid-row--25-75">
-            <div class="grid-col"><h3>auroraADE</h3></div>
-            <div class="grid-col"><p>The desktop environment direction, targeting x86_64.</p></div>
-          </div>
-        </div>
-      </section>
-
-      <section class="p-section" aria-labelledby="continue-title">
-        <div class="u-fixed-width">
-          <div class="grid-row grid-row--50-50">
-            <div class="grid-col">
-              <h2 id="continue-title" class="p-heading--2">Go deeper into the project.</h2>
-            </div>
-            <div class="grid-col">
-              <p><a href="./architecture.html">Architecture and project notes</a></p>
-              <p>Read about platform boundaries, the reset sequence, memory, devices and the display pipeline documented in the reachOS repository.</p>
-              <p><a href="https://github.com/critical-dummy/reachOS">Browse reachOS on GitHub</a></p>
-              <p><a href="https://github.com/DecemberReach/decemberreach.github.io">Browse this website's source</a></p>
-            </div>
-          </div>
+          <h2 id="documentation-title">Documentation and source</h2>
+          <ul>
+            <li><a href="./architecture.html">Architecture and platform notes</a> — boot topology, CPU boundary, memory model, device bus and display pipeline.</li>
+            <li><a href="https://github.com/critical-dummy/reachOS">reachOS repository</a> — source code for the wider operating-system project.</li>
+            <li><a href="https://github.com/DecemberReach/decemberreach.github.io">Website repository</a> — source code for this site.</li>
+          </ul>
         </div>
       </section>
     </main>
 
     <footer class="p-strip is-shallow">
       <div class="u-fixed-width">
-        <div class="grid-row grid-row--50-50">
-          <div class="grid-col">
-            <p><strong>December Reach</strong></p>
-            <p><small>auroraADE / part of reachOS</small></p>
-          </div>
-          <div class="grid-col">
-            <p><small>Built with <a href="https://vanillaframework.io/docs">Canonical Vanilla Framework</a>.</small></p>
-          </div>
-        </div>
+        <p><strong>December Reach</strong> · auroraADE</p>
+        <p><small>Built with <a href="https://vanillaframework.io/docs">Canonical Vanilla Framework</a>.</small></p>
       </div>
     </footer>
 
