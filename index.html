@@ -16,7 +16,7 @@
   <body class="is-paper">
     <a class="p-link--skip" href="#main-content">Skip to main content</a>
 
-    <header id="navigation" class="p-navigation is-dark">
+    <header id="navigation" class="p-navigation--sliding is-dark">
       <div class="p-navigation__row--25-75">
         <div class="p-navigation__banner">
           <div class="p-navigation__tagged-logo">
@@ -34,15 +34,38 @@
           </ul>
         </div>
         <nav id="primary-navigation" class="p-navigation__nav" aria-label="Primary site links">
-          <ul class="p-navigation__items">
-            <li class="p-navigation__item--dropdown-toggle" id="products-menu-item">
+          <ul class="p-navigation__items js-dropdown-nav-list js-navigation-sliding-panel">
+            <li class="p-navigation__item--dropdown-toggle js-navigation-dropdown-toggle" id="products-menu-item">
               <button class="p-navigation__link" type="button" aria-controls="products-menu">Products</button>
-              <ul class="p-navigation__dropdown" id="products-menu" aria-hidden="true">
-                <li><a class="p-navigation__dropdown-item" href="https://github.com/critical-dummy/reachOS">reachOS</a></li>
-                <li><a class="p-navigation__dropdown-item" href="./index.html">auroraADE</a></li>
-              </ul>
+              <div class="p-navigation__dropdown is-full-width is-collapsed js-navigation-sliding-panel" id="products-menu" aria-hidden="true">
+                <div class="p-navigation__dropdown-content--sliding">
+                  <ul class="p-list u-no-margin js-dropdown-nav-list">
+                    <li class="p-navigation__item--dropdown-close">
+                      <button type="button" aria-controls="products-menu" class="p-navigation__link js-back-button">Back</button>
+                    </li>
+                    <li><a class="p-navigation__dropdown-item" href="https://github.com/critical-dummy/reachOS">reachOS</a></li>
+                    <li><a class="p-navigation__dropdown-item" href="./index.html">auroraADE</a></li>
+                  </ul>
+                </div>
+                <div class="p-navigation__dropdown-content--full-width">
+                  <div class="p-strip is-shallow">
+                    <div class="row">
+                      <div class="col-6">
+                        <p class="p-muted-heading">Operating system</p>
+                        <h2><a href="https://github.com/critical-dummy/reachOS">reachOS</a></h2>
+                        <p>The wider operating-system project and its virtual hardware platform.</p>
+                      </div>
+                      <div class="col-6">
+                        <p class="p-muted-heading">Desktop environment</p>
+                        <h2><a href="./index.html">auroraADE</a></h2>
+                        <p>Aesthetic Desktop Environment for reachOS, targeting x86_64.</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </li>
-            <li class="p-navigation__item"><a class="p-navigation__link" href="./architecture.html">Architecture</a></li>
+            <li class="p-navigation__item"><a class="p-navigation__link" href="#overview">About auroraADE</a></li>
           </ul>
         </nav>
       </div>
@@ -123,27 +146,20 @@
         if (!menuButton || !menu) return;
 
         const desktopNavigation = window.matchMedia("(min-width: 1036px)");
-        const dropdownItems = Array.from(
-          navigation.querySelectorAll(".p-navigation__item--dropdown-toggle")
+        const dropdownToggles = Array.from(
+          navigation.querySelectorAll(".p-navigation__nav .p-navigation__item--dropdown-toggle > [aria-controls]")
         );
-        const dropdownToggles = dropdownItems
-          .map(function (item) {
-            return item.querySelector(":scope > [aria-controls]");
-          })
-          .filter(Boolean);
 
         function setDropdown(toggle, open) {
           const item = toggle.closest(".p-navigation__item--dropdown-toggle");
           const dropdown = document.getElementById(toggle.getAttribute("aria-controls"));
+          const parentPanel = item && item.closest(".js-navigation-sliding-panel");
           if (!item || !dropdown) return;
 
-          if (open) {
-            item.classList.add("is-active");
-            dropdown.setAttribute("aria-hidden", "false");
-          } else {
-            item.classList.remove("is-active");
-            dropdown.setAttribute("aria-hidden", "true");
-          }
+          item.classList.toggle("is-active", open);
+          if (parentPanel) parentPanel.classList.toggle("is-active", open);
+          dropdown.classList.toggle("is-collapsed", !open);
+          dropdown.setAttribute("aria-hidden", String(!open));
         }
 
         function closeAllDropdowns(focusToggle) {
@@ -189,14 +205,40 @@
         dropdownToggles.forEach(function (toggle) {
           toggle.addEventListener("click", function (event) {
             event.preventDefault();
-            const shouldOpen = !toggle.parentElement.classList.contains("is-active");
+            const dropdown = document.getElementById(toggle.getAttribute("aria-controls"));
+            if (!dropdown) return;
+
+            const shouldOpen = dropdown.getAttribute("aria-hidden") === "true";
             closeAllDropdowns();
-            if (shouldOpen) setDropdown(toggle, true);
+
+            if (shouldOpen) {
+              navigation.classList.add("has-menu-open");
+              setDropdown(toggle, true);
+            } else {
+              navigation.classList.remove("has-menu-open");
+            }
+          });
+        });
+
+        navigation.querySelectorAll(".js-back-button").forEach(function (button) {
+          button.addEventListener("click", function (event) {
+            event.preventDefault();
+            const toggle = dropdownToggles.find(function (candidate) {
+              return candidate.getAttribute("aria-controls") === button.getAttribute("aria-controls");
+            });
+
+            closeAllDropdowns(toggle);
+            if (!desktopNavigation.matches) {
+              navigation.classList.add("has-menu-open");
+              menu.setAttribute("aria-hidden", "false");
+            }
           });
         });
 
         document.addEventListener("click", function (event) {
-          if (!event.target.closest(".p-navigation__item--dropdown-toggle")) {
+          if (!event.target.closest("#navigation")) {
+            closeMenu();
+          } else if (!event.target.closest(".p-navigation__item--dropdown-toggle")) {
             closeAllDropdowns();
           }
         });
@@ -205,11 +247,15 @@
           if (event.key !== "Escape") return;
 
           const openToggle = dropdownToggles.find(function (toggle) {
-            return toggle.parentElement.classList.contains("is-active");
+            const dropdown = document.getElementById(toggle.getAttribute("aria-controls"));
+            return dropdown && dropdown.getAttribute("aria-hidden") === "false";
           });
 
           if (openToggle) {
             closeAllDropdowns(openToggle);
+            if (desktopNavigation.matches) {
+              navigation.classList.remove("has-menu-open");
+            }
           } else if (navigation.classList.contains("has-menu-open")) {
             closeMenu();
             menuButton.focus();
