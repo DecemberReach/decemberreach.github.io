@@ -4,25 +4,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#211f28">
-    <meta name="description" content="auroraADE is the Aesthetic Desktop Environment direction within the reachOS project by December Reach.">
-    <title>auroraADE — A desktop environment for reachOS</title>
+    <meta name="description" content="auroraADE is the desktop environment direction for reachOS, with an x86_64 target.">
+    <title>auroraADE — Desktop environment for reachOS</title>
     <link rel="stylesheet" href="https://assets.ubuntu.com/v1/vanilla_framework_version_4.61.0.min.css">
-    <style>
-      /* Only the original interface illustration needs project-specific styling. */
-      .aurora-art {
-        width: 100%;
-        max-width: 52rem;
-        margin: 0 auto;
-      }
-      .aurora-art svg {
-        display: block;
-        width: 100%;
-        height: auto;
-      }
-      .aurora-art figcaption {
-        margin-top: .75rem;
-      }
-    </style>
   </head>
   <body class="is-paper">
     <a class="p-link--skip" href="#main-content">Skip to main content</a>
@@ -44,9 +28,8 @@
         <nav id="primary-navigation" class="p-navigation__nav" aria-label="Primary navigation">
           <ul class="p-navigation__items">
             <li class="p-navigation__item"><a class="p-navigation__link" href="#overview">Overview</a></li>
-            <li class="p-navigation__item"><a class="p-navigation__link" href="#direction">Direction</a></li>
-            <li class="p-navigation__item"><a class="p-navigation__link" href="#reachos">reachOS</a></li>
-            <li class="p-navigation__item"><a class="p-navigation__link" href="https://github.com/critical-dummy/reachOS">Source code</a></li>
+            <li class="p-navigation__item"><a class="p-navigation__link" href="#structure">Project structure</a></li>
+            <li class="p-navigation__item"><a class="p-navigation__link" href="#source">Source code</a></li>
           </ul>
         </nav>
       </div>
@@ -55,104 +38,17 @@
     <main id="main-content">
       <section id="top" class="p-strip is-dark is-deep" aria-labelledby="hero-title">
         <div class="u-fixed-width">
-          <p class="p-text--small-caps">REACHOS / DESKTOP ENVIRONMENT</p>
-          <h1 id="hero-title" class="p-heading--display">Meet auroraADE.</h1>
-          <p class="p-heading--2">A desktop environment for reachOS.</p>
-          <p>auroraADE is the Aesthetic Desktop Environment direction within reachOS, with its own identity and a focus on the desktop experience.</p>
-          <p>
-            <a class="p-button--positive" href="#overview">Discover auroraADE</a>
-            <a class="p-button--base" href="https://github.com/critical-dummy/reachOS">Explore reachOS</a>
-          </p>
-        </div>
-        <div class="u-fixed-width">
-          <figure class="aurora-art">
-              <svg viewBox="0 0 600 450" role="img" aria-labelledby="art-title art-description" xmlns="http://www.w3.org/2000/svg">
-                <title id="art-title">auroraADE desktop concept</title>
-                <desc id="art-description">A conceptual desktop interface with a side dock, layered windows, and an abstract violet and orange workspace.</desc>
-                <defs>
-                  <linearGradient id="desk-wallpaper" x1="0" y1="0" x2="1" y2="1">
-                    <stop offset="0" stop-color="#5e559d"/>
-                    <stop offset=".48" stop-color="#37304f"/>
-                    <stop offset="1" stop-color="#d96745"/>
-                  </linearGradient>
-                  <linearGradient id="desk-glow" x1="0" y1="1" x2="1" y2="0">
-                    <stop offset="0" stop-color="#f5a16f"/>
-                    <stop offset="1" stop-color="#a99af3"/>
-                  </linearGradient>
-                  <linearGradient id="desk-panel" x1="0" y1="0" x2="1" y2="1">
-                    <stop offset="0" stop-color="#fbf9ff"/>
-                    <stop offset="1" stop-color="#e7e0ef"/>
-                  </linearGradient>
-                  <clipPath id="desk-clip">
-                    <rect x="18" y="18" width="564" height="414" rx="15"/>
-                  </clipPath>
-                  <filter id="desk-shadow" x="-30%" y="-30%" width="160%" height="180%">
-                    <feDropShadow dx="0" dy="12" stdDeviation="12" flood-color="#14121d" flood-opacity=".36"/>
-                  </filter>
-                </defs>
-                <g clip-path="url(#desk-clip)">
-                  <rect x="18" y="18" width="564" height="414" rx="15" fill="#211f28"/>
-                  <rect x="18" y="18" width="564" height="42" fill="#302d39"/>
-                  <circle cx="39" cy="39" r="5" fill="#e95420"/>
-                  <circle cx="56" cy="39" r="5" fill="#b0a1ef"/>
-                  <circle cx="73" cy="39" r="5" fill="#797382"/>
-                  <text x="300" y="43" text-anchor="middle" fill="#f8f6fb" font-size="12" font-family="sans-serif" font-weight="600">auroraADE</text>
-                  <text x="558" y="43" text-anchor="end" fill="#e5e1ec" font-size="10" font-family="sans-serif">09:41</text>
-
-                  <rect x="18" y="60" width="58" height="372" fill="#27242f"/>
-                  <rect x="31" y="79" width="32" height="32" rx="9" fill="#e95420"/>
-                  <text x="47" y="101" text-anchor="middle" fill="#fff" font-size="19" font-family="sans-serif" font-weight="700">a</text>
-                  <rect x="31" y="124" width="32" height="32" rx="9" fill="#3b3745" stroke="#ffffff" stroke-opacity=".12"/>
-                  <rect x="40" y="133" width="14" height="14" rx="3" fill="none" stroke="#e4dfed" stroke-width="1.5"/>
-                  <rect x="31" y="169" width="32" height="32" rx="9" fill="#3b3745" stroke="#ffffff" stroke-opacity=".12"/>
-                  <circle cx="47" cy="185" r="7" fill="none" stroke="#e4dfed" stroke-width="1.5"/>
-                  <rect x="31" y="214" width="32" height="32" rx="9" fill="#3b3745" stroke="#ffffff" stroke-opacity=".12"/>
-                  <path d="M40 230h14m-7-7v14" stroke="#e4dfed" stroke-width="1.5" stroke-linecap="round"/>
-                  <circle cx="47" cy="405" r="12" fill="#3b3745"/>
-                  <path d="M42 405h10M47 400v10" stroke="#e4dfed" stroke-width="1.5" stroke-linecap="round"/>
-
-                  <rect x="76" y="60" width="506" height="372" fill="url(#desk-wallpaper)"/>
-                  <circle cx="443" cy="153" r="142" fill="#c4a6e9" opacity=".2"/>
-                  <circle cx="195" cy="377" r="178" fill="#f4a06f" opacity=".22"/>
-                  <path d="M76 346C192 280 252 410 369 317s157-54 213-99v214H76Z" fill="#25223a" opacity=".24"/>
-                  <path d="M76 378C183 317 246 417 357 354s171-16 225-65v143H76Z" fill="#efa074" opacity=".17"/>
-
-                  <text x="105" y="103" fill="#f8f5ff" opacity=".78" font-size="9" font-family="sans-serif" letter-spacing="2.2">WORKSPACE 01</text>
-                  <text x="105" y="145" fill="#fff" font-size="29" font-family="sans-serif" font-weight="600">Make room</text>
-                  <text x="105" y="178" fill="#fff" font-size="29" font-family="sans-serif" font-weight="600">for ideas.</text>
-                  <text x="105" y="202" fill="#e9e2f1" font-size="10" font-family="sans-serif">A place to find your flow.</text>
-
-                  <g filter="url(#desk-shadow)">
-                    <rect x="260" y="219" width="279" height="165" rx="10" fill="#1d1a26" opacity=".23"/>
-                    <rect x="250" y="208" width="279" height="165" rx="10" fill="url(#desk-panel)"/>
-                    <path d="M260 208h259a10 10 0 0 1 10 10v24H250v-24a10 10 0 0 1 10-10Z" fill="#f8f6fb"/>
-                    <circle cx="266" cy="221" r="3" fill="#e95420"/>
-                    <circle cx="277" cy="221" r="3" fill="#b6a7ed"/>
-                    <circle cx="288" cy="221" r="3" fill="#d3cddc"/>
-                    <text x="304" y="225" fill="#302b3b" font-size="9" font-family="sans-serif" font-weight="600">Workspace</text>
-                    <rect x="267" y="253" width="103" height="94" rx="5" fill="url(#desk-glow)"/>
-                    <circle cx="331" cy="279" r="20" fill="#ffffff" opacity=".2"/>
-                    <path d="M276 328l28-25 17 13 24-29 18 21v39h-87Z" fill="#4c3b66" opacity=".48"/>
-                    <rect x="384" y="255" width="124" height="7" rx="3.5" fill="#c8c0d3"/>
-                    <rect x="384" y="273" width="106" height="7" rx="3.5" fill="#d7d1df"/>
-                    <rect x="384" y="291" width="87" height="7" rx="3.5" fill="#d7d1df"/>
-                    <rect x="384" y="317" width="73" height="23" rx="5" fill="#393347"/>
-                    <text x="420" y="332" text-anchor="middle" fill="#fff" font-size="8" font-family="sans-serif">Open workspace</text>
-                  </g>
-
-                  <g filter="url(#desk-shadow)">
-                    <rect x="94" y="252" width="142" height="104" rx="9" fill="#f9f7fb" opacity=".96"/>
-                    <text x="108" y="273" fill="#5d536e" font-size="9" font-family="sans-serif">SYSTEM</text>
-                    <text x="108" y="294" fill="#2b2733" font-size="12" font-family="sans-serif" font-weight="600">Your workspace</text>
-                    <rect x="108" y="307" width="111" height="5" rx="2.5" fill="#d9d3e2"/>
-                    <rect x="108" y="319" width="78" height="5" rx="2.5" fill="#d9d3e2"/>
-                    <rect x="108" y="335" width="45" height="7" rx="3.5" fill="#e95420"/>
-                  </g>
-                </g>
-                <rect x="18.5" y="18.5" width="563" height="413" rx="15" fill="none" stroke="#fff" stroke-opacity=".2"/>
-              </svg>
-              <figcaption><small>Interface concept for visual direction — not a screenshot of a released build.</small></figcaption>
-            </figure>
+          <div class="grid-row grid-row--50-50">
+            <div class="grid-col">
+              <p class="p-text--small-caps">DECEMBER REACH / REACHOS</p>
+              <h1 id="hero-title" class="p-heading--display">auroraADE</h1>
+              <p class="p-heading--2">The desktop environment direction for reachOS.</p>
+            </div>
+            <div class="grid-col">
+              <p>auroraADE stands for Aesthetic Desktop Environment. It names the desktop-facing environment within reachOS, with an x86_64 target.</p>
+              <p><a class="p-button--positive" href="https://github.com/critical-dummy/reachOS">Read the reachOS source</a></p>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -160,64 +56,57 @@
         <div class="u-fixed-width">
           <div class="grid-row grid-row--50-50">
             <div class="grid-col">
-              <h2 id="overview-title" class="p-heading--2">The desktop is one layer of the system.</h2>
+              <h2 id="overview-title" class="p-heading--2">One project, distinct parts.</h2>
             </div>
             <div class="grid-col">
-              <p class="p-heading--4">reachOS is the operating-system project. auroraADE is its desktop environment direction.</p>
-              <p>That separation keeps the roles clear: reachOS names the wider project, while auroraADE names the desktop environment within it.</p>
-              <p><a href="https://github.com/critical-dummy/reachOS">Explore the reachOS repository</a></p>
+              <p>The wider operating-system project, its virtual hardware platform, and its desktop environment have different jobs. Keeping the names distinct makes that structure easier to understand.</p>
             </div>
           </div>
         </div>
       </section>
 
-      <section id="direction" class="p-strip--highlighted is-deep" aria-labelledby="direction-title">
+      <section id="structure" class="p-strip--highlighted is-deep" aria-labelledby="structure-title">
         <div class="u-fixed-width">
-          <div class="grid-row">
+          <h2 id="structure-title">Project structure</h2>
+          <div class="grid-row grid-row--25-75">
             <div class="grid-col">
-              <h2 id="direction-title">The direction behind auroraADE</h2>
-              <p>Project scope, architecture direction and visual concept — clearly separated.</p>
+              <h3>reachOS</h3>
+            </div>
+            <div class="grid-col">
+              <p>The wider operating-system project.</p>
             </div>
           </div>
-          <div class="grid-row grid-row--25-25-25-25">
+          <hr>
+          <div class="grid-row grid-row--25-75">
             <div class="grid-col">
-              <div class="p-card">
-                <h3>A desktop environment</h3>
-                <p class="p-card__content">ADE stands for Aesthetic Desktop Environment. auroraADE is the desktop-facing environment within reachOS.</p>
-              </div>
+              <h3>Fabric Dessert</h3>
             </div>
             <div class="grid-col">
-              <div class="p-card">
-                <h3>x86_64 direction</h3>
-                <p class="p-card__content">auroraADE is planned around the x86_64 architecture.</p>
-              </div>
+              <p>The virtual hardware platform and board architecture built for reachOS.</p>
+            </div>
+          </div>
+          <hr>
+          <div class="grid-row grid-row--25-75">
+            <div class="grid-col">
+              <h3>auroraADE</h3>
             </div>
             <div class="grid-col">
-              <div class="p-card">
-                <h3>Interface concept</h3>
-                <p class="p-card__content">The illustration explores a workspace, a side dock and overlapping application windows. It is conceptual artwork, not a product screenshot.</p>
-              </div>
-            </div>
-            <div class="grid-col">
-              <div class="p-card">
-                <h3>Inspect the source</h3>
-                <p class="p-card__content">The reachOS repository is the place to inspect the project's code and changes.</p>
-              </div>
+              <p>The desktop environment direction. Its target architecture is x86_64.</p>
             </div>
           </div>
         </div>
       </section>
 
-      <section id="reachos" class="p-strip is-dark is-deep" aria-labelledby="reachos-title">
+      <section id="source" class="p-section" aria-labelledby="source-title">
         <div class="u-fixed-width">
           <div class="grid-row grid-row--50-50">
             <div class="grid-col">
-              <h2 id="reachos-title">Follow the project at its source.</h2>
-              <p>Explore reachOS to see the wider operating-system project that auroraADE belongs to.</p>
+              <h2 id="source-title" class="p-heading--2">Follow the work in the repository.</h2>
             </div>
             <div class="grid-col">
-              <p><a class="p-button--positive" href="https://github.com/critical-dummy/reachOS">Open the reachOS repository</a></p>
-              <p><a href="https://github.com/DecemberReach/decemberreach.github.io">View this website's source code</a></p>
+              <p>The reachOS repository is the source for the wider project and its implementation.</p>
+              <p><a href="https://github.com/critical-dummy/reachOS">critical-dummy/reachOS on GitHub</a></p>
+              <p><a href="https://github.com/DecemberReach/decemberreach.github.io">This website's source code</a></p>
             </div>
           </div>
         </div>
@@ -229,11 +118,10 @@
         <div class="grid-row grid-row--50-50">
           <div class="grid-col">
             <p><strong>December Reach</strong></p>
-            <p><small>auroraADE · part of reachOS</small></p>
+            <p><small>auroraADE / part of reachOS</small></p>
           </div>
           <div class="grid-col">
             <p><small>Built with <a href="https://vanillaframework.io/docs">Canonical Vanilla Framework</a>.</small></p>
-            <p><small><a href="https://github.com/DecemberReach/decemberreach.github.io">Website source</a></small></p>
           </div>
         </div>
       </div>
