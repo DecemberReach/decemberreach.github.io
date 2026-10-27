@@ -34,8 +34,11 @@
               <span class="p-navigation__logo-title">December Reach</span>
             </a>
           </div>
-          <a href="#navigation" class="p-navigation__toggle--open" title="Open menu">Menu</a>
-          <a href="#navigation-closed" class="p-navigation__toggle--close" title="Close menu">Close menu</a>
+          <ul class="p-navigation__items">
+            <li class="p-navigation__item">
+              <button class="js-menu-button p-navigation__link" type="button" aria-controls="primary-navigation" aria-pressed="false">Menu</button>
+            </li>
+          </ul>
         </div>
         <nav class="p-navigation__nav" aria-label="Primary navigation">
           <ul class="p-navigation__items">
@@ -55,7 +58,7 @@
             <p><small>REACHOS / DESKTOP ENVIRONMENT</small></p>
             <h1 id="hero-title">auroraADE</h1>
             <p class="p-heading--2">A desktop environment for reachOS.</p>
-            <p>Meet the desktop environment direction within reachOS — with its own visual identity and a focus on the desktop experience.</p>
+            <p>auroraADE is the desktop layer of reachOS: a distinct visual environment designed around the experience of using a desktop.</p>
             <p>ADE stands for <em>Aesthetic Desktop Environment</em>.</p>
             <p>
               <a class="p-button" href="#about">Discover auroraADE</a>
@@ -161,8 +164,8 @@
             <h2 id="about-title">The desktop is one layer of the system.</h2>
           </div>
           <div class="grid-col">
-            <p class="p-heading--4">reachOS is the operating-system project. auroraADE is its desktop environment direction.</p>
-            <p>That distinction matters: this page is about the desktop experience within reachOS, not a separate operating system with a different name.</p>
+            <p class="p-heading--4">The desktop is where the wider system becomes a daily environment.</p>
+            <p>auroraADE focuses on that layer — the workspace, windows and visual language that shape the desktop experience. It belongs to reachOS rather than replacing the name of the operating-system project.</p>
             <p><a href="https://github.com/critical-dummy/reachOS">Explore the reachOS project <span aria-hidden="true">↗</span></a></p>
           </div>
         </div>
@@ -172,7 +175,7 @@
         <div class="grid-row">
           <div class="grid-col">
             <h2 id="direction-title">The direction behind auroraADE</h2>
-            <p>Three ideas define the role and identity of the desktop environment.</p>
+            <p>These principles describe the project's direction, not a claim that every part is already implemented.</p>
           </div>
         </div>
         <div class="grid-row grid-row--25-25-25-25">
@@ -207,7 +210,7 @@
         <div class="grid-row grid-row--50-50">
           <div class="grid-col">
             <h2 id="reachos-title">One project. Distinct roles.</h2>
-            <p>Keep the project structure easy to understand: reachOS is the operating-system project; auroraADE is the desktop environment direction within it.</p>
+            <p>reachOS is the operating-system project. auroraADE is the desktop environment direction within it — a distinct experience with a clear place in the wider system.</p>
           </div>
           <div class="grid-col">
             <div class="p-card">
@@ -227,7 +230,7 @@
         <div class="grid-row grid-row--50-50">
           <div class="grid-col">
             <h2 id="source-title">Follow the project.</h2>
-            <p>Explore reachOS and follow its development in the repository.</p>
+            <p>Follow the implementation where it lives: in the reachOS repository.</p>
           </div>
           <div class="grid-col">
             <p><a class="p-button" href="https://github.com/critical-dummy/reachOS">Open the reachOS repository ↗</a></p>
@@ -249,5 +252,34 @@
         </div>
       </div>
     </footer>
+
+    <script>
+      (function () {
+        const navigation = document.querySelector("#navigation");
+        if (!navigation) return;
+
+        const menuButton = navigation.querySelector(".js-menu-button");
+        const menu = navigation.querySelector(".p-navigation__nav");
+        if (!menuButton || !menu) return;
+
+        function closeMenu() {
+          navigation.classList.remove("has-menu-open");
+          menuButton.setAttribute("aria-pressed", "false");
+        }
+
+        menuButton.addEventListener("click", function () {
+          const isOpen = navigation.classList.toggle("has-menu-open");
+          menuButton.setAttribute("aria-pressed", String(isOpen));
+        });
+
+        menu.querySelectorAll("a").forEach(function (link) {
+          link.addEventListener("click", closeMenu);
+        });
+
+        document.addEventListener("keydown", function (event) {
+          if (event.key === "Escape") closeMenu();
+        });
+      })();
+    </script>
   </body>
 </html>
