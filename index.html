@@ -29,11 +29,11 @@
           </div>
           <ul class="p-navigation__items">
             <li class="p-navigation__item">
-              <button class="js-menu-button p-navigation__link" type="button" aria-controls="primary-navigation" aria-expanded="false">Menu</button>
+              <button class="js-menu-button p-navigation__link" type="button" aria-controls="primary-navigation">Menu</button>
             </li>
           </ul>
         </div>
-        <nav id="primary-navigation" class="p-navigation__nav" aria-label="Primary">
+        <nav id="primary-navigation" class="p-navigation__nav" aria-label="Primary site links">
           <ul class="p-navigation__items">
             <li class="p-navigation__item"><a class="p-navigation__link" href="#overview">Project</a></li>
             <li class="p-navigation__item"><a class="p-navigation__link" href="./architecture.html">Architecture</a></li>
@@ -114,8 +114,7 @@
 
         function closeMenu() {
           navigation.classList.remove("has-menu-open");
-          menuButton.setAttribute("aria-expanded", "false");
-          menuButton.textContent = "Menu";
+          menuButton.removeAttribute("aria-pressed");
 
           if (desktopNavigation.matches) {
             menu.removeAttribute("aria-hidden");
@@ -127,8 +126,7 @@
         function openMenu() {
           if (desktopNavigation.matches) return;
           navigation.classList.add("has-menu-open");
-          menuButton.setAttribute("aria-expanded", "true");
-          menuButton.textContent = "Close menu";
+          menuButton.setAttribute("aria-pressed", "true");
           menu.setAttribute("aria-hidden", "false");
         }
 
@@ -146,9 +144,6 @@
           }
         });
 
-        menu.querySelectorAll("a").forEach(function (link) {
-          link.addEventListener("click", closeMenu);
-        });
 
         document.addEventListener("keydown", function (event) {
           if (event.key === "Escape" && navigation.classList.contains("has-menu-open")) {
