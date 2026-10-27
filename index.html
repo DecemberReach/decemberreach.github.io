@@ -60,7 +60,7 @@
           <p class="p-heading--2">A desktop environment for reachOS.</p>
           <p>auroraADE is the Aesthetic Desktop Environment direction within reachOS, with its own identity and a focus on the desktop experience.</p>
           <p>
-            <a class="p-button--brand" href="#overview">Discover auroraADE</a>
+            <a class="p-button--positive" href="#overview">Discover auroraADE</a>
             <a class="p-button--base" href="https://github.com/critical-dummy/reachOS">Explore reachOS</a>
           </p>
         </div>
@@ -216,7 +216,7 @@
               <p>Explore reachOS to see the wider operating-system project that auroraADE belongs to.</p>
             </div>
             <div class="grid-col">
-              <p><a class="p-button--brand" href="https://github.com/critical-dummy/reachOS">Open the reachOS repository</a></p>
+              <p><a class="p-button--positive" href="https://github.com/critical-dummy/reachOS">Open the reachOS repository</a></p>
               <p><a href="https://github.com/DecemberReach/decemberreach.github.io">View this website's source code</a></p>
             </div>
           </div>
@@ -265,7 +265,10 @@
         });
 
         document.addEventListener("keydown", function (event) {
-          if (event.key === "Escape") closeMenu();
+          if (event.key === "Escape" && navigation.classList.contains("has-menu-open")) {
+            closeMenu();
+            menuButton.focus();
+          }
         });
 
         window.addEventListener("resize", function () {
