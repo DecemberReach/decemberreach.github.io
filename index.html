@@ -4,38 +4,26 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#211f28">
-    <meta name="description" content="auroraADE is the desktop environment direction within reachOS, a project by December Reach.">
+    <meta name="description" content="Discover auroraADE, the desktop environment direction within the reachOS project by December Reach.">
     <title>auroraADE — A desktop environment for reachOS</title>
-    <link rel="stylesheet" href="https://assets.ubuntu.com/v1/vanilla_framework_version_4.59.0.min.css">
+    <link rel="stylesheet" href="https://assets.ubuntu.com/v1/vanilla_framework_version_4.61.0.min.css">
     <style>
-      /* Project identity only. Layout, type, components and responsive behavior come from Vanilla. */
-      .reach-mark {
-        display: inline-grid;
-        width: 2rem;
-        height: 2rem;
-        place-items: center;
-        border-radius: .25rem;
-        background: #e95420;
-        color: #fff;
-        font-weight: 700;
-      }
-      .aurora-preview {
-        width: 100%;
-        max-width: 36rem;
+      /* Site-specific styling is limited to the original concept illustration. */
+      .aurora-art {
+        max-width: 40rem;
         margin-inline: auto;
       }
-      .aurora-preview svg {
+      .aurora-art svg {
         display: block;
         width: 100%;
         height: auto;
       }
-      .preview-caption {
+      .aurora-art figcaption {
         margin-top: .75rem;
-        text-align: center;
       }
     </style>
   </head>
-  <body>
+  <body class="is-paper">
     <a class="p-link--skip" href="#main-content">Skip to main content</a>
 
     <header id="navigation" class="p-navigation is-dark">
@@ -43,7 +31,6 @@
         <div class="p-navigation__banner">
           <div class="p-navigation__tagged-logo">
             <a class="p-navigation__link" href="#top" aria-label="December Reach home">
-              <span class="p-navigation__logo-tag"><span class="reach-mark" aria-hidden="true">d</span></span>
               <span class="p-navigation__logo-title">December Reach</span>
             </a>
           </div>
@@ -52,9 +39,10 @@
         </div>
         <nav class="p-navigation__nav" aria-label="Primary navigation">
           <ul class="p-navigation__items">
-            <li class="p-navigation__item"><a class="p-navigation__link" href="#overview">Overview</a></li>
-            <li class="p-navigation__item"><a class="p-navigation__link" href="#direction">Project direction</a></li>
-            <li class="p-navigation__item"><a class="p-navigation__link" href="https://github.com/critical-dummy/reachOS">reachOS on GitHub ↗</a></li>
+            <li class="p-navigation__item"><a class="p-navigation__link" href="#about">About auroraADE</a></li>
+            <li class="p-navigation__item"><a class="p-navigation__link" href="#direction">Design direction</a></li>
+            <li class="p-navigation__item"><a class="p-navigation__link" href="#reachos">reachOS</a></li>
+            <li class="p-navigation__item"><a class="p-navigation__link" href="https://github.com/critical-dummy/reachOS">Source code ↗</a></li>
           </ul>
         </nav>
       </div>
@@ -62,130 +50,175 @@
 
     <main id="main-content">
       <section id="top" class="p-strip is-dark is-deep" aria-labelledby="hero-title">
-        <div class="grid-row grid-row--50-50">
+        <div class="grid-row grid-row--50-50 u-vertically-center">
           <div class="grid-col">
-            <p class="p-text--small-caps">A desktop environment for reachOS</p>
-            <h1 id="hero-title">Meet auroraADE.</h1>
-            <p class="p-heading--2">A desktop environment with its own direction.</p>
-            <p>auroraADE is the desktop environment direction within reachOS, the operating-system project by December Reach.</p>
+            <p><small>REACHOS / DESKTOP ENVIRONMENT</small></p>
+            <h1 id="hero-title">auroraADE</h1>
+            <p class="p-heading--2">A desktop environment for reachOS.</p>
+            <p>Meet the desktop environment direction within reachOS — with its own visual identity and a focus on the desktop experience.</p>
             <p>ADE stands for <em>Aesthetic Desktop Environment</em>.</p>
             <p>
-              <a class="p-button" href="#overview">Explore auroraADE</a>
+              <a class="p-button" href="#about">Discover auroraADE</a>
               <a class="p-button--base" href="https://github.com/critical-dummy/reachOS">Explore reachOS ↗</a>
             </p>
           </div>
           <div class="grid-col">
-            <figure class="aurora-preview">
-              <svg viewBox="0 0 560 390" role="img" aria-labelledby="preview-title preview-description" xmlns="http://www.w3.org/2000/svg">
-                <title id="preview-title">auroraADE desktop concept</title>
-                <desc id="preview-description">An illustrative desktop frame with a side dock, gradient workspace and a floating application window.</desc>
+            <figure class="aurora-art">
+              <svg viewBox="0 0 600 450" role="img" aria-labelledby="art-title art-description" xmlns="http://www.w3.org/2000/svg">
+                <title id="art-title">auroraADE desktop concept</title>
+                <desc id="art-description">A conceptual desktop interface with a side dock, layered windows, and an abstract violet and orange workspace.</desc>
                 <defs>
-                  <linearGradient id="workspace" x1="0" y1="0" x2="1" y2="1">
+                  <linearGradient id="desk-wallpaper" x1="0" y1="0" x2="1" y2="1">
                     <stop offset="0" stop-color="#5e559d"/>
-                    <stop offset=".55" stop-color="#302d48"/>
-                    <stop offset="1" stop-color="#e95420"/>
+                    <stop offset=".48" stop-color="#37304f"/>
+                    <stop offset="1" stop-color="#d96745"/>
                   </linearGradient>
-                  <linearGradient id="window-accent" x1="0" y1="0" x2="1" y2="1">
-                    <stop offset="0" stop-color="#f0a078"/>
-                    <stop offset="1" stop-color="#8778d6"/>
+                  <linearGradient id="desk-glow" x1="0" y1="1" x2="1" y2="0">
+                    <stop offset="0" stop-color="#f5a16f"/>
+                    <stop offset="1" stop-color="#a99af3"/>
                   </linearGradient>
+                  <linearGradient id="desk-panel" x1="0" y1="0" x2="1" y2="1">
+                    <stop offset="0" stop-color="#fbf9ff"/>
+                    <stop offset="1" stop-color="#e7e0ef"/>
+                  </linearGradient>
+                  <clipPath id="desk-clip">
+                    <rect x="18" y="18" width="564" height="414" rx="15"/>
+                  </clipPath>
+                  <filter id="desk-shadow" x="-30%" y="-30%" width="160%" height="180%">
+                    <feDropShadow dx="0" dy="12" stdDeviation="12" flood-color="#14121d" flood-opacity=".36"/>
+                  </filter>
                 </defs>
-                <rect x="8" y="8" width="544" height="374" rx="18" fill="#17161c" stroke="#ffffff" stroke-opacity=".35"/>
-                <path d="M26 8h508a18 18 0 0 1 18 18v32H8V26A18 18 0 0 1 26 8Z" fill="#292730"/>
-                <circle cx="29" cy="31" r="5" fill="#e95420"/>
-                <circle cx="47" cy="31" r="5" fill="#8a78e6"/>
-                <circle cx="65" cy="31" r="5" fill="#77727f"/>
-                <text x="280" y="35" text-anchor="middle" fill="#f2eff6" font-size="13" font-family="sans-serif" font-weight="600">auroraADE</text>
-                <text x="518" y="35" text-anchor="end" fill="#dedbe3" font-size="11" font-family="sans-serif">09:41</text>
-                <path d="M8 58h58v306H26a18 18 0 0 1-18-18Z" fill="#222129"/>
-                <rect x="23" y="78" width="28" height="28" rx="8" fill="#e95420"/>
-                <text x="37" y="97" text-anchor="middle" fill="#fff" font-size="17" font-family="sans-serif" font-weight="700">a</text>
-                <rect x="23" y="119" width="28" height="28" rx="8" fill="#37333f" stroke="#ffffff" stroke-opacity=".15"/>
-                <rect x="23" y="160" width="28" height="28" rx="8" fill="#37333f" stroke="#ffffff" stroke-opacity=".15"/>
-                <rect x="23" y="201" width="28" height="28" rx="8" fill="#37333f" stroke="#ffffff" stroke-opacity=".15"/>
-                <path d="M66 58h468a18 18 0 0 1 18 18v270a18 18 0 0 1-18 18H66Z" fill="url(#workspace)"/>
-                <circle cx="420" cy="130" r="115" fill="#d1a4b8" opacity=".22"/>
-                <circle cx="200" cy="340" r="140" fill="#ef8b60" opacity=".25"/>
-                <text x="96" y="116" fill="#ffffff" opacity=".8" font-size="10" font-family="sans-serif" letter-spacing="2">WORKSPACE 01</text>
-                <text x="96" y="160" fill="#ffffff" font-size="35" font-family="sans-serif" font-weight="600">make room</text>
-                <text x="96" y="199" fill="#ffffff" font-size="35" font-family="sans-serif" font-weight="600">for ideas.</text>
-                <rect x="247" y="222" width="266" height="125" rx="9" fill="#17131c" opacity=".2"/>
-                <rect x="240" y="213" width="266" height="125" rx="9" fill="#f8f6f5" stroke="#ffffff" stroke-opacity=".8"/>
-                <path d="M249 213h248a9 9 0 0 1 9 9v16H240v-16a9 9 0 0 1 9-9Z" fill="#e7e2e9"/>
-                <text x="255" y="230" fill="#292530" font-size="10" font-family="sans-serif" font-weight="600">Workspace</text>
-                <text x="489" y="230" text-anchor="end" fill="#5d5962" font-size="10" font-family="sans-serif">— □ ×</text>
-                <rect x="255" y="249" width="97" height="72" rx="5" fill="url(#window-accent)"/>
-                <rect x="365" y="253" width="120" height="7" rx="3.5" fill="#d1cdd8"/>
-                <rect x="365" y="270" width="94" height="7" rx="3.5" fill="#d1cdd8"/>
-                <rect x="365" y="287" width="65" height="7" rx="3.5" fill="#d1cdd8"/>
+                <g clip-path="url(#desk-clip)">
+                  <rect x="18" y="18" width="564" height="414" rx="15" fill="#211f28"/>
+                  <rect x="18" y="18" width="564" height="42" fill="#302d39"/>
+                  <circle cx="39" cy="39" r="5" fill="#e95420"/>
+                  <circle cx="56" cy="39" r="5" fill="#b0a1ef"/>
+                  <circle cx="73" cy="39" r="5" fill="#797382"/>
+                  <text x="300" y="43" text-anchor="middle" fill="#f8f6fb" font-size="12" font-family="sans-serif" font-weight="600">auroraADE</text>
+                  <text x="558" y="43" text-anchor="end" fill="#e5e1ec" font-size="10" font-family="sans-serif">09:41</text>
+
+                  <rect x="18" y="60" width="58" height="372" fill="#27242f"/>
+                  <rect x="31" y="79" width="32" height="32" rx="9" fill="#e95420"/>
+                  <text x="47" y="101" text-anchor="middle" fill="#fff" font-size="19" font-family="sans-serif" font-weight="700">a</text>
+                  <rect x="31" y="124" width="32" height="32" rx="9" fill="#3b3745" stroke="#ffffff" stroke-opacity=".12"/>
+                  <rect x="40" y="133" width="14" height="14" rx="3" fill="none" stroke="#e4dfed" stroke-width="1.5"/>
+                  <rect x="31" y="169" width="32" height="32" rx="9" fill="#3b3745" stroke="#ffffff" stroke-opacity=".12"/>
+                  <circle cx="47" cy="185" r="7" fill="none" stroke="#e4dfed" stroke-width="1.5"/>
+                  <rect x="31" y="214" width="32" height="32" rx="9" fill="#3b3745" stroke="#ffffff" stroke-opacity=".12"/>
+                  <path d="M40 230h14m-7-7v14" stroke="#e4dfed" stroke-width="1.5" stroke-linecap="round"/>
+                  <circle cx="47" cy="405" r="12" fill="#3b3745"/>
+                  <path d="M42 405h10M47 400v10" stroke="#e4dfed" stroke-width="1.5" stroke-linecap="round"/>
+
+                  <rect x="76" y="60" width="506" height="372" fill="url(#desk-wallpaper)"/>
+                  <circle cx="443" cy="153" r="142" fill="#c4a6e9" opacity=".2"/>
+                  <circle cx="195" cy="377" r="178" fill="#f4a06f" opacity=".22"/>
+                  <path d="M76 346C192 280 252 410 369 317s157-54 213-99v214H76Z" fill="#25223a" opacity=".24"/>
+                  <path d="M76 378C183 317 246 417 357 354s171-16 225-65v143H76Z" fill="#efa074" opacity=".17"/>
+
+                  <text x="105" y="103" fill="#f8f5ff" opacity=".78" font-size="9" font-family="sans-serif" letter-spacing="2.2">WORKSPACE 01</text>
+                  <text x="105" y="145" fill="#fff" font-size="29" font-family="sans-serif" font-weight="600">Make room</text>
+                  <text x="105" y="178" fill="#fff" font-size="29" font-family="sans-serif" font-weight="600">for ideas.</text>
+                  <text x="105" y="202" fill="#e9e2f1" font-size="10" font-family="sans-serif">A place to find your flow.</text>
+
+                  <g filter="url(#desk-shadow)">
+                    <rect x="260" y="219" width="279" height="165" rx="10" fill="#1d1a26" opacity=".23"/>
+                    <rect x="250" y="208" width="279" height="165" rx="10" fill="url(#desk-panel)"/>
+                    <path d="M260 208h259a10 10 0 0 1 10 10v24H250v-24a10 10 0 0 1 10-10Z" fill="#f8f6fb"/>
+                    <circle cx="266" cy="221" r="3" fill="#e95420"/>
+                    <circle cx="277" cy="221" r="3" fill="#b6a7ed"/>
+                    <circle cx="288" cy="221" r="3" fill="#d3cddc"/>
+                    <text x="304" y="225" fill="#302b3b" font-size="9" font-family="sans-serif" font-weight="600">Workspace</text>
+                    <rect x="267" y="253" width="103" height="94" rx="5" fill="url(#desk-glow)"/>
+                    <circle cx="331" cy="279" r="20" fill="#ffffff" opacity=".2"/>
+                    <path d="M276 328l28-25 17 13 24-29 18 21v39h-87Z" fill="#4c3b66" opacity=".48"/>
+                    <rect x="384" y="255" width="124" height="7" rx="3.5" fill="#c8c0d3"/>
+                    <rect x="384" y="273" width="106" height="7" rx="3.5" fill="#d7d1df"/>
+                    <rect x="384" y="291" width="87" height="7" rx="3.5" fill="#d7d1df"/>
+                    <rect x="384" y="317" width="73" height="23" rx="5" fill="#393347"/>
+                    <text x="420" y="332" text-anchor="middle" fill="#fff" font-size="8" font-family="sans-serif">Open workspace</text>
+                  </g>
+
+                  <g filter="url(#desk-shadow)">
+                    <rect x="94" y="252" width="142" height="104" rx="9" fill="#f9f7fb" opacity=".96"/>
+                    <text x="108" y="273" fill="#5d536e" font-size="9" font-family="sans-serif">SYSTEM</text>
+                    <text x="108" y="294" fill="#2b2733" font-size="12" font-family="sans-serif" font-weight="600">Your workspace</text>
+                    <rect x="108" y="307" width="111" height="5" rx="2.5" fill="#d9d3e2"/>
+                    <rect x="108" y="319" width="78" height="5" rx="2.5" fill="#d9d3e2"/>
+                    <rect x="108" y="335" width="45" height="7" rx="3.5" fill="#e95420"/>
+                  </g>
+                </g>
+                <rect x="18.5" y="18.5" width="563" height="413" rx="15" fill="none" stroke="#fff" stroke-opacity=".2"/>
               </svg>
-              <figcaption class="preview-caption"><small>Concept illustration — not a screenshot of a released build</small></figcaption>
+              <figcaption><small>Interface concept for visual direction — not a screenshot of a released build.</small></figcaption>
             </figure>
           </div>
         </div>
       </section>
 
-      <section id="overview" class="p-section" aria-labelledby="overview-title">
+      <section id="about" class="p-section" aria-labelledby="about-title">
         <div class="grid-row grid-row--50-50">
           <div class="grid-col">
-            <h2 id="overview-title">A desktop environment within a bigger system.</h2>
+            <h2 id="about-title">The desktop is one layer of the system.</h2>
           </div>
           <div class="grid-col">
-            <p class="p-heading--4">reachOS is the operating-system project. auroraADE is its desktop environment direction, with a distinct role and visual identity.</p>
-            <p>This page introduces auroraADE specifically; it does not present auroraADE as a separate operating system or claim that the illustrated desktop is a released product.</p>
+            <p class="p-heading--4">reachOS is the operating-system project. auroraADE is its desktop environment direction.</p>
+            <p>That distinction matters: this page is about the desktop experience within reachOS, not a separate operating system with a different name.</p>
+            <p><a href="https://github.com/critical-dummy/reachOS">Explore the reachOS project <span aria-hidden="true">↗</span></a></p>
           </div>
         </div>
       </section>
 
-      <section class="p-strip is-paper is-deep" aria-labelledby="features-title">
+      <section id="direction" class="p-strip is-paper is-deep" aria-labelledby="direction-title">
         <div class="grid-row">
           <div class="grid-col">
-            <h2 id="features-title">The project direction</h2>
-            <p>Three parts of the auroraADE identity.</p>
+            <h2 id="direction-title">The direction behind auroraADE</h2>
+            <p>Three ideas define the role and identity of the desktop environment.</p>
           </div>
         </div>
         <div class="grid-row grid-row--25-25-25-25">
           <div class="grid-col">
-            <article class="p-card">
-              <h3>Desktop-focused</h3>
-              <p class="p-card__content">auroraADE is the desktop environment within the reachOS project, focused on the desktop experience.</p>
-            </article>
+            <div class="p-card">
+              <h3>Desktop, first</h3>
+              <p class="p-card__content">A focused environment for the desktop experience, rather than a label for the whole operating system.</p>
+            </div>
           </div>
           <div class="grid-col">
-            <article class="p-card">
+            <div class="p-card">
               <h3>x86_64 direction</h3>
-              <p class="p-card__content">The planned architecture direction for auroraADE is x86_64, distinct from the overall reachOS project.</p>
-            </article>
+              <p class="p-card__content">auroraADE's stated architecture direction is x86_64.</p>
+            </div>
           </div>
           <div class="grid-col">
-            <article class="p-card">
-              <h3>Aesthetic by design</h3>
-              <p class="p-card__content">The name expands to Aesthetic Desktop Environment: a desktop experience with its own identity.</p>
-            </article>
+            <div class="p-card">
+              <h3>A distinct identity</h3>
+              <p class="p-card__content">ADE means Aesthetic Desktop Environment — a name tied to the visual role of the project.</p>
+            </div>
           </div>
           <div class="grid-col">
-            <article class="p-card">
+            <div class="p-card">
               <h3>Part of reachOS</h3>
-              <p class="p-card__content">auroraADE belongs to the wider reachOS project; it is not a replacement name for the operating system.</p>
-            </article>
+              <p class="p-card__content">The desktop environment is presented in context, as one part of the wider reachOS project.</p>
+            </div>
           </div>
         </div>
       </section>
 
-      <section id="direction" class="p-section" aria-labelledby="direction-title">
+      <section id="reachos" class="p-section" aria-labelledby="reachos-title">
         <div class="grid-row grid-row--50-50">
           <div class="grid-col">
-            <h2 id="direction-title">One project. Distinct layers.</h2>
-            <p>auroraADE is the desktop-environment direction within reachOS, while reachOS remains the broader operating-system project.</p>
+            <h2 id="reachos-title">One project. Distinct roles.</h2>
+            <p>Keep the project structure easy to understand: reachOS is the operating-system project; auroraADE is the desktop environment direction within it.</p>
           </div>
           <div class="grid-col">
-            <article class="p-card">
+            <div class="p-card">
+              <p><small>OPERATING-SYSTEM PROJECT</small></p>
               <h3>reachOS</h3>
-              <p class="p-card__content">The operating-system project.</p>
-              <hr>
+              <p class="p-card__content">The wider project.</p>
+              <hr class="p-rule">
+              <p><small>DESKTOP ENVIRONMENT</small></p>
               <h3>auroraADE</h3>
               <p class="p-card__content">The desktop environment direction · x86_64.</p>
-            </article>
+            </div>
           </div>
         </div>
       </section>
@@ -193,24 +226,26 @@
       <section class="p-strip is-dark is-deep" aria-labelledby="source-title">
         <div class="grid-row grid-row--50-50">
           <div class="grid-col">
-            <h2 id="source-title">Built in the open.</h2>
-            <p>Follow the operating-system project or inspect the source of this website.</p>
+            <h2 id="source-title">Follow the project.</h2>
+            <p>Explore reachOS and follow its development in the repository.</p>
           </div>
           <div class="grid-col">
-            <p><a class="p-button" href="https://github.com/critical-dummy/reachOS">reachOS repository ↗</a></p>
-            <p><a href="https://github.com/DecemberReach/decemberreach.github.io">Website source on GitHub ↗</a></p>
+            <p><a class="p-button" href="https://github.com/critical-dummy/reachOS">Open the reachOS repository ↗</a></p>
+            <p><a href="https://github.com/DecemberReach/decemberreach.github.io">View this website's source code ↗</a></p>
           </div>
         </div>
       </section>
     </main>
 
-    <footer class="p-strip is-dark is-shallow">
+    <footer class="p-strip is-shallow">
       <div class="grid-row grid-row--50-50">
         <div class="grid-col">
-          <p><small>© 2026 December Reach · auroraADE / reachOS</small></p>
+          <p><strong>December Reach</strong></p>
+          <p><small>auroraADE · part of reachOS</small></p>
         </div>
         <div class="grid-col">
-          <p><small>Made with <a href="https://vanillaframework.io/docs">Canonical Vanilla Framework</a>.</small></p>
+          <p><small>Built with <a href="https://vanillaframework.io/docs">Canonical Vanilla Framework</a>.</small></p>
+          <p><small><a href="https://github.com/DecemberReach/decemberreach.github.io">Website source ↗</a></small></p>
         </div>
       </div>
     </footer>
