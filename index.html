@@ -16,7 +16,7 @@
   <body class="is-paper">
     <a class="p-link--skip" href="#main-content">Skip to main content</a>
 
-    <header id="navigation" class="p-navigation--sliding is-dark">
+    <header id="navigation" class="p-navigation is-dark">
       <div class="p-navigation__row--25-75">
         <div class="p-navigation__banner">
           <div class="p-navigation__tagged-logo">
@@ -29,13 +29,13 @@
           </div>
           <ul class="p-navigation__items">
             <li class="p-navigation__item">
-              <button class="js-menu-button p-navigation__link" type="button" aria-controls="primary-navigation" aria-pressed="false">Menu</button>
+              <button class="js-menu-button p-navigation__link" type="button" aria-controls="primary-navigation" aria-expanded="false">Menu</button>
             </li>
           </ul>
         </div>
-        <nav id="primary-navigation" class="p-navigation__nav" aria-label="Primary navigation">
+        <nav id="primary-navigation" class="p-navigation__nav" aria-label="Primary" aria-hidden="true">
           <ul class="p-navigation__items">
-            <li class="p-navigation__item"><a class="p-navigation__link" href="#overview">Overview</a></li>
+            <li class="p-navigation__item"><a class="p-navigation__link" href="#overview">Project</a></li>
             <li class="p-navigation__item"><a class="p-navigation__link" href="./architecture.html">Architecture</a></li>
             <li class="p-navigation__item"><a class="p-navigation__link" href="https://github.com/critical-dummy/reachOS">reachOS source</a></li>
           </ul>
@@ -44,61 +44,60 @@
     </header>
 
     <main id="main-content">
-      <section id="top" class="p-strip is-dark is-deep" aria-labelledby="page-title">
+      <section id="top" class="p-section--hero" aria-labelledby="page-title">
         <div class="u-fixed-width">
-          <h1 id="page-title" class="p-heading--display">auroraADE</h1>
+          <h1 id="page-title">auroraADE</h1>
           <p class="p-heading--2">Aesthetic Desktop Environment</p>
-          <p>auroraADE is the desktop environment direction within reachOS. Its target architecture is x86_64. It describes the desktop layer of the project, rather than the virtual hardware platform beneath it.</p>
+          <p>auroraADE is the desktop environment direction within reachOS. Its target architecture is x86_64.</p>
+          <p>reachOS is the wider operating-system project. Fabric Dessert is the virtual hardware platform and board architecture described in the reachOS source.</p>
         </div>
       </section>
 
       <section id="overview" class="p-section" aria-labelledby="overview-title">
         <div class="u-fixed-width">
-          <h2 id="overview-title">Project structure</h2>
-          <p>These names describe separate responsibilities within the wider project.</p>
+          <hr class="p-rule">
+          <h2 id="overview-title">Project responsibilities</h2>
           <table class="p-table">
             <thead>
               <tr>
-                <th scope="col">Name</th>
-                <th scope="col">Role</th>
-                <th scope="col">Scope</th>
+                <th scope="col">Project</th>
+                <th scope="col">Responsibility</th>
               </tr>
             </thead>
             <tbody>
               <tr>
                 <th scope="row"><a href="https://github.com/critical-dummy/reachOS">reachOS</a></th>
-                <td>Operating-system project</td>
-                <td>The wider project these components belong to.</td>
+                <td>The wider operating-system project.</td>
               </tr>
               <tr>
                 <th scope="row"><a href="https://github.com/critical-dummy/reachOS/tree/main/src/fabric-dessert">Fabric Dessert</a></th>
-                <td>Virtual hardware platform</td>
-                <td>Board and platform infrastructure documented in the reachOS source.</td>
+                <td>The virtual hardware platform and board architecture in the reachOS repository.</td>
               </tr>
               <tr>
                 <th scope="row">auroraADE</th>
-                <td>Desktop environment direction</td>
-                <td>The desktop-facing environment, targeting x86_64.</td>
+                <td>The desktop environment direction, targeting x86_64.</td>
               </tr>
             </tbody>
           </table>
         </div>
       </section>
 
-      <section id="documentation" class="p-strip is-deep" aria-labelledby="documentation-title">
+      <section id="references" class="p-section" aria-labelledby="references-title">
         <div class="u-fixed-width">
-          <h2 id="documentation-title">Documentation and source</h2>
+          <hr class="p-rule">
+          <h2 id="references-title">Project references</h2>
           <ul>
-            <li><a href="./architecture.html">Architecture and platform notes</a> — boot topology, CPU boundary, memory model, device bus and display pipeline.</li>
-            <li><a href="https://github.com/critical-dummy/reachOS">reachOS repository</a> — source code for the wider operating-system project.</li>
-            <li><a href="https://github.com/DecemberReach/decemberreach.github.io">Website repository</a> — source code for this site.</li>
+            <li><a href="./architecture.html">Architecture and platform notes</a> — boot topology, CPU boundary, memory, devices and display pipeline.</li>
+            <li><a href="https://github.com/critical-dummy/reachOS">reachOS repository</a> — implementation and project source.</li>
+            <li><a href="https://github.com/DecemberReach/decemberreach.github.io">Website source</a> — HTML and site assets.</li>
           </ul>
         </div>
       </section>
     </main>
 
-    <footer class="p-strip is-shallow">
+    <footer class="p-section--shallow">
       <div class="u-fixed-width">
+        <hr class="p-rule">
         <p><strong>December Reach</strong> · auroraADE</p>
         <p><small>Built with <a href="https://vanillaframework.io/docs">Canonical Vanilla Framework</a>.</small></p>
       </div>
@@ -113,16 +112,42 @@
         const menu = navigation.querySelector("#primary-navigation");
         if (!menuButton || !menu) return;
 
+        const desktopNavigation = window.matchMedia("(min-width: 1036px)");
+
         function closeMenu() {
           navigation.classList.remove("has-menu-open");
-          menuButton.setAttribute("aria-pressed", "false");
+          menuButton.setAttribute("aria-expanded", "false");
           menuButton.textContent = "Menu";
+
+          if (desktopNavigation.matches) {
+            menu.removeAttribute("aria-hidden");
+          } else {
+            menu.setAttribute("aria-hidden", "true");
+          }
+        }
+
+        function openMenu() {
+          if (desktopNavigation.matches) return;
+          navigation.classList.add("has-menu-open");
+          menuButton.setAttribute("aria-expanded", "true");
+          menuButton.textContent = "Close menu";
+          menu.setAttribute("aria-hidden", "false");
+        }
+
+        function syncNavigationState() {
+          if (desktopNavigation.matches) {
+            closeMenu();
+          } else if (!navigation.classList.contains("has-menu-open")) {
+            closeMenu();
+          }
         }
 
         menuButton.addEventListener("click", function () {
-          const isOpen = navigation.classList.toggle("has-menu-open");
-          menuButton.setAttribute("aria-pressed", String(isOpen));
-          menuButton.textContent = isOpen ? "Close menu" : "Menu";
+          if (navigation.classList.contains("has-menu-open")) {
+            closeMenu();
+          } else {
+            openMenu();
+          }
         });
 
         menu.querySelectorAll("a").forEach(function (link) {
@@ -136,9 +161,8 @@
           }
         });
 
-        window.addEventListener("resize", function () {
-          if (window.matchMedia("(min-width: 1036px)").matches) closeMenu();
-        });
+        desktopNavigation.addEventListener("change", syncNavigationState);
+        syncNavigationState();
       })();
     </script>
   </body>
