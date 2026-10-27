@@ -4,14 +4,15 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#211f28">
-    <meta name="description" content="Discover auroraADE, the desktop environment direction within the reachOS project by December Reach.">
+    <meta name="description" content="auroraADE is the Aesthetic Desktop Environment direction within the reachOS project by December Reach.">
     <title>auroraADE — A desktop environment for reachOS</title>
     <link rel="stylesheet" href="https://assets.ubuntu.com/v1/vanilla_framework_version_4.61.0.min.css">
     <style>
-      /* Site-specific styling is limited to the original concept illustration. */
+      /* Only the original interface illustration needs project-specific styling. */
       .aurora-art {
-        max-width: 40rem;
-        margin-inline: auto;
+        width: 100%;
+        max-width: 52rem;
+        margin: 0 auto;
       }
       .aurora-art svg {
         display: block;
@@ -26,7 +27,7 @@
   <body class="is-paper">
     <a class="p-link--skip" href="#main-content">Skip to main content</a>
 
-    <header id="navigation" class="p-navigation is-dark">
+    <header id="navigation" class="p-navigation--sliding is-dark">
       <div class="p-navigation__row--25-75">
         <div class="p-navigation__banner">
           <div class="p-navigation__tagged-logo">
@@ -40,10 +41,10 @@
             </li>
           </ul>
         </div>
-        <nav class="p-navigation__nav" aria-label="Primary navigation">
+        <nav id="primary-navigation" class="p-navigation__nav" aria-label="Primary navigation">
           <ul class="p-navigation__items">
-            <li class="p-navigation__item"><a class="p-navigation__link" href="#about">About auroraADE</a></li>
-            <li class="p-navigation__item"><a class="p-navigation__link" href="#direction">Design direction</a></li>
+            <li class="p-navigation__item"><a class="p-navigation__link" href="#overview">Overview</a></li>
+            <li class="p-navigation__item"><a class="p-navigation__link" href="#direction">Direction</a></li>
             <li class="p-navigation__item"><a class="p-navigation__link" href="#reachos">reachOS</a></li>
             <li class="p-navigation__item"><a class="p-navigation__link" href="https://github.com/critical-dummy/reachOS">Source code</a></li>
           </ul>
@@ -53,20 +54,18 @@
 
     <main id="main-content">
       <section id="top" class="p-strip is-dark is-deep" aria-labelledby="hero-title">
-        <div class="grid-row grid-row--50-50 u-vertically-center">
-          <div class="grid-col">
-            <p><small>REACHOS / DESKTOP ENVIRONMENT</small></p>
-            <h1 id="hero-title">auroraADE</h1>
-            <p class="p-heading--2">A desktop environment for reachOS.</p>
-            <p>auroraADE is the desktop layer of reachOS: a distinct visual environment designed around the experience of using a desktop.</p>
-            <p>ADE stands for <em>Aesthetic Desktop Environment</em>.</p>
-            <p>
-              <a class="p-button" href="#about">Discover auroraADE</a>
-              <a class="p-button--base" href="https://github.com/critical-dummy/reachOS">Explore reachOS</a>
-            </p>
-          </div>
-          <div class="grid-col">
-            <figure class="aurora-art">
+        <div class="u-fixed-width">
+          <p><small>REACHOS / DESKTOP ENVIRONMENT</small></p>
+          <h1 id="hero-title" class="p-heading--display">Meet auroraADE.</h1>
+          <p class="p-heading--2">A desktop environment for reachOS.</p>
+          <p>auroraADE is the Aesthetic Desktop Environment direction within reachOS, with its own identity and a focus on the desktop experience.</p>
+          <p>
+            <a class="p-button--brand" href="#overview">Discover auroraADE</a>
+            <a class="p-button--base" href="https://github.com/critical-dummy/reachOS">Explore reachOS</a>
+          </p>
+        </div>
+        <div class="u-fixed-width">
+          <figure class="aurora-art">
               <svg viewBox="0 0 600 450" role="img" aria-labelledby="art-title art-description" xmlns="http://www.w3.org/2000/svg">
                 <title id="art-title">auroraADE desktop concept</title>
                 <desc id="art-description">A conceptual desktop interface with a side dock, layered windows, and an abstract violet and orange workspace.</desc>
@@ -154,101 +153,88 @@
               </svg>
               <figcaption><small>Interface concept for visual direction — not a screenshot of a released build.</small></figcaption>
             </figure>
-          </div>
         </div>
       </section>
 
-      <section id="about" class="p-section" aria-labelledby="about-title">
-        <div class="grid-row grid-row--50-50">
-          <div class="grid-col">
-            <h2 id="about-title">The desktop is one layer of the system.</h2>
-          </div>
-          <div class="grid-col">
-            <p class="p-heading--4">The desktop is where the wider system becomes a daily environment.</p>
-            <p>auroraADE focuses on that layer — the workspace, windows and visual language that shape the desktop experience. It belongs to reachOS rather than replacing the name of the operating-system project.</p>
-            <p><a href="https://github.com/critical-dummy/reachOS">Explore the reachOS project <span aria-hidden="true"></span></a></p>
-          </div>
-        </div>
-      </section>
-
-      <section id="direction" class="p-strip is-paper is-deep" aria-labelledby="direction-title">
-        <div class="grid-row">
-          <div class="grid-col">
-            <h2 id="direction-title">The direction behind auroraADE</h2>
-            <p>These principles describe the project's direction, not a claim that every part is already implemented.</p>
-          </div>
-        </div>
-        <div class="grid-row grid-row--25-25-25-25">
-          <div class="grid-col">
-            <div class="p-card">
-              <h3>Desktop, first</h3>
-              <p class="p-card__content">A focused environment for the desktop experience, rather than a label for the whole operating system.</p>
+      <section id="overview" class="p-section" aria-labelledby="overview-title">
+        <div class="u-fixed-width">
+          <div class="grid-row grid-row--50-50">
+            <div class="grid-col">
+              <h2 id="overview-title" class="p-heading--2">The desktop is one layer of the system.</h2>
             </div>
-          </div>
-          <div class="grid-col">
-            <div class="p-card">
-              <h3>x86_64 direction</h3>
-              <p class="p-card__content">auroraADE's stated architecture direction is x86_64.</p>
-            </div>
-          </div>
-          <div class="grid-col">
-            <div class="p-card">
-              <h3>A distinct identity</h3>
-              <p class="p-card__content">ADE means Aesthetic Desktop Environment — a name tied to the visual role of the project.</p>
-            </div>
-          </div>
-          <div class="grid-col">
-            <div class="p-card">
-              <h3>Part of reachOS</h3>
-              <p class="p-card__content">The desktop environment is presented in context, as one part of the wider reachOS project.</p>
+            <div class="grid-col">
+              <p class="p-heading--4">reachOS is the operating-system project. auroraADE is its desktop environment direction.</p>
+              <p>That separation keeps the roles clear: reachOS names the wider project, while auroraADE names the desktop environment within it.</p>
+              <p><a href="https://github.com/critical-dummy/reachOS">Explore the reachOS repository</a></p>
             </div>
           </div>
         </div>
       </section>
 
-      <section id="reachos" class="p-section" aria-labelledby="reachos-title">
-        <div class="grid-row grid-row--50-50">
-          <div class="grid-col">
-            <h2 id="reachos-title">One project. Distinct roles.</h2>
-            <p>reachOS is the operating-system project. auroraADE is the desktop environment direction within it — a distinct experience with a clear place in the wider system.</p>
+      <section id="direction" class="p-strip--highlighted is-deep" aria-labelledby="direction-title">
+        <div class="u-fixed-width">
+          <div class="grid-row">
+            <div class="grid-col">
+              <h2 id="direction-title">The direction behind auroraADE</h2>
+              <p>Project scope, architecture direction and visual concept — clearly separated.</p>
+            </div>
           </div>
-          <div class="grid-col">
-            <div class="p-card">
-              <p><small>OPERATING-SYSTEM PROJECT</small></p>
-              <h3>reachOS</h3>
-              <p class="p-card__content">The wider project.</p>
-              <hr class="p-rule">
-              <p><small>DESKTOP ENVIRONMENT</small></p>
-              <h3>auroraADE</h3>
-              <p class="p-card__content">The desktop environment direction · x86_64.</p>
+          <div class="grid-row grid-row--25-25-25-25">
+            <div class="grid-col">
+              <div class="p-card">
+                <h3>A desktop environment</h3>
+                <p class="p-card__content">ADE stands for Aesthetic Desktop Environment. auroraADE is the desktop-facing environment within reachOS.</p>
+              </div>
+            </div>
+            <div class="grid-col">
+              <div class="p-card">
+                <h3>x86_64 direction</h3>
+                <p class="p-card__content">auroraADE is planned around the x86_64 architecture.</p>
+              </div>
+            </div>
+            <div class="grid-col">
+              <div class="p-card">
+                <h3>Interface concept</h3>
+                <p class="p-card__content">The illustration explores a workspace, a side dock and overlapping application windows. It is conceptual artwork, not a product screenshot.</p>
+              </div>
+            </div>
+            <div class="grid-col">
+              <div class="p-card">
+                <h3>Inspect the source</h3>
+                <p class="p-card__content">The reachOS repository is the place to inspect the project's code and changes.</p>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      <section class="p-strip is-dark is-deep" aria-labelledby="source-title">
-        <div class="grid-row grid-row--50-50">
-          <div class="grid-col">
-            <h2 id="source-title">Follow the project.</h2>
-            <p>Follow the implementation where it lives: in the reachOS repository.</p>
-          </div>
-          <div class="grid-col">
-            <p><a class="p-button" href="https://github.com/critical-dummy/reachOS">Open the reachOS repository</a></p>
-            <p><a href="https://github.com/DecemberReach/decemberreach.github.io">View this website's source code</a></p>
+      <section id="reachos" class="p-strip is-dark is-deep" aria-labelledby="reachos-title">
+        <div class="u-fixed-width">
+          <div class="grid-row grid-row--50-50">
+            <div class="grid-col">
+              <h2 id="reachos-title">Follow the project at its source.</h2>
+              <p>Explore reachOS to see the wider operating-system project that auroraADE belongs to.</p>
+            </div>
+            <div class="grid-col">
+              <p><a class="p-button--brand" href="https://github.com/critical-dummy/reachOS">Open the reachOS repository</a></p>
+              <p><a href="https://github.com/DecemberReach/decemberreach.github.io">View this website's source code</a></p>
+            </div>
           </div>
         </div>
       </section>
     </main>
 
     <footer class="p-strip is-shallow">
-      <div class="grid-row grid-row--50-50">
-        <div class="grid-col">
-          <p><strong>December Reach</strong></p>
-          <p><small>auroraADE · part of reachOS</small></p>
-        </div>
-        <div class="grid-col">
-          <p><small>Built with <a href="https://vanillaframework.io/docs">Canonical Vanilla Framework</a>.</small></p>
-          <p><small><a href="https://github.com/DecemberReach/decemberreach.github.io">Website source</a></small></p>
+      <div class="u-fixed-width">
+        <div class="grid-row grid-row--50-50">
+          <div class="grid-col">
+            <p><strong>December Reach</strong></p>
+            <p><small>auroraADE · part of reachOS</small></p>
+          </div>
+          <div class="grid-col">
+            <p><small>Built with <a href="https://vanillaframework.io/docs">Canonical Vanilla Framework</a>.</small></p>
+            <p><small><a href="https://github.com/DecemberReach/decemberreach.github.io">Website source</a></small></p>
+          </div>
         </div>
       </div>
     </footer>
@@ -259,17 +245,19 @@
         if (!navigation) return;
 
         const menuButton = navigation.querySelector(".js-menu-button");
-        const menu = navigation.querySelector(".p-navigation__nav");
+        const menu = navigation.querySelector("#primary-navigation");
         if (!menuButton || !menu) return;
 
         function closeMenu() {
           navigation.classList.remove("has-menu-open");
           menuButton.setAttribute("aria-pressed", "false");
+          menuButton.textContent = "Menu";
         }
 
         menuButton.addEventListener("click", function () {
           const isOpen = navigation.classList.toggle("has-menu-open");
           menuButton.setAttribute("aria-pressed", String(isOpen));
+          menuButton.textContent = isOpen ? "Close menu" : "Menu";
         });
 
         menu.querySelectorAll("a").forEach(function (link) {
@@ -278,6 +266,10 @@
 
         document.addEventListener("keydown", function (event) {
           if (event.key === "Escape") closeMenu();
+        });
+
+        window.addEventListener("resize", function () {
+          if (window.matchMedia("(min-width: 1036px)").matches) closeMenu();
         });
       })();
     </script>
