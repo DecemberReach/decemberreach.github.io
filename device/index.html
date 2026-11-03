@@ -1,243 +1,73 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="theme-color" content="#211f28">
-    <meta name="description" content="Device channels for auroraADE.">
-    <title>Devices — auroraADE</title>
-    <link rel="stylesheet" href="https://assets.ubuntu.com/v1/vanilla_framework_version_4.61.0.min.css">
-  </head>
-  <body class="is-paper">
-    <a class="p-link--skip" href="#main-content">Skip to main content</a>
-
-    <header id="navigation" class="p-navigation--sliding is-dark">
-      <div class="p-navigation__row--25-75">
-        <div class="p-navigation__banner">
-          <div class="p-navigation__tagged-logo">
-            <a class="p-navigation__link" href="../index.html#top" aria-label="December Reach home">
-              <div class="p-navigation__logo-tag">
-                <img class="p-navigation__logo-icon" src="../logo.svg" alt="">
-              </div>
-              <span class="p-navigation__logo-title">December Reach</span>
-            </a>
-          </div>
-          <ul class="p-navigation__items">
-            <li class="p-navigation__item">
-              <button class="js-menu-button p-navigation__link" type="button" aria-controls="primary-navigation">Menu</button>
-            </li>
-          </ul>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#171717">
+  <meta name="description" content="Device support status for auroraADE.">
+  <title>Devices — auroraADE</title>
+  <link rel="stylesheet" href="https://assets.ubuntu.com/v1/vanilla_framework_version_4.61.0.min.css">
+</head>
+<body class="is-paper">
+  <a class="p-link--skip" href="#main-content">Skip to main content</a>
+  <header class="p-navigation--sliding is-dark">
+    <div class="p-navigation__row--25-75">
+      <div class="p-navigation__banner">
+        <div class="p-navigation__tagged-logo">
+          <a class="p-navigation__link" href="../" aria-label="December Reach home">
+            <div class="p-navigation__logo-tag"><img class="p-navigation__logo-icon" src="../logo.svg" alt=""></div>
+            <span class="p-navigation__logo-title">December Reach</span>
+          </a>
         </div>
-        <nav id="primary-navigation" class="p-navigation__nav" aria-label="Primary site links">
-          <ul class="p-navigation__items js-dropdown-nav-list js-navigation-sliding-panel">
-            <li class="p-navigation__item--dropdown-toggle js-navigation-dropdown-toggle" id="products-menu-item">
-              <button class="p-navigation__link" type="button" aria-controls="products-menu">Products</button>
-              <div class="p-navigation__dropdown is-full-width is-collapsed js-navigation-sliding-panel" id="products-menu" aria-hidden="true">
-                <div class="p-navigation__dropdown-content--sliding">
-                  <ul class="p-list u-no-margin js-dropdown-nav-list">
-                    <li class="p-navigation__item--dropdown-close">
-                      <button type="button" aria-controls="products-menu" class="p-navigation__link js-back-button">Back</button>
-                    </li>
-                    <li><a class="p-navigation__dropdown-item" href="https://github.com/critical-dummy/reachOS">reachOS</a></li>
-                    <li><a class="p-navigation__dropdown-item" href="../index.html">auroraADE</a></li>
-                  </ul>
-                </div>
-                <div class="p-navigation__dropdown-content--full-width">
-                  <div class="p-strip is-shallow">
-                    <div class="grid-row--50-50">
-                      <div class="grid-col">
-                        <p class="p-muted-heading">Operating system</p>
-                        <h2><a href="https://github.com/critical-dummy/reachOS">reachOS</a></h2>
-                        <p>The wider operating-system project and its virtual hardware platform.</p>
-                      </div>
-                      <div class="grid-col">
-                        <p class="p-muted-heading">Desktop environment</p>
-                        <h2><a href="../index.html">auroraADE</a></h2>
-                        <p>Aesthetic Desktop Environment for reachOS, targeting x86_64.</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </li>
-            <li class="p-navigation__item"><a class="p-navigation__link" href="../index.html#overview">About auroraADE</a></li>
-            <li class="p-navigation__item"><a class="p-navigation__link" href="./" aria-current="page">Devices</a></li>
-          </ul>
-        </nav>
+        <ul class="p-navigation__items">
+          <li class="p-navigation__item"><button class="js-menu-button p-navigation__link" type="button" aria-controls="primary-navigation" aria-expanded="false">Menu</button></li>
+        </ul>
       </div>
-    </header>
-
-    <main id="main-content">
-      <section class="p-section--hero is-dark" aria-labelledby="page-title">
-        <div class="u-fixed-width">
-          <p class="p-muted-heading">auroraADE · DEVICE CHANNEL</p>
-          <h1 id="page-title">Choose your device</h1>
-          <p class="p-heading--4">Device channels are listed below. A channel becomes selectable when its runtime is ready.</p>
-        </div>
-      </section>
-
-      <section class="p-section" aria-labelledby="channels-title">
-        <div class="u-fixed-width">
-          <hr class="p-rule">
-          <h2 id="channels-title">Device channels</h2>
-          <div class="grid-row--50-50">
-            <div class="grid-col">
-              <article class="p-card" aria-labelledby="desktop-title">
-                <p class="p-muted-heading">DESKTOP CHANNEL</p>
-                <h3 id="desktop-title">Desktop</h3>
-                <p class="p-card__content">The desktop channel will load the real auroraADE operating-system build through the browser runtime. Runtime integration is not connected yet.</p>
-                <p><span class="p-chip--caution is-readonly is-inline">Runtime integration pending</span></p>
-              </article>
-            </div>
-            <div class="grid-col">
-              <article class="p-card" aria-labelledby="mobile-title">
-                <p class="p-muted-heading">MOBILE CHANNEL</p>
-                <h3 id="mobile-title">Mobile</h3>
-                <p class="p-card__content">The mobile channel is currently under inspection and is not available.</p>
-                <p><span class="p-chip--caution is-readonly is-inline">점검중 · Under Inspection</span></p>
-              </article>
-            </div>
-          </div>
-        </div>
-      </section>
-    </main>
-
-    <footer class="p-section--shallow">
+      <nav id="primary-navigation" class="p-navigation__nav" aria-label="Primary navigation">
+        <ul class="p-navigation__items">
+          <li class="p-navigation__item"><a class="p-navigation__link" href="../architecture.html">Architecture</a></li>
+          <li class="p-navigation__item is-selected"><a class="p-navigation__link" href="./" aria-current="page">Devices</a></li>
+          <li class="p-navigation__item"><a class="p-navigation__link" href="https://github.com/critical-dummy/reachOS">reachOS source</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+  <main id="main-content">
+    <section class="p-section--hero is-dark" aria-labelledby="page-title">
       <div class="u-fixed-width">
-        <hr class="p-rule">
-        <p><strong>December Reach</strong> · auroraADE</p>
+        <h1 id="page-title">Devices</h1>
+        <p class="p-heading--4">Current device support for auroraADE.</p>
       </div>
-    </footer>
-
-    <script>
-      (function () {
-        const navigation = document.querySelector("#navigation");
-        if (!navigation) return;
-
-        const menuButton = navigation.querySelector(".js-menu-button");
-        const menu = navigation.querySelector("#primary-navigation");
-        if (!menuButton || !menu) return;
-
-        const desktopNavigation = window.matchMedia("(min-width: 1036px)");
-        const dropdownToggles = Array.from(
-          navigation.querySelectorAll(".p-navigation__nav .p-navigation__item--dropdown-toggle > [aria-controls]")
-        );
-
-        function setDropdown(toggle, open) {
-          const item = toggle.closest(".p-navigation__item--dropdown-toggle");
-          const dropdown = document.getElementById(toggle.getAttribute("aria-controls"));
-          const parentPanel = item && item.closest(".js-navigation-sliding-panel");
-          if (!item || !dropdown) return;
-
-          item.classList.toggle("is-active", open);
-          if (parentPanel) parentPanel.classList.toggle("is-active", open);
-          dropdown.classList.toggle("is-collapsed", !open);
-          dropdown.setAttribute("aria-hidden", String(!open));
-        }
-
-        function closeAllDropdowns(focusToggle) {
-          dropdownToggles.forEach(function (toggle) {
-            setDropdown(toggle, false);
-          });
-          if (focusToggle) focusToggle.focus();
-        }
-
-        function closeMenu() {
-          navigation.classList.remove("has-menu-open");
-          menuButton.removeAttribute("aria-pressed");
-          closeAllDropdowns();
-
-          if (desktopNavigation.matches) {
-            menu.removeAttribute("aria-hidden");
-          } else {
-            menu.setAttribute("aria-hidden", "true");
-          }
-        }
-
-        function openMenu() {
-          if (desktopNavigation.matches) return;
-          navigation.classList.add("has-menu-open");
-          menuButton.setAttribute("aria-pressed", "true");
-          menu.setAttribute("aria-hidden", "false");
-        }
-
-        function syncNavigationState() {
-          if (desktopNavigation.matches || !navigation.classList.contains("has-menu-open")) {
-            closeMenu();
-          }
-        }
-
-        menuButton.addEventListener("click", function () {
-          if (navigation.classList.contains("has-menu-open")) {
-            closeMenu();
-          } else {
-            openMenu();
-          }
-        });
-
-        dropdownToggles.forEach(function (toggle) {
-          toggle.addEventListener("click", function (event) {
-            event.preventDefault();
-            const dropdown = document.getElementById(toggle.getAttribute("aria-controls"));
-            if (!dropdown) return;
-
-            const shouldOpen = dropdown.getAttribute("aria-hidden") === "true";
-            closeAllDropdowns();
-
-            if (shouldOpen) {
-              navigation.classList.add("has-menu-open");
-              setDropdown(toggle, true);
-            } else {
-              navigation.classList.remove("has-menu-open");
-            }
-          });
-        });
-
-        navigation.querySelectorAll(".js-back-button").forEach(function (button) {
-          button.addEventListener("click", function (event) {
-            event.preventDefault();
-            const toggle = dropdownToggles.find(function (candidate) {
-              return candidate.getAttribute("aria-controls") === button.getAttribute("aria-controls");
-            });
-
-            closeAllDropdowns(toggle);
-            if (!desktopNavigation.matches) {
-              navigation.classList.add("has-menu-open");
-              menu.setAttribute("aria-hidden", "false");
-            }
-          });
-        });
-
-        document.addEventListener("click", function (event) {
-          if (!event.target.closest("#navigation")) {
-            closeMenu();
-          } else if (!event.target.closest(".p-navigation__item--dropdown-toggle")) {
-            closeAllDropdowns();
-          }
-        });
-
-        document.addEventListener("keydown", function (event) {
-          if (event.key !== "Escape") return;
-
-          const openToggle = dropdownToggles.find(function (toggle) {
-            const dropdown = document.getElementById(toggle.getAttribute("aria-controls"));
-            return dropdown && dropdown.getAttribute("aria-hidden") === "false";
-          });
-
-          if (openToggle) {
-            closeAllDropdowns(openToggle);
-            if (desktopNavigation.matches) {
-              navigation.classList.remove("has-menu-open");
-            }
-          } else if (navigation.classList.contains("has-menu-open")) {
-            closeMenu();
-            menuButton.focus();
-          }
-        });
-
-        desktopNavigation.addEventListener("change", syncNavigationState);
-        syncNavigationState();
-      })();
-    </script>
-  </body>
+    </section>
+    <section class="p-section" aria-labelledby="support-title">
+      <div class="u-fixed-width">
+        <div class="grid-row--50-50">
+          <div class="grid-col"><h2 id="support-title">Availability</h2></div>
+          <div class="grid-col"><p>Device builds are not available yet. The entries below describe the current integration state.</p></div>
+        </div>
+        <hr class="p-rule">
+        <div class="grid-row--50-50">
+          <div class="grid-col"><h3>Desktop</h3></div>
+          <div class="grid-col"><p>Runtime integration pending.</p><p>The browser runtime is not connected to a desktop build yet.</p></div>
+        </div>
+        <hr class="p-rule">
+        <div class="grid-row--50-50">
+          <div class="grid-col"><h3>Mobile</h3></div>
+          <div class="grid-col"><p>Unavailable.</p><p>There is no mobile build available at this time.</p></div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer class="p-section--shallow">
+    <div class="u-fixed-width"><hr class="p-rule"><p>December Reach · <a href="../">auroraADE</a></p></div>
+  </footer>
+  <script>
+    const navigation = document.querySelector(".p-navigation--sliding");
+    const menuButton = navigation && navigation.querySelector(".js-menu-button");
+    if (menuButton) menuButton.addEventListener("click", () => {
+      const isOpen = navigation.classList.toggle("has-menu-open");
+      menuButton.setAttribute("aria-expanded", String(isOpen));
+    });
+  </script>
+</body>
 </html>
