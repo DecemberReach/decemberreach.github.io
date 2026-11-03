@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#211f28">
+    <meta name="description" content="Choose a device channel for auroraADE.">
+    <title>Devices — auroraADE</title>
+    <link rel="stylesheet" href="https://assets.ubuntu.com/v1/vanilla_framework_version_4.61.0.min.css">
+    <style>
+      .p-navigation__tagged-logo .p-navigation__logo-tag { background-color: #fff; }
+      .device-choice {
+        display: flex;
+        min-height: 18rem;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: 1.5rem;
+        border: 1px solid #d9d9d9;
+        border-radius: 0.25rem;
+        background: #fff;
+        color: #1f1f1f;
+      }
+      .device-choice--available { border-top: 4px solid #0e8420; }
+      .device-choice--inspection { border-top: 4px solid #888; background: #f5f5f5; }
+      .device-choice__icon { font-size: 2.5rem; line-height: 1; }
+      .device-choice__action { align-self: flex-start; }
+      .device-choice:focus-within { outline: 2px solid #2453ff; outline-offset: 3px; }
+      #channel-status { min-height: 1.5rem; }
+    </style>
+  </head>
+  <body class="is-paper">
+    <a class="p-link--skip" href="#main-content">Skip to main content</a>
+
+    <header id="navigation" class="p-navigation--sliding is-dark">
+      <div class="p-navigation__row--25-75">
+        <div class="p-navigation__banner">
+          <div class="p-navigation__tagged-logo">
+            <a class="p-navigation__link" href="../index.html" aria-label="December Reach home">
+              <div class="p-navigation__logo-tag"><img class="p-navigation__logo-icon" src="../logo.svg" alt=""></div>
+              <span class="p-navigation__logo-title">December Reach</span>
+            </a>
+          </div>
+          <ul class="p-navigation__items">
+            <li class="p-navigation__item">
+              <button class="js-menu-button p-navigation__link" type="button" aria-controls="primary-navigation">Menu</button>
+            </li>
+          </ul>
+        </div>
+        <nav id="primary-navigation" class="p-navigation__nav" aria-label="Primary site links">
+          <ul class="p-navigation__items">
+            <li class="p-navigation__item"><a class="p-navigation__link" href="../index.html">Home</a></li>
+            <li class="p-navigation__item"><a class="p-navigation__link" href="../architecture.html">Architecture</a></li>
+            <li class="p-navigation__item"><a class="p-navigation__link" href="./index.html" aria-current="page">Devices</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main-content">
+      <section class="p-strip is-dark is-deep">
+        <div class="u-fixed-width">
+          <p class="p-muted-heading">auroraADE · DEVICE CHANNEL</p>
+          <h1>Choose your device</h1>
+          <p class="p-heading--4">Select the environment you want to use auroraADE on.</p>
+        </div>
+      </section>
+
+      <section class="p-section">
+        <div class="u-fixed-width">
+          <div class="grid-row--50-50">
+            <div class="grid-col">
+              <article class="device-choice device-choice--available" aria-labelledby="desktop-title">
+                <div>
+                  <p class="device-choice__icon" aria-hidden="true">▣</p>
+                  <p class="p-muted-heading">DESKTOP CHANNEL</p>
+                  <h2 id="desktop-title">Desktop</h2>
+                  <p>For desktop-class devices. The browser-based runtime will be connected to this channel.</p>
+                </div>
+                <div>
+                  <p><span class="p-chip"><span class="p-chip__value">Available</span></span></p>
+                  <button class="p-button--positive device-choice__action" id="desktop-select" type="button">Select Desktop</button>
+                </div>
+              </article>
+            </div>
+            <div class="grid-col">
+              <article class="device-choice device-choice--inspection" aria-labelledby="mobile-title">
+                <div>
+                  <p class="device-choice__icon" aria-hidden="true">▯</p>
+                  <p class="p-muted-heading">MOBILE CHANNEL</p>
+                  <h2 id="mobile-title">Mobile</h2>
+                  <p>The mobile channel is not available yet. It will return after inspection is complete.</p>
+                </div>
+                <div>
+                  <p><span class="p-chip"><span class="p-chip__value">점검중 · Under Inspection</span></span></p>
+                  <button class="p-button" type="button" disabled aria-disabled="true">Unavailable</button>
+                </div>
+              </article>
+            </div>
+          </div>
+          <hr class="p-rule">
+          <p id="channel-status" role="status" aria-live="polite">Choose a device channel to continue.</p>
+        </div>
+      </section>
+    </main>
+
+    <footer class="p-section--shallow">
+      <div class="u-fixed-width">
+        <hr class="p-rule">
+        <p><strong>December Reach</strong> · auroraADE</p>
+      </div>
+    </footer>
+
+    <script>
+      (function () {
+        const navigation = document.querySelector("#navigation");
+        if (navigation) {
+          const menuButton = navigation.querySelector(".js-menu-button");
+          const menu = navigation.querySelector("#primary-navigation");
+          if (menuButton && menu) {
+            menuButton.addEventListener("click", function () {
+              const open = navigation.classList.toggle("has-menu-open");
+              menuButton.setAttribute("aria-pressed", String(open));
+              menu.setAttribute("aria-hidden", String(!open));
+            });
+          }
+        }
+
+        const desktopButton = document.querySelector("#desktop-select");
+        const status = document.querySelector("#channel-status");
+        if (desktopButton && status) {
+          desktopButton.addEventListener("click", function () {
+            status.textContent = "Desktop channel selected. The OS runtime has not been connected yet.";
+            desktopButton.textContent = "Desktop Selected";
+            desktopButton.setAttribute("aria-pressed", "true");
+          });
+        }
+      })();
+    </script>
+  </body>
+</html>
