@@ -1,267 +1,89 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="theme-color" content="#211f28">
-    <meta name="description" content="auroraADE is an Aesthetic Desktop Environment project for reachOS, targeting x86_64.">
-    <title>auroraADE — Aesthetic Desktop Environment</title>
-    <link rel="stylesheet" href="https://assets.ubuntu.com/v1/vanilla_framework_version_4.61.0.min.css">
-  </head>
-  <body class="is-paper">
-    <a class="p-link--skip" href="#main-content">Skip to main content</a>
-
-    <header id="navigation" class="p-navigation--sliding is-dark">
-      <div class="p-navigation__row--25-75">
-        <div class="p-navigation__banner">
-          <div class="p-navigation__tagged-logo">
-            <a class="p-navigation__link" href="#top" aria-label="December Reach home">
-              <div class="p-navigation__logo-tag">
-                <img class="p-navigation__logo-icon" src="./logo.svg" alt="">
-              </div>
-              <span class="p-navigation__logo-title">December Reach</span>
-            </a>
-          </div>
-          <ul class="p-navigation__items">
-            <li class="p-navigation__item">
-              <button class="js-menu-button p-navigation__link" type="button" aria-controls="primary-navigation">Menu</button>
-            </li>
-          </ul>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#171717">
+  <meta name="description" content="auroraADE is a desktop environment project for reachOS, targeting x86_64.">
+  <title>auroraADE</title>
+  <link rel="stylesheet" href="https://assets.ubuntu.com/v1/vanilla_framework_version_4.61.0.min.css">
+  <style>
+    .site-hero { min-height: 34rem; display: flex; align-items: center; }
+    .site-hero h1 { font-size: clamp(4rem, 12vw, 9rem); letter-spacing: -0.075em; line-height: 0.95; margin-bottom: 1.5rem; }
+    .site-hero__description { max-width: 38rem; }
+    .site-hero__links { display: flex; flex-wrap: wrap; gap: 1rem 1.5rem; margin-top: 2rem; }
+    .site-hero__links a { color: inherit; }
+    .site-meta { border-top: 1px solid rgba(255,255,255,.35); padding-top: 1rem; margin-top: 1rem; }
+    .site-meta p { margin-bottom: .35rem; }
+    .site-meta strong { font-size: 1.5rem; font-weight: 400; }
+    @media (max-width: 767px) { .site-hero { min-height: 0; padding-top: 5rem; padding-bottom: 5rem; } }
+  </style>
+</head>
+<body class="is-paper">
+  <a class="p-link--skip" href="#main-content">Skip to main content</a>
+  <header class="p-navigation--sliding is-dark">
+    <div class="p-navigation__row--25-75">
+      <div class="p-navigation__banner">
+        <div class="p-navigation__tagged-logo">
+          <a class="p-navigation__link" href="./" aria-label="December Reach home">
+            <div class="p-navigation__logo-tag"><img class="p-navigation__logo-icon" src="./logo.svg" alt=""></div>
+            <span class="p-navigation__logo-title">December Reach</span>
+          </a>
         </div>
-        <nav id="primary-navigation" class="p-navigation__nav" aria-label="Primary site links">
-          <ul class="p-navigation__items js-dropdown-nav-list js-navigation-sliding-panel">
-            <li class="p-navigation__item--dropdown-toggle js-navigation-dropdown-toggle" id="products-menu-item">
-              <button class="p-navigation__link" type="button" aria-controls="products-menu">Products</button>
-              <div class="p-navigation__dropdown is-full-width is-collapsed js-navigation-sliding-panel" id="products-menu" aria-hidden="true">
-                <div class="p-navigation__dropdown-content--sliding">
-                  <ul class="p-list u-no-margin js-dropdown-nav-list">
-                    <li class="p-navigation__item--dropdown-close">
-                      <button type="button" aria-controls="products-menu" class="p-navigation__link js-back-button">Back</button>
-                    </li>
-                    <li><a class="p-navigation__dropdown-item" href="https://github.com/critical-dummy/reachOS">reachOS</a></li>
-                    <li><a class="p-navigation__dropdown-item" href="./index.html">auroraADE</a></li>
-                  </ul>
-                </div>
-                <div class="p-navigation__dropdown-content--full-width">
-                  <div class="p-strip is-shallow">
-                    <div class="grid-row--50-50">
-                      <div class="grid-col">
-                        <p class="p-muted-heading">Operating system</p>
-                        <h2><a href="https://github.com/critical-dummy/reachOS">reachOS</a></h2>
-                        <p>The wider operating-system project and its virtual hardware platform.</p>
-                      </div>
-                      <div class="grid-col">
-                        <p class="p-muted-heading">Desktop environment</p>
-                        <h2><a href="./index.html">auroraADE</a></h2>
-                        <p>Aesthetic Desktop Environment for reachOS, targeting x86_64.</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </li>
-            <li class="p-navigation__item"><a class="p-navigation__link" href="#overview">About auroraADE</a></li>
-            <li class="p-navigation__item"><a class="p-navigation__link" href="./device/">Devices</a></li>
-          </ul>
-        </nav>
+        <ul class="p-navigation__items">
+          <li class="p-navigation__item"><button class="js-menu-button p-navigation__link" type="button" aria-controls="primary-navigation" aria-expanded="false">Menu</button></li>
+        </ul>
       </div>
-    </header>
-
-    <main id="main-content">
-      <section id="top" class="p-section--hero is-dark" aria-labelledby="page-title">
-        <div class="grid-row--75-25">
-          <div class="grid-col">
-            <h1 id="page-title">auroraADE</h1>
-            <p class="p-heading--4">Aesthetic Desktop Environment</p>
-            <p>A desktop environment for reachOS, with x86_64 as its target architecture.</p>
-            <p>
-              <a class="p-button--positive" href="https://github.com/critical-dummy/reachOS">Explore reachOS</a>
-              <a class="p-button--base" href="./architecture.html">Architecture notes</a>
-              <a class="p-button--base" href="./device/">Choose your device</a>
-            </p>
-          </div>
-          <div class="col">
-            <hr class="p-rule">
-            <p class="p-heading--2">x86_64</p>
-            <p>Target architecture</p>
-            <hr class="p-rule">
-            <p class="p-heading--4">reachOS</p>
-            <p>Operating-system platform</p>
-          </div>
-        </div>
-      </section>
-
-      <section id="overview" class="p-section" aria-labelledby="overview-title">
-        <div class="u-fixed-width">
-          <hr class="p-rule">
-          <div class="grid-row--50-50">
-            <div class="grid-col">
-              <h2 id="overview-title">A desktop environment within reachOS</h2>
-            </div>
-            <div class="grid-col">
-              <p>auroraADE is December Reach's desktop environment project for reachOS. The name stands for Aesthetic Desktop Environment, and the project targets x86_64.</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section id="explore" class="p-section" aria-labelledby="explore-title">
-        <div class="u-fixed-width">
-          <hr class="p-rule">
-          <div class="grid-row--50-50">
-            <div class="grid-col">
-              <h2 id="explore-title">Explore the project</h2>
-              <p>Follow the platform that auroraADE is being designed for, or read the separate technical notes.</p>
-            </div>
-            <div class="grid-col">
-              <h3>reachOS</h3>
-              <p>The wider operating-system project and platform source.</p>
-              <p><a class="p-link--external" href="https://github.com/critical-dummy/reachOS">View the reachOS repository</a></p>
-              <h3>Architecture and platform notes</h3>
-              <p>Background on the CPU boundary, memory, devices and display pipeline.</p>
-              <p><a href="./architecture.html">Read the architecture notes</a></p>
-            </div>
-          </div>
-        </div>
-      </section>
-    </main>
-
-    <footer class="p-section--shallow">
+      <nav id="primary-navigation" class="p-navigation__nav" aria-label="Primary navigation">
+        <ul class="p-navigation__items">
+          <li class="p-navigation__item"><a class="p-navigation__link" href="./architecture.html">Architecture</a></li>
+          <li class="p-navigation__item"><a class="p-navigation__link" href="./device/">Devices</a></li>
+          <li class="p-navigation__item"><a class="p-navigation__link" href="https://github.com/critical-dummy/reachOS">reachOS source</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+  <main id="main-content">
+    <section id="top" class="p-section--hero is-dark site-hero" aria-labelledby="page-title">
       <div class="u-fixed-width">
-        <hr class="p-rule">
-        <p><strong>December Reach</strong> · auroraADE</p>
+        <p class="p-muted-heading">DECEMBER REACH</p>
+        <h1 id="page-title">auroraADE</h1>
+        <p class="p-heading--4">Aesthetic Desktop Environment</p>
+        <p class="site-hero__description">A desktop environment project for reachOS. Its current target architecture is x86_64.</p>
+        <div class="site-hero__links">
+          <a href="https://github.com/critical-dummy/reachOS">Explore reachOS <span aria-hidden="true">↗</span></a>
+          <a href="./architecture.html">Architecture</a>
+          <a href="./device/">Device support</a>
+        </div>
+        <div class="grid-row--50-50">
+          <div class="grid-col"><div class="site-meta"><p class="p-muted-heading">Target architecture</p><p><strong>x86_64</strong></p></div></div>
+          <div class="grid-col"><div class="site-meta"><p class="p-muted-heading">Platform</p><p><strong>reachOS</strong></p></div></div>
+        </div>
       </div>
-    </footer>
-
-    <script>
-      (function () {
-        const navigation = document.querySelector("#navigation");
-        if (!navigation) return;
-
-        const menuButton = navigation.querySelector(".js-menu-button");
-        const menu = navigation.querySelector("#primary-navigation");
-        if (!menuButton || !menu) return;
-
-        const desktopNavigation = window.matchMedia("(min-width: 1036px)");
-        const dropdownToggles = Array.from(
-          navigation.querySelectorAll(".p-navigation__nav .p-navigation__item--dropdown-toggle > [aria-controls]")
-        );
-
-        function setDropdown(toggle, open) {
-          const item = toggle.closest(".p-navigation__item--dropdown-toggle");
-          const dropdown = document.getElementById(toggle.getAttribute("aria-controls"));
-          const parentPanel = item && item.closest(".js-navigation-sliding-panel");
-          if (!item || !dropdown) return;
-
-          item.classList.toggle("is-active", open);
-          if (parentPanel) parentPanel.classList.toggle("is-active", open);
-          dropdown.classList.toggle("is-collapsed", !open);
-          dropdown.setAttribute("aria-hidden", String(!open));
-        }
-
-        function closeAllDropdowns(focusToggle) {
-          dropdownToggles.forEach(function (toggle) {
-            setDropdown(toggle, false);
-          });
-          if (focusToggle) focusToggle.focus();
-        }
-
-        function closeMenu() {
-          navigation.classList.remove("has-menu-open");
-          menuButton.removeAttribute("aria-pressed");
-          closeAllDropdowns();
-
-          if (desktopNavigation.matches) {
-            menu.removeAttribute("aria-hidden");
-          } else {
-            menu.setAttribute("aria-hidden", "true");
-          }
-        }
-
-        function openMenu() {
-          if (desktopNavigation.matches) return;
-          navigation.classList.add("has-menu-open");
-          menuButton.setAttribute("aria-pressed", "true");
-          menu.setAttribute("aria-hidden", "false");
-        }
-
-        function syncNavigationState() {
-          if (desktopNavigation.matches || !navigation.classList.contains("has-menu-open")) {
-            closeMenu();
-          }
-        }
-
-        menuButton.addEventListener("click", function () {
-          if (navigation.classList.contains("has-menu-open")) {
-            closeMenu();
-          } else {
-            openMenu();
-          }
-        });
-
-        dropdownToggles.forEach(function (toggle) {
-          toggle.addEventListener("click", function (event) {
-            event.preventDefault();
-            const dropdown = document.getElementById(toggle.getAttribute("aria-controls"));
-            if (!dropdown) return;
-
-            const shouldOpen = dropdown.getAttribute("aria-hidden") === "true";
-            closeAllDropdowns();
-
-            if (shouldOpen) {
-              navigation.classList.add("has-menu-open");
-              setDropdown(toggle, true);
-            } else {
-              navigation.classList.remove("has-menu-open");
-            }
-          });
-        });
-
-        navigation.querySelectorAll(".js-back-button").forEach(function (button) {
-          button.addEventListener("click", function (event) {
-            event.preventDefault();
-            const toggle = dropdownToggles.find(function (candidate) {
-              return candidate.getAttribute("aria-controls") === button.getAttribute("aria-controls");
-            });
-
-            closeAllDropdowns(toggle);
-            if (!desktopNavigation.matches) {
-              navigation.classList.add("has-menu-open");
-              menu.setAttribute("aria-hidden", "false");
-            }
-          });
-        });
-
-        document.addEventListener("click", function (event) {
-          if (!event.target.closest("#navigation")) {
-            closeMenu();
-          } else if (!event.target.closest(".p-navigation__item--dropdown-toggle")) {
-            closeAllDropdowns();
-          }
-        });
-
-        document.addEventListener("keydown", function (event) {
-          if (event.key !== "Escape") return;
-
-          const openToggle = dropdownToggles.find(function (toggle) {
-            const dropdown = document.getElementById(toggle.getAttribute("aria-controls"));
-            return dropdown && dropdown.getAttribute("aria-hidden") === "false";
-          });
-
-          if (openToggle) {
-            closeAllDropdowns(openToggle);
-            if (desktopNavigation.matches) {
-              navigation.classList.remove("has-menu-open");
-            }
-          } else if (navigation.classList.contains("has-menu-open")) {
-            closeMenu();
-            menuButton.focus();
-          }
-        });
-
-        desktopNavigation.addEventListener("change", syncNavigationState);
-        syncNavigationState();
-      })();
-    </script>
-  </body>
+    </section>
+    <section id="about" class="p-section" aria-labelledby="about-title">
+      <div class="u-fixed-width">
+        <div class="grid-row--50-50">
+          <div class="grid-col"><h2 id="about-title">A desktop environment for reachOS.</h2></div>
+          <div class="grid-col">
+            <p>auroraADE is the desktop environment project within December Reach. The name stands for Aesthetic Desktop Environment.</p>
+            <p>The project targets x86_64. Its implementation and device availability are documented separately from the wider reachOS platform.</p>
+            <p><a href="./architecture.html">Read the architecture notes</a></p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer class="p-section--shallow">
+    <div class="u-fixed-width"><hr class="p-rule"><p>December Reach · <a href="https://github.com/DecemberReach">GitHub</a></p></div>
+  </footer>
+  <script>
+    const navigation = document.querySelector(".p-navigation--sliding");
+    const menuButton = navigation && navigation.querySelector(".js-menu-button");
+    if (menuButton) menuButton.addEventListener("click", () => {
+      const isOpen = navigation.classList.toggle("has-menu-open");
+      menuButton.setAttribute("aria-expanded", String(isOpen));
+    });
+  </script>
+</body>
 </html>
