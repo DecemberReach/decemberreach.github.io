@@ -27,21 +27,14 @@ const photos = {
     alt: "Tiger Leaping Gorge in warm sunlight"
   }
 };
-
-const projects = [
-  { slug: "auroraADE", name: "auroraADE", category: "Desktop environment", detail: "x86_64", photo: photos.aurora },
-  { slug: "haloDOT", name: "haloDOT", category: "Operating system project", detail: "", photo: photos.halo },
-  { slug: "stellaOS", name: "stellaOS", category: "Television operating system", detail: "", photo: photos.stella }
-];
 ---
 <SiteLayout
-  title="Hub"
-  description="December Reach Hub: projects, platform and resources."
+  title="Home"
+  description="December Reach projects and resources."
   current="hub"
 >
   <div class="hub-workspace">
-    <aside class="hub-sidebar" aria-label="Hub catalogue">
-      <p class="hub-sidebar-label">CATALOG</p>
+    <aside class="hub-sidebar" aria-label="Home categories">
       <button
         class="hub-nav-button is-selected"
         type="button"
@@ -58,7 +51,6 @@ const projects = [
       >Website versions</button>
 
       <div class="hub-sidebar-rule"></div>
-      <p class="hub-sidebar-label">SOURCE</p>
       <a class="hub-source-link" href="https://github.com/DecemberReach/reach-to-be-reached" target="_blank" rel="noreferrer">
         reach-to-be-reached
       </a>
@@ -67,11 +59,7 @@ const projects = [
     <div class="hub-content">
       <section class="hub-panel" id="hub-panel-projects" data-hub-panel="projects" aria-labelledby="hub-projects-title">
         <header class="hub-content-heading">
-          <div>
-            <p class="hub-location">DECEMBER REACH / HUB</p>
-            <h1 id="hub-projects-title">Projects</h1>
-          </div>
-          <span class="hub-item-count">3 projects</span>
+          <h1 id="hub-projects-title">Projects</h1>
         </header>
 
         <div class="hub-tile-board">
@@ -116,50 +104,37 @@ const projects = [
           </a>
         </div>
 
-        <div class="hub-source-row">
-          <span class="hub-source-label">OS SOURCE</span>
-          <a href="https://github.com/DecemberReach/reach-to-be-reached" target="_blank" rel="noreferrer">
-            DecemberReach / reach-to-be-reached
-          </a>
-          <span class="hub-source-detail">Each OS is developed in its own directory.</span>
-        </div>
-
         <p class="hub-artwork-credit">
-          Temporary artwork:
-          <a href={photos.aurora.page} target="_blank" rel="noreferrer">{photos.aurora.photographer}</a>,
-          <a href={photos.halo.page} target="_blank" rel="noreferrer">{photos.halo.photographer}</a>,
-          <a href={photos.stella.page} target="_blank" rel="noreferrer">{photos.stella.photographer}</a>
+          Photos:
+          <a href={photos.aurora.page} target="_blank" rel="noreferrer">auroraADE — {photos.aurora.photographer}</a>,
+          <a href={photos.halo.page} target="_blank" rel="noreferrer">haloDOT — {photos.halo.photographer}</a>,
+          <a href={photos.stella.page} target="_blank" rel="noreferrer">stellaOS — {photos.stella.photographer}</a>
           / Unsplash
         </p>
       </section>
 
       <section class="hub-panel" id="hub-panel-website" data-hub-panel="website" aria-labelledby="hub-website-title" hidden>
         <header class="hub-content-heading">
-          <div>
-            <p class="hub-location">DECEMBER REACH / HUB</p>
-            <h1 id="hub-website-title">Website versions</h1>
-          </div>
-          <span class="hub-item-count">Current</span>
+          <h1 id="hub-website-title">Website versions</h1>
         </header>
 
         <div class="hub-version-board">
           <a class="hub-tile hub-version-tile" href="/">
             <img src={photos.home.src} alt={photos.home.alt} loading="lazy" />
             <span class="hub-tile-caption">
-              <span class="hub-tile-type">Published website</span>
+              <span class="hub-tile-type">Current website</span>
               <strong>December Reach</strong>
             </span>
           </a>
           <div class="hub-version-info">
-            <span class="hub-version-state">CURRENT</span>
-            <h2>Official homepage</h2>
+            <h2>Current homepage</h2>
             <p>December Reach · GitHub Pages</p>
             <a href="https://github.com/DecemberReach/decemberreach.github.io" target="_blank" rel="noreferrer">Website repository</a>
           </div>
         </div>
 
         <p class="hub-artwork-credit">
-          Temporary artwork by
+          Photo:
           <a href={photos.home.page} target="_blank" rel="noreferrer">{photos.home.photographer}</a>
           / Unsplash
         </p>

@@ -42,13 +42,15 @@ const isHub = current === "hub";
         <slot />
       </main>
 
-      <footer class="site-footer">
-        <div class="footer-brand">
-          <img src="/logo.svg" alt="" width="28" height="28" />
-          <span>December Reach</span>
-        </div>
-        <a class="footer-link" href="https://github.com/DecemberReach" target="_blank" rel="noreferrer">GitHub organization</a>
-      </footer>
+      {!isHub && (
+        <footer class="site-footer">
+          <div class="footer-brand">
+            <img src="/logo.svg" alt="" width="28" height="28" />
+            <span>December Reach</span>
+          </div>
+          <a class="footer-link" href="https://github.com/DecemberReach" target="_blank" rel="noreferrer">GitHub organization</a>
+        </footer>
+      )}
     </div>
   </body>
 </html>
