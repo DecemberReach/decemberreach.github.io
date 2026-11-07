@@ -13,39 +13,39 @@ type Project = {
   photographer: string;
 };
 
-const projects: Project[] = [
-  {
-    slug: "auroraADE",
-    name: "auroraADE",
-    category: "Desktop environment",
-    target: "x86_64",
-    repository: "https://github.com/critical-dummy/auroraADE-AI-Development-Test",
-    image: "https://images.unsplash.com/photo-1531764411937-45495415d84d?auto=format&fit=crop&w=1400&q=80",
-    imageAlt: "Turquoise lake surrounded by forested mountains",
-    photoPage: "https://unsplash.com/photos/landscape-photography-of-lake-and-mountains-bXGUdxFeQUQ",
-    photographer: "Ryan Stone"
-  },
-  {
-    slug: "haloDOT",
-    name: "haloDOT",
-    category: "Operating system project",
-    image: "https://images.unsplash.com/photo-1465056836041-7f43ac27dcb5?auto=format&fit=crop&w=1400&q=80",
-    imageAlt: "Mountain range across a wide lake under a cloudy evening sky",
-    photoPage: "https://unsplash.com/photos/landscape-photography-of-lake-and-mountain-73F4pKoUkM0",
-    photographer: "Tobias Keller"
-  },
-  {
-    slug: "stellaOS",
-    name: "stellaOS",
-    category: "Television operating system",
-    image: "https://images.unsplash.com/photo-1516941072577-aecd44b927bf?auto=format&fit=crop&w=1400&q=80",
-    imageAlt: "A sunlit river canyon between steep mountain walls",
-    photoPage: "https://unsplash.com/photos/landscape-photography-of-mountain-and-lake-kyDyOHkIbC8",
-    photographer: "Marc-Olivier Jodoin"
-  }
-];
-
 export function getStaticPaths() {
+  const projects: Project[] = [
+    {
+      slug: "auroraADE",
+      name: "auroraADE",
+      category: "Desktop environment",
+      target: "x86_64",
+      repository: "https://github.com/critical-dummy/auroraADE-AI-Development-Test",
+      image: "https://images.unsplash.com/photo-1531764411937-45495415d84d?auto=format&fit=crop&w=1400&q=80",
+      imageAlt: "Turquoise lake surrounded by forested mountains",
+      photoPage: "https://unsplash.com/photos/landscape-photography-of-lake-and-mountains-bXGUdxFeQUQ",
+      photographer: "Ryan Stone"
+    },
+    {
+      slug: "haloDOT",
+      name: "haloDOT",
+      category: "Operating system project",
+      image: "https://images.unsplash.com/photo-1465056836041-7f43ac27dcb5?auto=format&fit=crop&w=1400&q=80",
+      imageAlt: "Mountain range across a wide lake under a cloudy evening sky",
+      photoPage: "https://unsplash.com/photos/landscape-photography-of-lake-and-mountain-73F4pKoUkM0",
+      photographer: "Tobias Keller"
+    },
+    {
+      slug: "stellaOS",
+      name: "stellaOS",
+      category: "Television operating system",
+      image: "https://images.unsplash.com/photo-1516941072577-aecd44b927bf?auto=format&fit=crop&w=1400&q=80",
+      imageAlt: "A sunlit river canyon between steep mountain walls",
+      photoPage: "https://unsplash.com/photos/landscape-photography-of-mountain-and-lake-kyDyOHkIbC8",
+      photographer: "Marc-Olivier Jodoin"
+    }
+  ];
+
   return projects.map((project) => ({
     params: { slug: project.slug },
     props: { project }
