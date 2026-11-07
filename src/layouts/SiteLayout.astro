@@ -1,6 +1,7 @@
 ---
 import "../styles/global.css";
 import SiteNavigation from "../components/SiteNavigation.astro";
+import SiteFooter from "../components/SiteFooter.astro";
 
 interface Props {
   title: string;
@@ -41,13 +42,7 @@ const { title, description, current } = Astro.props;
         <slot />
       </main>
 
-      <footer class="site-footer">
-        <div class="footer-brand">
-          <img src="/logo.svg" alt="" width="28" height="28" />
-          <span>December Reach</span>
-        </div>
-        <a class="footer-link" href="https://github.com/DecemberReach" target="_blank" rel="noreferrer">GitHub organization</a>
-      </footer>
+      <SiteFooter />
     </div>
 
     <aside class="page-scrollbar" aria-label="Page navigation">

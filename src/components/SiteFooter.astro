@@ -1,0 +1,66 @@
+---
+const exploreLinks = [
+  { label: "Home", href: "/" },
+  { label: "Projects", href: "/project/" },
+  { label: "Platform", href: "/platform/" },
+  { label: "Resources", href: "/resources/" }
+];
+
+const projectLinks = [
+  { label: "auroraADE", href: "/project/auroraADE/" },
+  { label: "haloDOT", href: "/project/haloDOT/" },
+  { label: "stellaOS", href: "/project/stellaOS/" }
+];
+---
+
+<footer class="site-footer" aria-label="Site footer">
+  <div class="footer-main">
+    <div class="footer-identity">
+      <a class="footer-brand" href="/" aria-label="December Reach home">
+        <img src="/logo.svg" alt="" width="30" height="30" />
+        <span>December Reach</span>
+      </a>
+      <p class="footer-description">
+        Software and operating system projects by December Reach.
+      </p>
+    </div>
+
+    <nav class="footer-group" aria-label="Explore">
+      <h2>Explore</h2>
+      <ul>
+        {exploreLinks.map((item) => (
+          <li><a href={item.href}>{item.label}</a></li>
+        ))}
+      </ul>
+    </nav>
+
+    <nav class="footer-group" aria-label="Projects">
+      <h2>Projects</h2>
+      <ul>
+        {projectLinks.map((item) => (
+          <li><a href={item.href}>{item.label}</a></li>
+        ))}
+      </ul>
+    </nav>
+
+    <nav class="footer-group" aria-label="Source repositories">
+      <h2>Source</h2>
+      <ul>
+        <li>
+          <a href="https://github.com/DecemberReach" target="_blank" rel="noreferrer">
+            GitHub organization
+          </a>
+        </li>
+        <li>
+          <a href="https://github.com/DecemberReach/reach-to-be-reached" target="_blank" rel="noreferrer">
+            Shared OS repository
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+
+  <div class="footer-bottom">
+    <span>© {new Date().getFullYear()} December Reach</span>
+  </div>
+</footer>
