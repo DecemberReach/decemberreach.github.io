@@ -1,0 +1,27 @@
+---
+interface Props {
+  current?: "hub" | "platform" | "resources";
+}
+
+const { current } = Astro.props;
+
+const items = [
+  { label: "Hub", href: "/", key: "hub" },
+  { label: "Platform", href: "/platform/", key: "platform" },
+  { label: "Resources", href: "/resources/", key: "resources" }
+] as const;
+---
+<nav class="primary-nav" aria-label="Main navigation">
+  {items.map((item) => (
+    <a
+      href={item.href}
+      class:list={["nav-link", { "is-active": current === item.key }]}
+      aria-current={current === item.key ? "page" : undefined}
+    >
+      {item.label}
+    </a>
+  ))}
+  <a class="nav-link nav-source" href="https://github.com/DecemberReach" target="_blank" rel="noreferrer">
+    GitHub
+  </a>
+</nav>

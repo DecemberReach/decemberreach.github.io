@@ -2,168 +2,167 @@
 import SiteLayout from "../layouts/SiteLayout.astro";
 
 const photos = {
-  hills: {
+  home: {
     src: "https://images.unsplash.com/photo-1429081172764-c0ee67ab9afd?auto=format&fit=crop&w=1800&q=80",
     page: "https://unsplash.com/photos/landscape-photography-of-mountain-and-lake-EKIyHUrUHWU",
     photographer: "Adriel Kloppenburg",
-    alt: "Open golden hills and a wide valley beneath a pale blue sky"
+    alt: "Golden hills and a mountain valley under a clear sky"
   },
   aurora: {
-    src: "https://images.unsplash.com/photo-1531764411937-45495415d84d?auto=format&fit=crop&w=1400&q=80",
+    src: "https://images.unsplash.com/photo-1531764411937-45495415d84d?auto=format&fit=crop&w=1600&q=80",
     page: "https://unsplash.com/photos/landscape-photography-of-lake-and-mountains-bXGUdxFeQUQ",
     photographer: "Ryan Stone",
-    alt: "Turquoise lake surrounded by forested mountains"
+    alt: "Lake Louise surrounded by forested mountains"
   },
   halo: {
-    src: "https://images.unsplash.com/photo-1465056836041-7f43ac27dcb5?auto=format&fit=crop&w=1400&q=80",
+    src: "https://images.unsplash.com/photo-1465056836041-7f43ac27dcb5?auto=format&fit=crop&w=1100&q=80",
     page: "https://unsplash.com/photos/landscape-photography-of-lake-and-mountain-73F4pKoUkM0",
     photographer: "Tobias Keller",
-    alt: "Mountain range across a wide lake under a cloudy evening sky"
+    alt: "Lake Tekapo and a snow-covered mountain range at sunset"
   },
   stella: {
-    src: "https://images.unsplash.com/photo-1516941072577-aecd44b927bf?auto=format&fit=crop&w=1400&q=80",
+    src: "https://images.unsplash.com/photo-1516941072577-aecd44b927bf?auto=format&fit=crop&w=1100&q=80",
     page: "https://unsplash.com/photos/landscape-photography-of-mountain-and-lake-kyDyOHkIbC8",
     photographer: "Marc-Olivier Jodoin",
-    alt: "A sunlit river canyon between steep mountain walls"
+    alt: "Tiger Leaping Gorge in warm sunlight"
   }
 };
 
 const projects = [
-  { slug: "auroraADE", name: "auroraADE", category: "Desktop environment", target: "x86_64", photo: photos.aurora },
-  { slug: "haloDOT", name: "haloDOT", category: "Operating system project", target: "", photo: photos.halo },
-  { slug: "stellaOS", name: "stellaOS", category: "Television operating system", target: "", photo: photos.stella }
+  { slug: "auroraADE", name: "auroraADE", category: "Desktop environment", detail: "x86_64", photo: photos.aurora },
+  { slug: "haloDOT", name: "haloDOT", category: "Operating system project", detail: "", photo: photos.halo },
+  { slug: "stellaOS", name: "stellaOS", category: "Television operating system", detail: "", photo: photos.stella }
 ];
 ---
 <SiteLayout
   title="Hub"
-  description="The official December Reach hub for projects, platform information, resources and website versions."
-  hidePrimaryNav={true}
+  description="December Reach Hub: projects, platform and resources."
+  current="hub"
 >
-  <div class="hub-layout">
-    <aside class="hub-sidebar" aria-label="Hub navigation">
-      <div class="hub-sidebar-group">
-        <p class="hub-sidebar-label">CATALOG</p>
-        <button
-          class="hub-nav-button is-selected"
-          type="button"
-          data-hub-tab="projects"
-          aria-pressed="true"
-          aria-controls="hub-panel-projects"
-        >
-          Projects
-        </button>
-        <button
-          class="hub-nav-button"
-          type="button"
-          data-hub-tab="website"
-          aria-pressed="false"
-          aria-controls="hub-panel-website"
-        >
-          Website versions
-        </button>
-      </div>
+  <div class="hub-workspace">
+    <aside class="hub-sidebar" aria-label="Hub catalogue">
+      <p class="hub-sidebar-label">CATALOG</p>
+      <button
+        class="hub-nav-button is-selected"
+        type="button"
+        data-hub-tab="projects"
+        aria-pressed="true"
+        aria-controls="hub-panel-projects"
+      >Projects</button>
+      <button
+        class="hub-nav-button"
+        type="button"
+        data-hub-tab="website"
+        aria-pressed="false"
+        aria-controls="hub-panel-website"
+      >Website versions</button>
 
-      <div class="hub-sidebar-group hub-sidebar-directory">
-        <p class="hub-sidebar-label">DIRECTORY</p>
-        <a class="hub-nav-link" href="/platform/">Platform</a>
-        <a class="hub-nav-link" href="/resources/">Resources</a>
-        <a class="hub-nav-link" href="https://github.com/DecemberReach" target="_blank" rel="noreferrer">GitHub</a>
-      </div>
+      <div class="hub-sidebar-rule"></div>
+      <p class="hub-sidebar-label">SOURCE</p>
+      <a class="hub-source-link" href="https://github.com/DecemberReach/reach-to-be-reached" target="_blank" rel="noreferrer">
+        reach-to-be-reached
+      </a>
     </aside>
 
-    <div class="hub-content" aria-live="polite">
+    <div class="hub-content">
       <section class="hub-panel" id="hub-panel-projects" data-hub-panel="projects" aria-labelledby="hub-projects-title">
         <header class="hub-content-heading">
-          <p class="hub-eyebrow">DECEMBER REACH / HUB</p>
-          <h1 id="hub-projects-title">Projects</h1>
-          <p>Browse the projects developed under December Reach.</p>
+          <div>
+            <p class="hub-location">DECEMBER REACH / HUB</p>
+            <h1 id="hub-projects-title">Projects</h1>
+          </div>
+          <span class="hub-item-count">3 projects</span>
         </header>
 
-        <div class="hub-feature">
-          <img
-            class="hub-feature-photo"
-            src={photos.hills.src}
-            alt={photos.hills.alt}
-            loading="eager"
-            fetchpriority="high"
-          />
-          <div class="hub-feature-shade"></div>
-          <div class="hub-feature-copy">
-            <p class="hub-feature-label">PROJECT CATALOG</p>
-            <h2>December Reach</h2>
-            <p>Operating-system projects and environments.</p>
-          </div>
-          <a class="hub-feature-credit" href={photos.hills.page} target="_blank" rel="noreferrer">
-            Photo by {photos.hills.photographer} / Unsplash
+        <div class="hub-tile-board">
+          <a class="hub-tile hub-tile-feature" href="/project/auroraADE/">
+            <img
+              src={photos.aurora.src}
+              alt={photos.aurora.alt}
+              loading="eager"
+              fetchpriority="high"
+              style="view-transition-name: project-auroraADE"
+            />
+            <span class="hub-tile-caption">
+              <span class="hub-tile-type">Desktop environment · x86_64</span>
+              <strong>auroraADE</strong>
+            </span>
+          </a>
+
+          <a class="hub-tile hub-tile-secondary" href="/project/haloDOT/">
+            <img
+              src={photos.halo.src}
+              alt={photos.halo.alt}
+              loading="lazy"
+              style="view-transition-name: project-haloDOT"
+            />
+            <span class="hub-tile-caption">
+              <span class="hub-tile-type">Operating system project</span>
+              <strong>haloDOT</strong>
+            </span>
+          </a>
+
+          <a class="hub-tile hub-tile-secondary" href="/project/stellaOS/">
+            <img
+              src={photos.stella.src}
+              alt={photos.stella.alt}
+              loading="lazy"
+              style="view-transition-name: project-stellaOS"
+            />
+            <span class="hub-tile-caption">
+              <span class="hub-tile-type">Television operating system</span>
+              <strong>stellaOS</strong>
+            </span>
           </a>
         </div>
 
-        <div class="hub-project-heading">
-          <h2>Project selection</h2>
-          <span>03 projects</span>
+        <div class="hub-source-row">
+          <span class="hub-source-label">OS SOURCE</span>
+          <a href="https://github.com/DecemberReach/reach-to-be-reached" target="_blank" rel="noreferrer">
+            DecemberReach / reach-to-be-reached
+          </a>
+          <span class="hub-source-detail">Each OS is developed in its own directory.</span>
         </div>
 
-        <div class="hub-project-grid">
-          {projects.map((project) => (
-            <article class="hub-project-item">
-              <a class="hub-project-card" href={"/project/" + project.slug + "/"}>
-                <figure class="hub-project-image">
-                  <img
-                    src={project.photo.src}
-                    alt={project.photo.alt}
-                    loading="lazy"
-                    style={"view-transition-name: project-" + project.slug}
-                  />
-                </figure>
-                <div class="hub-project-copy">
-                  <p class="hub-project-category">{project.category}</p>
-                  <h3>{project.name}</h3>
-                  {project.target && <p class="hub-project-target">{project.target}</p>}
-                  <span class="hub-project-open">Open project</span>
-                </div>
-              </a>
-              <p class="hub-photo-credit">
-                <a href={project.photo.page} target="_blank" rel="noreferrer">
-                  Photo by {project.photo.photographer} / Unsplash
-                </a>
-                <span>Temporary artwork</span>
-              </p>
-            </article>
-          ))}
-        </div>
-
-        <p class="hub-artwork-note">Landscape photographs are temporary artwork for the project splash areas. They are not screenshots of the operating systems or their interfaces.</p>
+        <p class="hub-artwork-credit">
+          Temporary artwork:
+          <a href={photos.aurora.page} target="_blank" rel="noreferrer">{photos.aurora.photographer}</a>,
+          <a href={photos.halo.page} target="_blank" rel="noreferrer">{photos.halo.photographer}</a>,
+          <a href={photos.stella.page} target="_blank" rel="noreferrer">{photos.stella.photographer}</a>
+          / Unsplash
+        </p>
       </section>
 
       <section class="hub-panel" id="hub-panel-website" data-hub-panel="website" aria-labelledby="hub-website-title" hidden>
         <header class="hub-content-heading">
-          <p class="hub-eyebrow">DECEMBER REACH / CATALOG</p>
-          <h1 id="hub-website-title">Website versions</h1>
-          <p>The published homepage and its available version entry.</p>
+          <div>
+            <p class="hub-location">DECEMBER REACH / HUB</p>
+            <h1 id="hub-website-title">Website versions</h1>
+          </div>
+          <span class="hub-item-count">Current</span>
         </header>
 
-        <div class="hub-version-showcase">
-          <img src={photos.hills.src} alt={photos.hills.alt} loading="lazy" />
-          <div class="hub-version-shade"></div>
-          <div class="hub-version-copy">
-            <p class="hub-feature-label">WEBSITE</p>
-            <h2>December Reach</h2>
-            <p>Official organization homepage</p>
-          </div>
-          <a class="hub-feature-credit" href={photos.hills.page} target="_blank" rel="noreferrer">
-            Photo by {photos.hills.photographer} / Unsplash
+        <div class="hub-version-board">
+          <a class="hub-tile hub-version-tile" href="/">
+            <img src={photos.home.src} alt={photos.home.alt} loading="lazy" />
+            <span class="hub-tile-caption">
+              <span class="hub-tile-type">Published website</span>
+              <strong>December Reach</strong>
+            </span>
           </a>
+          <div class="hub-version-info">
+            <span class="hub-version-state">CURRENT</span>
+            <h2>Official homepage</h2>
+            <p>December Reach · GitHub Pages</p>
+            <a href="https://github.com/DecemberReach/decemberreach.github.io" target="_blank" rel="noreferrer">Website repository</a>
+          </div>
         </div>
 
-        <div class="hub-version-list">
-          <div>
-            <p class="hub-version-kicker">CURRENT</p>
-            <h2>Current homepage</h2>
-            <p>December Reach · GitHub Pages</p>
-          </div>
-          <span class="hub-version-state">Published</span>
-        </div>
-        <p class="hub-artwork-note">Only the current published homepage is listed here. No older site versions are represented as available releases.</p>
+        <p class="hub-artwork-credit">
+          Temporary artwork by
+          <a href={photos.home.page} target="_blank" rel="noreferrer">{photos.home.photographer}</a>
+          / Unsplash
+        </p>
       </section>
     </div>
   </div>
