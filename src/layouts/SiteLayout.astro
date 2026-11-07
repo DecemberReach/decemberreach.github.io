@@ -102,7 +102,14 @@ const { title, description, current } = Astro.props;
         let isDragging = false;
         let dragPointerId = null;
         let dragPointerOffset = 0;
-        let chapters = [];
+        type ScrollChapter = {
+          heading: HTMLHeadingElement;
+          id: string;
+          title: string;
+          top: number;
+          marker: HTMLButtonElement | null;
+        };
+        let chapters: ScrollChapter[] = [];
 
         const getScrollMetrics = () => {
           const documentHeight = Math.max(
@@ -142,7 +149,7 @@ const { title, description, current } = Astro.props;
 
         const detectChapters = () => {
           const headings = Array.from(
-            document.querySelectorAll("#main-content h1, #main-content h2"),
+            document.querySelectorAll<HTMLHeadingElement>("#main-content h1, #main-content h2"),
           ).filter((heading) => {
             const title = heading.textContent?.trim();
             return Boolean(title) && heading.getClientRects().length > 0;
@@ -223,8 +230,11 @@ const { title, description, current } = Astro.props;
           const active = chapters[activeIndex];
           currentChapterLabel.textContent = active.title;
           currentChapterLabel.title = active.title;
-          currentChapterLabel.style.top =
-            `${metrics.thumbTop + metrics.thumbHeight / 2}px`;
+          const labelCenter = Math.min(
+            window.innerHeight - 48,
+            Math.max(48, 42 + metrics.thumbTop + metrics.thumbHeight / 2),
+          );
+          currentChapterLabel.style.top = `${labelCenter}px`;
 
           chapters.forEach((chapter, index) => {
             chapter.marker?.classList.toggle("is-active", index === activeIndex);
@@ -392,7 +402,7 @@ const { title, description, current } = Astro.props;
         scrollbar.addEventListener("focusout", (event) => {
           if (
             !pointerNearEdge &&
-            !scrollbar.contains(event.relatedTarget) &&
+            !(event.relatedTarget instanceof Node && scrollbar.contains(event.relatedTarget)) &&
             !isDragging
           ) {
             scrollbar.classList.remove("is-visible");
