@@ -1633,7 +1633,7 @@ body.site-theme-dark {
     z-index: 1000;
     inset: 0 0 0 auto;
     display: block;
-    width: 42px;
+    width: 36px;
     height: 100vh;
     height: 100dvh;
     opacity: 0;
@@ -1659,10 +1659,10 @@ body.site-theme-dark {
   .page-scrollbar-control {
     position: absolute;
     z-index: 5;
-    right: 3px;
+    right: 4px;
     display: grid;
-    width: 34px;
-    height: 34px;
+    width: 22px;
+    height: 22px;
     place-items: center;
     padding: 0;
     border: 0;
@@ -1683,17 +1683,17 @@ body.site-theme-dark {
   }
 
   .page-scrollbar-top {
-    top: 3px;
+    top: 4px;
   }
 
   .page-scrollbar-bottom {
-    bottom: 3px;
+    bottom: 4px;
   }
 
   .page-scrollbar-arrow {
     display: block;
-    width: 8px;
-    height: 8px;
+    width: 6px;
+    height: 6px;
     border-top: 1.5px solid currentColor;
     border-left: 1.5px solid currentColor;
   }
@@ -1708,12 +1708,15 @@ body.site-theme-dark {
 
   .page-scrollbar-rail {
     position: absolute;
-    inset: 42px 0 42px;
+    inset: 28px 0;
   }
 
   .page-scrollbar-track {
     position: absolute;
-    inset: 0 18px;
+    top: 0;
+    right: 7px;
+    bottom: 0;
+    width: 4px;
     background: #2d2d2d;
     cursor: pointer;
   }
@@ -1722,7 +1725,7 @@ body.site-theme-dark {
     position: absolute;
     z-index: 4;
     top: 0;
-    right: 18px;
+    right: 6px;
     width: 6px;
     min-height: 36px;
     background: #777;
@@ -1752,10 +1755,10 @@ body.site-theme-dark {
   .page-scrollbar-chapter-marker {
     position: absolute;
     z-index: 3;
-    left: 50%;
+    left: 16px;
     display: grid;
-    width: 20px;
-    height: 20px;
+    width: 14px;
+    height: 14px;
     place-items: center;
     padding: 0;
     border: 0;
@@ -1767,8 +1770,8 @@ body.site-theme-dark {
 
   .page-scrollbar-chapter-marker::before {
     display: block;
-    width: 5px;
-    height: 5px;
+    width: 4px;
+    height: 4px;
     border: 1px solid #aaa;
     background: #303030;
     content: "";
@@ -1776,14 +1779,14 @@ body.site-theme-dark {
   }
 
   .page-scrollbar-chapter-marker:hover::before {
-    width: 8px;
-    height: 8px;
+    width: 6px;
+    height: 6px;
     background: #d0d0d0;
   }
 
   .page-scrollbar-chapter-marker.is-active::before {
-    width: 8px;
-    height: 8px;
+    width: 6px;
+    height: 6px;
     border-color: #fff;
     background: #fff;
   }
