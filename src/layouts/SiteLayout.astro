@@ -102,6 +102,14 @@ const { title, description, current } = Astro.props;
         let isDragging = false;
         let dragPointerId = null;
         let dragPointerOffset = 0;
+        let dragRailTop = 0;
+        let dragMaxThumbTop = 0;
+        let dragMaxScrollTop = 0;
+        let pendingDragClientY = 0;
+        let dragFrame = 0;
+        let metricsFrame = 0;
+        let previousScrollBehavior = "";
+        let scrollBehaviorOverridden = false;
         type ScrollChapter = {
           heading: HTMLHeadingElement;
           id: string;
@@ -312,6 +320,31 @@ const { title, description, current } = Astro.props;
           );
         });
 
+        const restoreScrollBehavior = () => {
+          if (!scrollBehaviorOverridden) return;
+          document.documentElement.style.scrollBehavior = previousScrollBehavior;
+          scrollBehaviorOverridden = false;
+        };
+
+        const applyDragPosition = () => {
+          dragFrame = 0;
+          if (!isDragging) return;
+
+          const nextThumbTop = Math.min(
+            dragMaxThumbTop,
+            Math.max(
+              0,
+              pendingDragClientY - dragRailTop - dragPointerOffset,
+            ),
+          );
+          const nextScrollTop = dragMaxThumbTop > 0
+            ? (nextThumbTop / dragMaxThumbTop) * dragMaxScrollTop
+            : 0;
+
+          // Dragging must be immediate; the site's normal smooth-scroll rule causes lag here.
+          window.scrollTo({ top: nextScrollTop, behavior: "auto" });
+        };
+
         thumb.addEventListener("pointerdown", (event) => {
           if (event.button !== 0) return;
 
@@ -321,6 +354,15 @@ const { title, description, current } = Astro.props;
           const railBounds = rail.getBoundingClientRect();
           dragPointerOffset =
             event.clientY - railBounds.top - metrics.thumbTop;
+          dragRailTop = railBounds.top;
+          dragMaxThumbTop = metrics.maxThumbTop;
+          dragMaxScrollTop = metrics.maxScrollTop;
+          pendingDragClientY = event.clientY;
+
+          previousScrollBehavior = document.documentElement.style.scrollBehavior;
+          document.documentElement.style.scrollBehavior = "auto";
+          scrollBehaviorOverridden = true;
+
           isDragging = true;
           dragPointerId = event.pointerId;
           thumb.setPointerCapture(event.pointerId);
@@ -328,30 +370,16 @@ const { title, description, current } = Astro.props;
           event.preventDefault();
         });
 
-        thumb.addEventListener("pointermove", (event) => {
-          if (!isDragging || event.pointerId !== dragPointerId) return;
-
-          const metrics = getScrollMetrics();
-          const railBounds = rail.getBoundingClientRect();
-          const nextThumbTop = Math.min(
-            metrics.maxThumbTop,
-            Math.max(
-              0,
-              event.clientY - railBounds.top - dragPointerOffset,
-            ),
-          );
-          const nextScrollTop = metrics.maxThumbTop > 0
-            ? (nextThumbTop / metrics.maxThumbTop) * metrics.maxScrollTop
-            : 0;
-
-          window.scrollTo({ top: nextScrollTop, behavior: "auto" });
-        });
-
         const endDragging = (event) => {
           if (!isDragging || event.pointerId !== dragPointerId) return;
 
           isDragging = false;
           dragPointerId = null;
+          if (dragFrame) {
+            cancelAnimationFrame(dragFrame);
+            dragFrame = 0;
+          }
+          restoreScrollBehavior();
           scrollbar.classList.remove("is-dragging");
           updateMetrics();
 
@@ -412,7 +440,15 @@ const { title, description, current } = Astro.props;
         window.addEventListener(
           "pointermove",
           (event) => {
-            if (event.pointerType !== "mouse" || isDragging) return;
+            if (isDragging && event.pointerId === dragPointerId) {
+              pendingDragClientY = event.clientY;
+              if (!dragFrame) {
+                dragFrame = requestAnimationFrame(applyDragPosition);
+              }
+              return;
+            }
+
+            if (event.pointerType !== "mouse") return;
 
             pointerNearEdge =
               window.innerWidth - event.clientX <= edgeRevealWidth;
@@ -428,7 +464,15 @@ const { title, description, current } = Astro.props;
           { passive: true },
         );
 
-        window.addEventListener("scroll", updateMetrics, { passive: true });
+        const scheduleMetricsUpdate = () => {
+          if (metricsFrame) return;
+          metricsFrame = requestAnimationFrame(() => {
+            metricsFrame = 0;
+            updateMetrics();
+          });
+        };
+
+        window.addEventListener("scroll", scheduleMetricsUpdate, { passive: true });
         window.addEventListener("resize", refreshChapters, { passive: true });
         window.addEventListener("pageshow", refreshChapters);
 
@@ -455,6 +499,11 @@ const { title, description, current } = Astro.props;
         window.addEventListener("blur", () => {
           isDragging = false;
           dragPointerId = null;
+          if (dragFrame) {
+            cancelAnimationFrame(dragFrame);
+            dragFrame = 0;
+          }
+          restoreScrollBehavior();
           scrollbar.classList.remove("is-visible", "is-dragging");
         });
       }
