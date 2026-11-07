@@ -6,26 +6,27 @@ import SiteLayout from "../../layouts/SiteLayout.astro";
   description="Architecture notes for reachOS, Fabric Dessert, FRT64, memory, devices, boot and display."
   current="architecture"
 >
-  <section class="page-intro">
+  <header class="page-heading">
+    <p class="page-context">December Reach / Documentation</p>
     <h1>Architecture</h1>
     <p class="page-lead">
       Architecture documented in the reachOS source: the virtual hardware
       platform, its CPU boundary, memory and device model, and display path.
     </p>
-  </section>
+  </header>
 
-  <nav class="section-pivot" aria-label="Architecture sections">
+  <nav class="section-nav" aria-label="Architecture sections">
     <a href="#names">Names</a>
-    <a href="#layout">Platform</a>
+    <a href="#platform">Platform</a>
     <a href="#boot">Boot and CPU</a>
-    <a href="#memory">Memory and devices</a>
+    <a href="#memory">Memory</a>
+    <a href="#devices">Devices</a>
     <a href="#display">Display</a>
     <a href="#references">References</a>
   </nav>
 
   <section class="document-section" id="names">
     <header class="document-heading">
-      <span class="document-index">01</span>
       <h2>Names and responsibilities</h2>
     </header>
     <div class="document-body">
@@ -45,7 +46,7 @@ import SiteLayout from "../../layouts/SiteLayout.astro";
             <td>CPU integration boundary designed to accommodate ARM 32-bit, ARM 64-bit, x86 32-bit and x86 64-bit integrations. This does not claim that every ISA implementation is complete.</td>
           </tr>
           <tr>
-            <th>auroraADE</th>
+            <th><a href="https://github.com/critical-dummy/auroraADE-AI-Development-Test" target="_blank" rel="noreferrer">auroraADE</a></th>
             <td>Aesthetic Desktop Environment. Its documented target architecture is x86_64, not every architecture available at the broader platform boundary.</td>
           </tr>
         </tbody>
@@ -53,9 +54,8 @@ import SiteLayout from "../../layouts/SiteLayout.astro";
     </div>
   </section>
 
-  <section class="document-section" id="layout">
+  <section class="document-section" id="platform">
     <header class="document-heading">
-      <span class="document-index">02</span>
       <h2>Platform architecture</h2>
     </header>
     <div class="document-body">
@@ -77,7 +77,6 @@ import SiteLayout from "../../layouts/SiteLayout.astro";
 
   <section class="document-section" id="boot">
     <header class="document-heading">
-      <span class="document-index">03</span>
       <h2>Boot and CPU boundary</h2>
     </header>
     <div class="document-body">
@@ -95,21 +94,25 @@ import SiteLayout from "../../layouts/SiteLayout.astro";
 
   <section class="document-section" id="memory">
     <header class="document-heading">
-      <span class="document-index">04</span>
-      <h2>Memory and devices</h2>
+      <h2>Physical memory</h2>
     </header>
     <div class="document-body">
-      <h3>Physical memory</h3>
       <p>The physical address space uses 64-bit <code>bigint</code> addresses. Sparse physical backing is allocated in 64 KiB chunks rather than eagerly allocating the entire configured RAM range.</p>
       <p>Region mapping includes conflict checks and access-boundary validation. Memory-mapped device access is dispatched through the address-space and device model.</p>
-      <h3>Device bus</h3>
+    </div>
+  </section>
+
+  <section class="document-section" id="devices">
+    <header class="document-heading">
+      <h2>Device bus</h2>
+    </header>
+    <div class="document-body">
       <p><code>DeviceBus</code> manages MMIO address windows, alignment, interrupt-vector assignments and device enumeration. Device interfaces provide a common boundary for controllers, timers, display devices and other peripherals.</p>
     </div>
   </section>
 
   <section class="document-section" id="display">
     <header class="document-heading">
-      <span class="document-index">05</span>
       <h2>Display pipeline</h2>
     </header>
     <div class="document-body">
@@ -127,15 +130,14 @@ import SiteLayout from "../../layouts/SiteLayout.astro";
 
   <section class="document-section" id="references">
     <header class="document-heading">
-      <span class="document-index">06</span>
       <h2>Scope and references</h2>
     </header>
     <div class="document-body">
       <p>This page documents architecture visible in the referenced reachOS source. It does not specify the implementation status of auroraADE's window manager, panel, dock, file manager or bundled applications, so it does not present those as completed features.</p>
-      <ul>
-        <li><a href="https://github.com/DecemberReach/reach-to-be-reached" target="_blank" rel="noreferrer">December Reach OS source collection</a> — current organization-level OS repository.</li>
-        <li><a href="https://github.com/critical-dummy/reachOS" target="_blank" rel="noreferrer">Fabric Dessert implementation reference</a> — source for the platform architecture documented on this page.</li>
-        <li><a href="https://github.com/critical-dummy/reachOS/blob/main/README.md" target="_blank" rel="noreferrer">Platform README</a> — architecture overview, reset topology and subsystem notes.</li>
+      <ul class="reference-list">
+        <li><a href="https://github.com/DecemberReach/reach-to-be-reached" target="_blank" rel="noreferrer">December Reach OS source collection</a></li>
+        <li><a href="https://github.com/critical-dummy/reachOS" target="_blank" rel="noreferrer">Fabric Dessert implementation reference</a></li>
+        <li><a href="https://github.com/critical-dummy/reachOS/blob/main/README.md" target="_blank" rel="noreferrer">Platform README</a></li>
       </ul>
     </div>
   </section>
