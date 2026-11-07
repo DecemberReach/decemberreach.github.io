@@ -10,6 +10,7 @@ interface Props {
 }
 
 const { title, description, current } = Astro.props;
+const buildId = import.meta.env.PUBLIC_BUILD_ID ?? "local";
 ---
 <!doctype html>
 <html lang="en">
@@ -17,6 +18,7 @@ const { title, description, current } = Astro.props;
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#101010" />
+    <meta name="site-build-id" content={buildId} />
     <meta name="description" content={description} />
     <meta property="og:type" content="website" />
     <meta property="og:title" content={title} />
@@ -26,6 +28,51 @@ const { title, description, current } = Astro.props;
     <link rel="canonical" href={Astro.url.href} />
     <link rel="preload" href="/fonts/open-sans/open-sans-variable.ttf" as="font" type="font/ttf" crossorigin />
     <title>{title} · December Reach</title>
+<script is:inline>
+  (() => {
+    const refreshParameter = "__dr_refresh";
+    const currentBuildId = document
+      .querySelector('meta[name="site-build-id"]')
+      ?.getAttribute("content");
+    const currentUrl = new URL(window.location.href);
+
+    if (currentUrl.searchParams.has(refreshParameter)) {
+      currentUrl.searchParams.delete(refreshParameter);
+      window.history.replaceState(
+        window.history.state,
+        "",
+        `${currentUrl.pathname}${currentUrl.search}${currentUrl.hash}`,
+      );
+      return;
+    }
+
+    if (!currentBuildId || currentBuildId === "local") return;
+
+    fetch(`${currentUrl.pathname}${currentUrl.search}`, {
+      cache: "no-cache",
+      credentials: "same-origin",
+      headers: { Accept: "text/html" },
+    })
+      .then((response) => response.ok ? response.text() : null)
+      .then((html) => {
+        if (!html) return;
+
+        const latestDocument = new DOMParser().parseFromString(html, "text/html");
+        const latestBuildId = latestDocument
+          .querySelector('meta[name="site-build-id"]')
+          ?.getAttribute("content");
+
+        if (!latestBuildId || latestBuildId === currentBuildId) return;
+
+        const refreshedUrl = new URL(window.location.href);
+        refreshedUrl.searchParams.set(refreshParameter, latestBuildId);
+        window.location.replace(refreshedUrl.href);
+      })
+      .catch(() => {
+        // Keep the current page available when the freshness check cannot reach the site.
+      });
+  })();
+</script>
   </head>
   <body class="site-theme-dark">
     <a class="skip-link" href="#main-content">Skip to content</a>
