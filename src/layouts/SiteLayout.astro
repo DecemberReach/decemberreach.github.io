@@ -101,15 +101,14 @@ const { title, description, current } = Astro.props;
         let pointerNearEdge = false;
         let isDragging = false;
         let dragPointerId = null;
-        let dragPointerOffset = 0;
-        let dragRailTop = 0;
+        const scrollingElement = document.scrollingElement ?? document.documentElement;
+        let dragStartClientY = 0;
+        let dragStartScrollTop = 0;
         let dragMaxThumbTop = 0;
         let dragMaxScrollTop = 0;
         let pendingDragClientY = 0;
         let dragFrame = 0;
         let metricsFrame = 0;
-        let previousScrollBehavior = "";
-        let scrollBehaviorOverridden = false;
         type ScrollChapter = {
           heading: HTMLHeadingElement;
           id: string;
@@ -320,29 +319,22 @@ const { title, description, current } = Astro.props;
           );
         });
 
-        const restoreScrollBehavior = () => {
-          if (!scrollBehaviorOverridden) return;
-          document.documentElement.style.scrollBehavior = previousScrollBehavior;
-          scrollBehaviorOverridden = false;
-        };
-
         const applyDragPosition = () => {
           dragFrame = 0;
           if (!isDragging) return;
 
-          const nextThumbTop = Math.min(
-            dragMaxThumbTop,
-            Math.max(
-              0,
-              pendingDragClientY - dragRailTop - dragPointerOffset,
-            ),
-          );
-          const nextScrollTop = dragMaxThumbTop > 0
-            ? (nextThumbTop / dragMaxThumbTop) * dragMaxScrollTop
+          const pointerDelta = pendingDragClientY - dragStartClientY;
+          const scrollDelta = dragMaxThumbTop > 0
+            ? pointerDelta * (dragMaxScrollTop / dragMaxThumbTop)
             : 0;
+          const nextScrollTop = Math.min(
+            dragMaxScrollTop,
+            Math.max(0, dragStartScrollTop + scrollDelta),
+          );
 
-          // Dragging must be immediate; the site's normal smooth-scroll rule causes lag here.
-          window.scrollTo({ top: nextScrollTop, behavior: "auto" });
+          // A single cached mapping keeps the thumb directly attached to the pointer.
+          scrollingElement.scrollTop = nextScrollTop;
+          updateMetrics();
         };
 
         thumb.addEventListener("pointerdown", (event) => {
@@ -351,20 +343,20 @@ const { title, description, current } = Astro.props;
           const metrics = getScrollMetrics();
           if (metrics.maxScrollTop <= 0 || metrics.maxThumbTop <= 0) return;
 
-          const railBounds = rail.getBoundingClientRect();
-          dragPointerOffset =
-            event.clientY - railBounds.top - metrics.thumbTop;
-          dragRailTop = railBounds.top;
+          dragStartClientY = event.clientY;
+          dragStartScrollTop = metrics.scrollTop;
           dragMaxThumbTop = metrics.maxThumbTop;
           dragMaxScrollTop = metrics.maxScrollTop;
           pendingDragClientY = event.clientY;
 
-          previousScrollBehavior = document.documentElement.style.scrollBehavior;
-          document.documentElement.style.scrollBehavior = "auto";
-          scrollBehaviorOverridden = true;
-
           isDragging = true;
           dragPointerId = event.pointerId;
+          if (metricsFrame) {
+            cancelAnimationFrame(metricsFrame);
+            metricsFrame = 0;
+          }
+
+          document.documentElement.classList.add("is-scrollbar-dragging");
           thumb.setPointerCapture(event.pointerId);
           scrollbar.classList.add("is-visible", "is-dragging");
           event.preventDefault();
@@ -379,7 +371,7 @@ const { title, description, current } = Astro.props;
             cancelAnimationFrame(dragFrame);
             dragFrame = 0;
           }
-          restoreScrollBehavior();
+          document.documentElement.classList.remove("is-scrollbar-dragging");
           scrollbar.classList.remove("is-dragging");
           updateMetrics();
 
@@ -465,7 +457,7 @@ const { title, description, current } = Astro.props;
         );
 
         const scheduleMetricsUpdate = () => {
-          if (metricsFrame) return;
+          if (isDragging || metricsFrame) return;
           metricsFrame = requestAnimationFrame(() => {
             metricsFrame = 0;
             updateMetrics();
@@ -503,7 +495,7 @@ const { title, description, current } = Astro.props;
             cancelAnimationFrame(dragFrame);
             dragFrame = 0;
           }
-          restoreScrollBehavior();
+          document.documentElement.classList.remove("is-scrollbar-dragging");
           scrollbar.classList.remove("is-visible", "is-dragging");
         });
       }

@@ -1823,3 +1823,10 @@ body.site-theme-dark {
     outline-offset: -2px;
   }
 }
+
+
+@media (hover: hover) and (pointer: fine) {
+  html.is-scrollbar-dragging {
+    scroll-behavior: auto !important;
+  }
+}
