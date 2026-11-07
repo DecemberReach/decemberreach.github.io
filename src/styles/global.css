@@ -1715,18 +1715,8 @@ body.site-theme-dark {
 
   .page-scrollbar-arrow {
     display: block;
-    width: 6px;
-    height: 6px;
-    border-top: 1.5px solid currentColor;
-    border-left: 1.5px solid currentColor;
-  }
-
-  .page-scrollbar-arrow-up {
-    transform: translateY(2px) rotate(45deg);
-  }
-
-  .page-scrollbar-arrow-down {
-    transform: translateY(-2px) rotate(225deg);
+    font-size: 11px;
+    line-height: 1;
   }
 
   .page-scrollbar-rail {
