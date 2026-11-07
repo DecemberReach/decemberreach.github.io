@@ -1612,3 +1612,35 @@ body.site-theme-dark {
     padding: 20px 0;
   }
 }
+
+/* Reveal the native page scrollbar only when the pointer reaches the right edge. */
+@media (hover: hover) and (pointer: fine) {
+  html {
+    scrollbar-width: thin;
+    scrollbar-color: transparent transparent;
+  }
+
+  html.scrollbar-revealed {
+    scrollbar-color: #686868 transparent;
+  }
+
+  html::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  html::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  html::-webkit-scrollbar-thumb {
+    background: transparent;
+  }
+
+  html.scrollbar-revealed::-webkit-scrollbar-thumb {
+    background: #686868;
+  }
+
+  html.scrollbar-revealed::-webkit-scrollbar-thumb:hover {
+    background: #a3a3a3;
+  }
+}

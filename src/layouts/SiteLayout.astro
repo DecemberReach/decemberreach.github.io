@@ -49,5 +49,25 @@ const { title, description, current } = Astro.props;
         <a class="footer-link" href="https://github.com/DecemberReach" target="_blank" rel="noreferrer">GitHub organization</a>
       </footer>
     </div>
+
+    <script>
+      const root = document.documentElement;
+      const edgeRevealWidth = 14;
+
+      window.addEventListener(
+        "pointermove",
+        (event) => {
+          if (event.pointerType !== "mouse") return;
+
+          const nearRightEdge = window.innerWidth - event.clientX <= edgeRevealWidth;
+          root.classList.toggle("scrollbar-revealed", nearRightEdge);
+        },
+        { passive: true },
+      );
+
+      window.addEventListener("blur", () => {
+        root.classList.remove("scrollbar-revealed");
+      });
+    </script>
   </body>
 </html>
