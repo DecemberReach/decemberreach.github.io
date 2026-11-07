@@ -50,24 +50,222 @@ const { title, description, current } = Astro.props;
       </footer>
     </div>
 
+    <div
+      class="page-scrollbar"
+      role="scrollbar"
+      aria-label="Page scroll position"
+      aria-orientation="vertical"
+      aria-valuemin="0"
+      aria-valuemax="100"
+      aria-valuenow="0"
+      tabindex="0"
+    >
+      <div class="page-scrollbar-thumb" aria-hidden="true"></div>
+    </div>
+
     <script>
-      const root = document.documentElement;
-      const edgeRevealWidth = 14;
+      const scrollbar = document.querySelector(".page-scrollbar");
+      const thumb = scrollbar?.querySelector(".page-scrollbar-thumb");
 
-      window.addEventListener(
-        "pointermove",
-        (event) => {
-          if (event.pointerType !== "mouse") return;
+      if (
+        scrollbar instanceof HTMLElement &&
+        thumb instanceof HTMLElement &&
+        window.matchMedia("(hover: hover) and (pointer: fine)").matches
+      ) {
+        const edgeRevealWidth = 16;
+        let pointerNearEdge = false;
+        let isDragging = false;
+        let dragPointerId = null;
+        let dragStartY = 0;
+        let dragStartThumbTop = 0;
 
-          const nearRightEdge = window.innerWidth - event.clientX <= edgeRevealWidth;
-          root.classList.toggle("scrollbar-revealed", nearRightEdge);
-        },
-        { passive: true },
-      );
+        const measure = () => {
+          const scrollHeight = Math.max(
+            document.documentElement.scrollHeight,
+            document.body.scrollHeight,
+          );
+          const viewportHeight = window.innerHeight;
+          const trackHeight = scrollbar.clientHeight;
+          const maxScrollTop = Math.max(scrollHeight - viewportHeight, 0);
+          const thumbHeight = Math.min(
+            trackHeight,
+            Math.max(28, trackHeight * (viewportHeight / scrollHeight)),
+          );
+          const maxThumbTop = Math.max(trackHeight - thumbHeight, 0);
+          const scrollTop = window.scrollY || document.documentElement.scrollTop;
+          const thumbTop = maxScrollTop > 0
+            ? (scrollTop / maxScrollTop) * maxThumbTop
+            : 0;
 
-      window.addEventListener("blur", () => {
-        root.classList.remove("scrollbar-revealed");
-      });
+          return {
+            maxScrollTop,
+            thumbHeight,
+            maxThumbTop,
+            thumbTop,
+            scrollTop,
+          };
+        };
+
+        const updateMetrics = () => {
+          const metrics = measure();
+          thumb.style.height = `${metrics.thumbHeight}px`;
+          thumb.style.top = `${metrics.thumbTop}px`;
+          scrollbar.setAttribute(
+            "aria-valuenow",
+            String(
+              metrics.maxScrollTop > 0
+                ? Math.round((metrics.scrollTop / metrics.maxScrollTop) * 100)
+                : 0,
+            ),
+          );
+          scrollbar.classList.toggle("is-disabled", metrics.maxScrollTop <= 0);
+          if (metrics.maxScrollTop <= 0) {
+            scrollbar.classList.remove("is-visible");
+          }
+        };
+
+        window.addEventListener("scroll", updateMetrics, { passive: true });
+        window.addEventListener("resize", updateMetrics, { passive: true });
+        window.addEventListener("pageshow", updateMetrics);
+
+        const resizeObserver = new ResizeObserver(updateMetrics);
+        resizeObserver.observe(document.documentElement);
+        resizeObserver.observe(document.body);
+        updateMetrics();
+
+        window.addEventListener(
+          "pointermove",
+          (event) => {
+            if (isDragging && event.pointerId === dragPointerId) {
+              const metrics = measure();
+              const nextThumbTop = Math.min(
+                metrics.maxThumbTop,
+                Math.max(
+                  0,
+                  dragStartThumbTop + (event.clientY - dragStartY),
+                ),
+              );
+              const nextScrollTop = metrics.maxThumbTop > 0
+                ? (nextThumbTop / metrics.maxThumbTop) * metrics.maxScrollTop
+                : 0;
+
+              window.scrollTo({ top: nextScrollTop, behavior: "auto" });
+              scrollbar.classList.add("is-visible");
+              return;
+            }
+
+            if (event.pointerType !== "mouse") return;
+
+            pointerNearEdge = window.innerWidth - event.clientX <= edgeRevealWidth;
+            const pointerOnScrollbar =
+              event.target instanceof Node && scrollbar.contains(event.target);
+            const hasFocus = document.activeElement === scrollbar;
+
+            scrollbar.classList.toggle(
+              "is-visible",
+              pointerNearEdge || pointerOnScrollbar || hasFocus,
+            );
+          },
+          { passive: true },
+        );
+
+        scrollbar.addEventListener("pointerdown", (event) => {
+          if (event.button !== 0) return;
+
+          const metrics = measure();
+          if (metrics.maxScrollTop <= 0 || metrics.maxThumbTop <= 0) return;
+
+          const pointerOnThumb = event.target === thumb;
+          if (pointerOnThumb) {
+            dragStartThumbTop = metrics.thumbTop;
+          } else {
+            const bounds = scrollbar.getBoundingClientRect();
+            dragStartThumbTop = Math.min(
+              metrics.maxThumbTop,
+              Math.max(
+                0,
+                event.clientY - bounds.top - metrics.thumbHeight / 2,
+              ),
+            );
+            window.scrollTo({
+              top:
+                (dragStartThumbTop / metrics.maxThumbTop) *
+                metrics.maxScrollTop,
+              behavior: "auto",
+            });
+          }
+
+          isDragging = true;
+          dragPointerId = event.pointerId;
+          dragStartY = event.clientY;
+          scrollbar.setPointerCapture(event.pointerId);
+          scrollbar.classList.add("is-visible", "is-dragging");
+          event.preventDefault();
+        });
+
+        const endDragging = (event) => {
+          if (!isDragging || event.pointerId !== dragPointerId) return;
+
+          isDragging = false;
+          dragPointerId = null;
+          scrollbar.classList.remove("is-dragging");
+          updateMetrics();
+          if (!pointerNearEdge && document.activeElement !== scrollbar) {
+            scrollbar.classList.remove("is-visible");
+          }
+        };
+
+        scrollbar.addEventListener("pointerup", endDragging);
+        scrollbar.addEventListener("pointercancel", endDragging);
+        scrollbar.addEventListener("lostpointercapture", endDragging);
+
+        scrollbar.addEventListener("focus", () => {
+          scrollbar.classList.add("is-visible");
+        });
+
+        scrollbar.addEventListener("blur", () => {
+          if (!pointerNearEdge && !isDragging) {
+            scrollbar.classList.remove("is-visible");
+          }
+        });
+
+        scrollbar.addEventListener("keydown", (event) => {
+          const lineStep = Math.max(48, window.innerHeight * 0.12);
+          let nextScrollTop;
+
+          switch (event.key) {
+            case "ArrowDown":
+              nextScrollTop = window.scrollY + lineStep;
+              break;
+            case "ArrowUp":
+              nextScrollTop = window.scrollY - lineStep;
+              break;
+            case "PageDown":
+              nextScrollTop = window.scrollY + window.innerHeight * 0.9;
+              break;
+            case "PageUp":
+              nextScrollTop = window.scrollY - window.innerHeight * 0.9;
+              break;
+            case "Home":
+              nextScrollTop = 0;
+              break;
+            case "End":
+              nextScrollTop = document.documentElement.scrollHeight;
+              break;
+            default:
+              return;
+          }
+
+          event.preventDefault();
+          window.scrollTo({ top: nextScrollTop, behavior: "auto" });
+        });
+
+        window.addEventListener("blur", () => {
+          isDragging = false;
+          dragPointerId = null;
+          scrollbar.classList.remove("is-visible", "is-dragging");
+        });
+      }
     </script>
   </body>
 </html>
