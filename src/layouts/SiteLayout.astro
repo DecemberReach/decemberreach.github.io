@@ -163,7 +163,7 @@ const { title, description, current } = Astro.props;
             return {
               heading,
               id: heading.id,
-              title: heading.textContent?.trim().replace(/\\s+/g, " ") ?? "Untitled",
+              title: heading.textContent?.trim().replace(/\s+/g, " ") ?? "Untitled",
               top: getHeadingPosition(heading),
               marker: null,
             };
