@@ -16,6 +16,14 @@ The site is built with Astro 6 and custom CSS. It is separate from the operating
 - /emulation/ — source acquisition and emulation responsibility model.
 - /architecture/ — compatibility redirect to /platform/.
 
+## OS source organization
+
+All operating-system projects are developed in the shared repository:
+
+https://github.com/DecemberReach/reach-to-be-reached
+
+Each OS is developed in its own directory within that repository. The project pages link to this shared source repository rather than separate per-OS repositories.
+
 ## Artwork
 
 Temporary landscape artwork is served from Unsplash. Each image links to its photographer's Unsplash photo page. The landscape photographs are not screenshots of the projects or their interfaces.
@@ -53,9 +61,8 @@ Astro outputs the static site to dist/.
 
 ## Project links
 
-- OS source collection: https://github.com/DecemberReach/reach-to-be-reached
+- Shared OS source repository: https://github.com/DecemberReach/reach-to-be-reached
 - Fabric Dessert implementation reference: https://github.com/critical-dummy/reachOS
-- auroraADE development repository: https://github.com/critical-dummy/auroraADE-AI-Development-Test
 - December Reach organization: https://github.com/DecemberReach
 
 ## Deployment

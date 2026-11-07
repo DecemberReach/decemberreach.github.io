@@ -6,12 +6,13 @@ type Project = {
   name: string;
   category: string;
   target?: string;
-  repository?: string;
   image: string;
   imageAlt: string;
   photoPage: string;
   photographer: string;
 };
+
+const sharedOSRepository = "https://github.com/DecemberReach/reach-to-be-reached";
 
 export function getStaticPaths() {
   const projects: Project[] = [
@@ -20,7 +21,6 @@ export function getStaticPaths() {
       name: "auroraADE",
       category: "Desktop environment",
       target: "x86_64",
-      repository: "https://github.com/critical-dummy/auroraADE-AI-Development-Test",
       image: "https://images.unsplash.com/photo-1531764411937-45495415d84d?auto=format&fit=crop&w=1400&q=80",
       imageAlt: "Turquoise lake surrounded by forested mountains",
       photoPage: "https://unsplash.com/photos/landscape-photography-of-lake-and-mountains-bXGUdxFeQUQ",
@@ -93,13 +93,12 @@ const { project } = Astro.props;
           <strong>{project.target}</strong>
         </div>
       )}
-      {project.repository && (
-        <div class="project-fact">
-          <span>Development repository</span>
-          <a href={project.repository} target="_blank" rel="noreferrer">Open repository</a>
-        </div>
-      )}
+      <div class="project-fact">
+        <span>Shared OS source</span>
+        <a href={sharedOSRepository} target="_blank" rel="noreferrer">DecemberReach / reach-to-be-reached</a>
+      </div>
     </section>
+    <p class="project-source-note">All operating-system projects are developed in this repository, with a separate directory for each OS.</p>
 
     <a class="project-back-link" href="/">Back to Hub</a>
   </div>
