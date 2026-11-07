@@ -8,7 +8,7 @@ import SiteLayout from "../../layouts/SiteLayout.astro";
 >
   <section class="page-hero">
     <p class="eyebrow">03 / DEVICE STATUS</p>
-    <h1>Device availability.</h1>
+    <h1>Device<br /><span>availability.</span></h1>
     <p class="lead">
       The entries below preserve the previously published integration state
       for auroraADE. They describe availability, not a promise of completed
@@ -17,7 +17,10 @@ import SiteLayout from "../../layouts/SiteLayout.astro";
   </section>
 
   <section class="doc-section">
-    <h2>Current status</h2>
+    <header class="doc-label">
+      <span class="doc-number">01</span>
+      <h2>Current status</h2>
+    </header>
     <div class="doc-content">
       <p>Device builds were not available in the previous project status page. The current published notes are retained here until the integration status is updated with new implementation evidence.</p>
       <div class="status-list">
@@ -29,7 +32,7 @@ import SiteLayout from "../../layouts/SiteLayout.astro";
         <div class="status-row">
           <strong>Mobile</strong>
           <p>No mobile build was available in the last published status.</p>
-          <span class="status-label">Unavailable</span>
+          <span class="status-label status-unavailable">Unavailable</span>
         </div>
       </div>
       <div class="callout">These are preserved project notes from the previous site. Update this page when the actual device-build status changes.</div>
@@ -37,7 +40,10 @@ import SiteLayout from "../../layouts/SiteLayout.astro";
   </section>
 
   <section class="doc-section">
-    <h2>Platform target</h2>
+    <header class="doc-label">
+      <span class="doc-number">02</span>
+      <h2>Platform target</h2>
+    </header>
     <div class="doc-content">
       <p>auroraADE's documented target architecture is x86_64. The wider Fabric Dessert CPU integration boundary is designed to accommodate ARM 32-bit, ARM 64-bit, x86 32-bit and x86 64-bit integrations; that broader boundary should not be confused with auroraADE's own target.</p>
       <p><a href="/architecture/">Read the platform architecture →</a></p>

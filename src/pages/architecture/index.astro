@@ -8,7 +8,7 @@ import SiteLayout from "../../layouts/SiteLayout.astro";
 >
   <section class="page-hero">
     <p class="eyebrow">02 / PLATFORM DOCUMENTATION</p>
-    <h1>The platform, layer by layer.</h1>
+    <h1>The platform,<br /><span>layer by layer.</span></h1>
     <p class="lead">
       This page records the architecture documented in the reachOS source:
       the virtual hardware platform, its CPU boundary, memory and device model,
@@ -17,7 +17,10 @@ import SiteLayout from "../../layouts/SiteLayout.astro";
   </section>
 
   <section class="doc-section">
-    <h2>Names and responsibilities</h2>
+    <header class="doc-label">
+      <span class="doc-number">01</span>
+      <h2>Names and responsibilities</h2>
+    </header>
     <div class="doc-content">
       <p>These names describe related parts of the project, but they do not mean the same thing. In particular, the virtual hardware platform's CPU integration boundary and auroraADE's target architecture describe different layers.</p>
       <table class="doc-table">
@@ -44,7 +47,10 @@ import SiteLayout from "../../layouts/SiteLayout.astro";
   </section>
 
   <section class="doc-section">
-    <h2>Platform architecture</h2>
+    <header class="doc-label">
+      <span class="doc-number">02</span>
+      <h2>Platform architecture</h2>
+    </header>
     <div class="doc-content">
       <p>The source separates the browser-facing host shell from the Fabric Dessert platform runtime. The host provides integration with the browser; the platform code owns the virtual board and its subsystems.</p>
       <table class="doc-table">
@@ -63,7 +69,10 @@ import SiteLayout from "../../layouts/SiteLayout.astro";
   </section>
 
   <section class="doc-section">
-    <h2>Boot and CPU boundary</h2>
+    <header class="doc-label">
+      <span class="doc-number">03</span>
+      <h2>Boot and CPU boundary</h2>
+    </header>
     <div class="doc-content">
       <p>The documented reset path is a Fabric Dessert platform contract, not a generic description of every CPU's boot behavior.</p>
       <ol>
@@ -78,7 +87,10 @@ import SiteLayout from "../../layouts/SiteLayout.astro";
   </section>
 
   <section class="doc-section">
-    <h2>Memory and devices</h2>
+    <header class="doc-label">
+      <span class="doc-number">04</span>
+      <h2>Memory and devices</h2>
+    </header>
     <div class="doc-content">
       <h3>Physical memory</h3>
       <p>The physical address space uses 64-bit <code>bigint</code> addresses. Sparse physical backing is allocated in 64 KiB chunks rather than eagerly allocating the entire configured RAM range.</p>
@@ -89,7 +101,10 @@ import SiteLayout from "../../layouts/SiteLayout.astro";
   </section>
 
   <section class="doc-section">
-    <h2>Display pipeline</h2>
+    <header class="doc-label">
+      <span class="doc-number">05</span>
+      <h2>Display pipeline</h2>
+    </header>
     <div class="doc-content">
       <p>The documented display path assigns explicit responsibilities to the virtual device, pixel storage, rendering coordinator and browser-canvas adapter.</p>
       <ol>
@@ -104,7 +119,10 @@ import SiteLayout from "../../layouts/SiteLayout.astro";
   </section>
 
   <section class="doc-section">
-    <h2>Scope and references</h2>
+    <header class="doc-label">
+      <span class="doc-number">06</span>
+      <h2>Scope and references</h2>
+    </header>
     <div class="doc-content">
       <p>This page documents architecture visible in the referenced reachOS source. It does not specify the implementation status of auroraADE's window manager, panel, dock, file manager or bundled applications, so it does not present those as completed features.</p>
       <ul>
