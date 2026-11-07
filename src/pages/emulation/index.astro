@@ -6,71 +6,74 @@ import SiteLayout from "../../layouts/SiteLayout.astro";
   description="How December Reach acquires real OS source and performs emulation in a JavaScript backend."
   current="emulation"
 >
-  <section class="page-hero">
-    <p class="eyebrow">04 / WEB EMULATION</p>
+  <section class="page-intro">
+    <p class="page-category">December Reach / Web emulation</p>
     <h1>The web is the way in.<br /><span>Not the machine.</span></h1>
-    <p class="lead">
+    <p class="page-lead">
       December Reach uses the website to acquire and preload OS source. The
       actual emulation work belongs to the JavaScript backend, not to a
       browser-side CPU simulator.
     </p>
   </section>
 
-  <section class="section">
-    <div class="section-heading">
-      <div>
-        <p class="section-index">EXECUTION PATH</p>
-        <h2>Three distinct responsibilities.</h2>
+  <section class="document-section emulation-overview">
+    <header class="document-heading">
+      <span class="document-index">01</span>
+      <h2>Three responsibilities</h2>
+    </header>
+    <div class="document-body">
+      <p>Source preparation, system execution and web access are separate responsibilities. Keeping that boundary clear prevents the frontend from becoming a pretend emulator.</p>
+      <div class="emulation-sequence">
+        <article class="emulation-row">
+          <span class="emulation-count">01</span>
+          <div>
+            <p class="emulation-role">Frontend</p>
+            <h3>Source acquisition</h3>
+            <p>The site obtains the operating-system source and preloads what is needed before an emulation session begins.</p>
+          </div>
+        </article>
+        <article class="emulation-row">
+          <span class="emulation-count">02</span>
+          <div>
+            <p class="emulation-role">Backend</p>
+            <h3>JavaScript emulation</h3>
+            <p>The backend owns the emulation process and execution environment. CPU, memory and device behavior are not simulated by the website UI.</p>
+          </div>
+        </article>
+        <article class="emulation-row">
+          <span class="emulation-count">03</span>
+          <div>
+            <p class="emulation-role">Web access</p>
+            <h3>Reach the session</h3>
+            <p>The browser is the access surface for the system. It is not the guest machine's execution host.</p>
+          </div>
+        </article>
       </div>
-      <p>
-        Source preparation, system execution and web access are separate
-        responsibilities. Keeping that boundary clear prevents the frontend
-        from becoming a pretend emulator.
-      </p>
-    </div>
-
-    <div class="emulation-flow">
-      <article class="emulation-step">
-        <span class="emulation-number">01</span>
-        <span class="emulation-label">FRONTEND</span>
-        <h2>Source acquisition</h2>
-        <p>The site obtains the operating-system source and preloads what is needed before an emulation session begins.</p>
-      </article>
-      <article class="emulation-step">
-        <span class="emulation-number">02</span>
-        <span class="emulation-label">BACKEND</span>
-        <h2>JavaScript emulation</h2>
-        <p>The backend owns the emulation process and execution environment. CPU, memory and device behavior are not simulated by the website UI.</p>
-      </article>
-      <article class="emulation-step">
-        <span class="emulation-number">03</span>
-        <span class="emulation-label">WEB ACCESS</span>
-        <h2>Reach the session</h2>
-        <p>The browser is the access surface for the system. It is not the guest machine's execution host.</p>
-      </article>
     </div>
   </section>
 
-  <section class="doc-section">
-    <header class="doc-label">
-      <span class="doc-number">01</span>
+  <section class="document-section">
+    <header class="document-heading">
+      <span class="document-index">02</span>
       <h2>Why the split matters</h2>
     </header>
-    <div class="doc-content">
+    <div class="document-body">
       <p>The frontend and emulator are not interchangeable layers. The frontend is responsible for obtaining and preparing source. The JavaScript backend performs the emulation itself.</p>
       <p>This keeps the guest operating system's execution model out of presentation code and allows the emulation runtime to evolve independently from the website interface.</p>
     </div>
   </section>
 
-  <section class="doc-section">
-    <header class="doc-label">
-      <span class="doc-number">02</span>
+  <section class="document-section">
+    <header class="document-heading">
+      <span class="document-index">03</span>
       <h2>Source repository</h2>
     </header>
-    <div class="doc-content">
+    <div class="document-body">
       <p>The OS source collection is maintained separately from this website.</p>
-      <p><a href="https://github.com/DecemberReach/reach-to-be-reached" target="_blank" rel="noreferrer">Open reach-to-be-reached on GitHub ↗</a></p>
-      <div class="callout">This repository contains the static Astro website. The JavaScript emulation service is a separate execution component and is not bundled into the GitHub Pages frontend.</div>
+      <a class="metro-link" href="https://github.com/DecemberReach/reach-to-be-reached" target="_blank" rel="noreferrer">
+        Open reach-to-be-reached on GitHub <span aria-hidden="true">↗</span>
+      </a>
+      <aside class="document-note">This repository contains the static Astro website. The JavaScript emulation service is a separate execution component and is not bundled into the GitHub Pages frontend.</aside>
     </div>
   </section>
 </SiteLayout>

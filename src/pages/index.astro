@@ -2,170 +2,135 @@
 import SiteLayout from "../layouts/SiteLayout.astro";
 ---
 <SiteLayout
-  title="Operating systems, built to be reached"
-  description="December Reach develops operating systems and a JavaScript-based, server-side emulation environment that brings real OS source into the web."
+  title="Independent operating system development"
+  description="December Reach is an independent operating system development organization. Explore its OS projects, platform architecture and web emulation model."
   current="home"
 >
-  <section class="hero" aria-labelledby="hero-title">
-    <div class="hero-main">
-      <p class="eyebrow">Independent operating system development</p>
-      <h1 id="hero-title">Operating systems.<br /><span>Within reach.</span></h1>
-      <p class="hero-copy">
-        December Reach develops operating systems and the technology that makes
-        their real source accessible through the web. Source is acquired and
-        preloaded by the site; emulation runs in a JavaScript backend.
-      </p>
-      <div class="hero-actions">
-        <a class="text-link" href="https://github.com/DecemberReach/reach-to-be-reached" target="_blank" rel="noreferrer">
-          Explore OS source <span aria-hidden="true">↗</span>
-        </a>
-        <a class="text-link" href="/emulation/">
-          How emulation works <span aria-hidden="true">→</span>
-        </a>
-      </div>
+  <section class="panorama-intro" aria-labelledby="home-title">
+    <div class="identity">
+      <p class="identity-description">Independent operating system development</p>
+      <h1 id="home-title">December<br />Reach</h1>
     </div>
-
-    <aside class="execution-aside" aria-label="December Reach execution model">
-      <p class="aside-kicker">The access model</p>
-      <h2>Source first.<br />Execution separate.</h2>
-      <ol class="execution-list">
-        <li>
-          <span class="execution-number">01</span>
-          <div>
-            <strong>OS source</strong>
-            <p>Load and preload the real project source.</p>
-          </div>
-          <span class="execution-tag">ACQUIRE</span>
-        </li>
-        <li>
-          <span class="execution-number">02</span>
-          <div>
-            <strong>JavaScript backend</strong>
-            <p>Emulation and execution happen server-side.</p>
-          </div>
-          <span class="execution-tag">EXECUTE</span>
-        </li>
-        <li>
-          <span class="execution-number">03</span>
-          <div>
-            <strong>Web OS session</strong>
-            <p>Reach the running system through the web.</p>
-          </div>
-          <span class="execution-tag">ACCESS</span>
-        </li>
-      </ol>
-      <p class="aside-foot">FRONTEND: SOURCE ACQUISITION <span>·</span> BACKEND: EMULATION</p>
-    </aside>
+    <div class="intro-detail">
+      <p class="intro-statement">Operating systems,<br />built to be reached.</p>
+      <p class="intro-copy">
+        December Reach develops operating systems and the technology that makes
+        their real source accessible through the web. The site acquires and
+        preloads source; emulation runs in a separate JavaScript backend.
+      </p>
+      <a class="metro-link" href="https://github.com/DecemberReach/reach-to-be-reached" target="_blank" rel="noreferrer">
+        Explore the OS source <span aria-hidden="true">↗</span>
+      </a>
+    </div>
   </section>
 
-  <section class="section" id="systems" aria-labelledby="systems-title">
-    <div class="section-heading">
-      <div>
-        <p class="section-index">01 / OS LINEUP</p>
-        <h2 id="systems-title">Different systems.<br />Different destinations.</h2>
-      </div>
-      <p>
-        December Reach is the OS development side of the ecosystem. Its projects
-        target different computing environments while keeping their own identity.
-      </p>
-    </div>
+  <section class="panorama-section systems-section" id="systems" aria-labelledby="systems-title">
+    <header class="section-heading">
+      <h2 id="systems-title">Operating systems</h2>
+      <p>Different environments. Separate system identities.</p>
+    </header>
 
-    <div class="system-grid">
-      <article class="system-card system-blue">
-        <span class="card-index">SYSTEM / 001</span>
-        <div class="system-card-copy">
+    <div class="system-panorama">
+      <article class="system-tile tile-aurora">
+        <span class="tile-number">01</span>
+        <div class="tile-content">
           <h3>auroraADE</h3>
-          <p>Aesthetic Desktop Environment. The current target architecture is x86_64.</p>
+          <p>Aesthetic Desktop Environment. Its documented target architecture is x86_64.</p>
         </div>
-        <span class="system-type">DESKTOP ENVIRONMENT</span>
+        <span class="tile-context">Desktop environment</span>
       </article>
-
-      <article class="system-card system-dark">
-        <span class="card-index">SYSTEM / 002</span>
-        <div class="system-card-copy">
+      <article class="system-tile tile-halo">
+        <span class="tile-number">02</span>
+        <div class="tile-content">
           <h3>haloDOT</h3>
           <p>An operating-system project in the December Reach lineup.</p>
         </div>
-        <span class="system-type">OS PROJECT</span>
+        <span class="tile-context">OS project</span>
       </article>
-
-      <article class="system-card system-yellow">
-        <span class="card-index">SYSTEM / 003</span>
-        <div class="system-card-copy">
+      <article class="system-tile tile-stella">
+        <span class="tile-number">03</span>
+        <div class="tile-content">
           <h3>stellaOS</h3>
           <p>A television operating system in the reachOS lineup.</p>
         </div>
-        <span class="system-type">TV OPERATING SYSTEM</span>
+        <span class="tile-context">TV operating system</span>
       </article>
     </div>
   </section>
 
-  <section class="section" aria-labelledby="architecture-title">
-    <div class="section-heading">
-      <div>
-        <p class="section-index">02 / PLATFORM</p>
-        <h2 id="architecture-title">The hardware layer matters.</h2>
-      </div>
+  <section class="panorama-section platform-section" id="platform" aria-labelledby="platform-title">
+    <header class="section-heading">
+      <h2 id="platform-title">Platform architecture</h2>
       <p>
         Fabric Dessert defines the virtual board and hardware-facing contracts
-        used by the reachOS platform. It is designed to stay separate from the
-        browser host.
+        used by the reachOS platform. It remains separate from the browser host.
       </p>
-    </div>
-    <div class="data-grid">
-      <div class="data-cell">
-        <span class="data-label">CPU BOUNDARY</span>
+    </header>
+
+    <div class="specification-list">
+      <div class="specification-row">
+        <span class="specification-name">CPU boundary</span>
         <strong>FRT64</strong>
-        <p>Architecture integration boundary for ARM and x86, 32-bit and 64-bit.</p>
+        <p>Integration boundary for ARM and x86, 32-bit and 64-bit.</p>
       </div>
-      <div class="data-cell">
-        <span class="data-label">MEMORY</span>
+      <div class="specification-row">
+        <span class="specification-name">Physical memory</span>
         <strong>64-bit address space</strong>
-        <p>BigInt-backed physical addressing with sparse memory regions.</p>
+        <p>BigInt-backed addressing with sparse memory regions.</p>
       </div>
-      <div class="data-cell">
-        <span class="data-label">DEVICE BUS</span>
+      <div class="specification-row">
+        <span class="specification-name">Device bus</span>
         <strong>MMIO / IRQ</strong>
         <p>Device windows, alignment, interrupt lines and enumeration.</p>
       </div>
-      <div class="data-cell">
-        <span class="data-label">DISPLAY</span>
+      <div class="specification-row">
+        <span class="specification-name">Display</span>
         <strong>1080 × 2424</strong>
         <p>RGBA8888 framebuffer with a deterministic host-canvas bridge.</p>
       </div>
     </div>
-    <div class="hero-actions section-actions">
-      <a class="text-link" href="/architecture/">Read platform architecture <span aria-hidden="true">→</span></a>
-      <a class="text-link" href="/devices/">Device availability <span aria-hidden="true">→</span></a>
-    </div>
+    <a class="metro-link section-link" href="/architecture/">Read the platform architecture <span aria-hidden="true">→</span></a>
   </section>
 
-  <section class="section" aria-labelledby="work-title">
-    <div class="feature-grid">
-      <div class="feature-panel feature-panel-blue">
-        <span class="feature-kicker">THE SOURCE</span>
-        <h3 id="work-title">Built from real OS code.</h3>
-        <p>
-          The source repository is the home of the operating-system work.
-          The website is its web-facing entry point, not a visual imitation of
-          an operating system.
-        </p>
-        <a class="feature-link" href="https://github.com/DecemberReach/reach-to-be-reached" target="_blank" rel="noreferrer">
-          Open reach-to-be-reached <span aria-hidden="true">↗</span>
-        </a>
-      </div>
-      <div class="feature-panel">
-        <span class="feature-kicker">THE EXECUTION MODEL</span>
-        <h3>Browser access.<br />Backend execution.</h3>
-        <p>
-          The frontend acquires and preloads OS source. The JavaScript backend
-          handles the emulation. The browser is the access surface, not the
-          guest machine's CPU or memory runtime.
-        </p>
-        <a class="feature-link" href="/emulation/">
-          Explore the emulation model <span aria-hidden="true">→</span>
-        </a>
-      </div>
+  <section class="panorama-section execution-section" id="web-access" aria-labelledby="execution-title">
+    <header class="section-heading">
+      <h2 id="execution-title">The web is the way in.<br />Not the machine.</h2>
+      <p>
+        Source preparation, system execution and web access are separate
+        responsibilities. The browser is not the guest machine's execution host.
+      </p>
+    </header>
+
+    <div class="execution-sequence">
+      <article class="execution-step">
+        <span class="step-number">01</span>
+        <div>
+          <h3>Source acquisition</h3>
+          <p>The frontend obtains and preloads the real operating-system source.</p>
+        </div>
+      </article>
+      <article class="execution-step">
+        <span class="step-number">02</span>
+        <div>
+          <h3>JavaScript backend</h3>
+          <p>The backend owns emulation and the system execution environment.</p>
+        </div>
+      </article>
+      <article class="execution-step">
+        <span class="step-number">03</span>
+        <div>
+          <h3>Web access</h3>
+          <p>The browser provides access to the running system session.</p>
+        </div>
+      </article>
     </div>
+    <a class="metro-link section-link" href="/emulation/">Understand the emulation model <span aria-hidden="true">→</span></a>
+  </section>
+
+  <section class="closing-line" aria-label="December Reach source">
+    <p>The source is the work.</p>
+    <a class="metro-link" href="https://github.com/DecemberReach/reach-to-be-reached" target="_blank" rel="noreferrer">
+      Open reach-to-be-reached <span aria-hidden="true">↗</span>
+    </a>
   </section>
 </SiteLayout>

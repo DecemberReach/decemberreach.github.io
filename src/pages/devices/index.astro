@@ -6,47 +6,47 @@ import SiteLayout from "../../layouts/SiteLayout.astro";
   description="Published device integration status for auroraADE."
   current="devices"
 >
-  <section class="page-hero">
-    <p class="eyebrow">03 / DEVICE STATUS</p>
+  <section class="page-intro">
+    <p class="page-category">December Reach / Device status</p>
     <h1>Device<br /><span>availability.</span></h1>
-    <p class="lead">
+    <p class="page-lead">
       The entries below preserve the previously published integration state
       for auroraADE. They describe availability, not a promise of completed
       hardware support.
     </p>
   </section>
 
-  <section class="doc-section">
-    <header class="doc-label">
-      <span class="doc-number">01</span>
+  <section class="document-section">
+    <header class="document-heading">
+      <span class="document-index">01</span>
       <h2>Current status</h2>
     </header>
-    <div class="doc-content">
+    <div class="document-body">
       <p>Device builds were not available in the previous project status page. The current published notes are retained here until the integration status is updated with new implementation evidence.</p>
-      <div class="status-list">
-        <div class="status-row">
-          <strong>Desktop</strong>
+      <div class="device-status-list">
+        <div class="device-status-row">
+          <h3>Desktop</h3>
           <p>Runtime integration pending. The browser runtime was not connected to a desktop build in the last published status.</p>
-          <span class="status-label">Pending</span>
+          <strong class="status-word status-pending">Pending</strong>
         </div>
-        <div class="status-row">
-          <strong>Mobile</strong>
+        <div class="device-status-row">
+          <h3>Mobile</h3>
           <p>No mobile build was available in the last published status.</p>
-          <span class="status-label status-unavailable">Unavailable</span>
+          <strong class="status-word status-unavailable">Unavailable</strong>
         </div>
       </div>
-      <div class="callout">These are preserved project notes from the previous site. Update this page when the actual device-build status changes.</div>
+      <aside class="document-note">These are preserved project notes from the previous site. Update this page when the actual device-build status changes.</aside>
     </div>
   </section>
 
-  <section class="doc-section">
-    <header class="doc-label">
-      <span class="doc-number">02</span>
+  <section class="document-section">
+    <header class="document-heading">
+      <span class="document-index">02</span>
       <h2>Platform target</h2>
     </header>
-    <div class="doc-content">
+    <div class="document-body">
       <p>auroraADE's documented target architecture is x86_64. The wider Fabric Dessert CPU integration boundary is designed to accommodate ARM 32-bit, ARM 64-bit, x86 32-bit and x86 64-bit integrations; that broader boundary should not be confused with auroraADE's own target.</p>
-      <p><a href="/architecture/">Read the platform architecture →</a></p>
+      <a class="metro-link" href="/architecture/">Read the platform architecture <span aria-hidden="true">→</span></a>
     </div>
   </section>
 </SiteLayout>

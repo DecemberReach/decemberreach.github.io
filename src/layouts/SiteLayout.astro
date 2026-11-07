@@ -35,27 +35,25 @@ const navItems = [
     <a class="skip-link" href="#main-content">Skip to content</a>
     <div class="site-frame">
       <header class="site-header">
-        <div class="header-main">
-          <a class="brand" href="/" aria-label="December Reach home">
-            <img src="/logo.svg" alt="" width="38" height="38" />
-            <span class="brand-wordmark">DECEMBER <b>REACH</b></span>
-          </a>
+        <a class="brand" href="/" aria-label="December Reach home">
+          <img src="/logo.svg" alt="" width="42" height="42" />
+          <span class="brand-wordmark">December Reach</span>
+        </a>
 
-          <nav class="desktop-nav" aria-label="Main navigation">
-            {navItems.map((item) => (
-              <a
-                href={item.href}
-                class:list={["nav-link", { "is-active": current === item.key }]}
-                aria-current={current === item.key ? "page" : undefined}
-              >
-                {item.label}
-              </a>
-            ))}
-            <a class="nav-link nav-source" href="https://github.com/DecemberReach/reach-to-be-reached" target="_blank" rel="noreferrer">
-              OS source <span aria-hidden="true">↗</span>
+        <nav class="pivot-nav" aria-label="Main navigation">
+          {navItems.map((item) => (
+            <a
+              href={item.href}
+              class:list={["pivot-link", { "is-active": current === item.key }]}
+              aria-current={current === item.key ? "page" : undefined}
+            >
+              {item.label}
             </a>
-          </nav>
-        </div>
+          ))}
+          <a class="pivot-link source-link" href="https://github.com/DecemberReach/reach-to-be-reached" target="_blank" rel="noreferrer">
+            OS source <span aria-hidden="true">↗</span>
+          </a>
+        </nav>
       </header>
 
       <main id="main-content">
@@ -63,20 +61,16 @@ const navItems = [
       </main>
 
       <footer class="site-footer">
-        <div class="footer-top">
-          <a class="brand brand-footer" href="/" aria-label="December Reach home">
-            <img src="/logo.svg" alt="" width="30" height="30" />
-            <span class="brand-wordmark">DECEMBER <b>REACH</b></span>
+        <div class="footer-main">
+          <a class="brand footer-brand" href="/" aria-label="December Reach home">
+            <img src="/logo.svg" alt="" width="32" height="32" />
+            <span class="brand-wordmark">December Reach</span>
           </a>
-          <p>Operating systems, built to be reached.</p>
+          <p>Independent operating system development.</p>
         </div>
-        <div class="footer-bottom">
-          <span>Independent OS development</span>
-          <div>
-            <a href="https://github.com/DecemberReach" target="_blank" rel="noreferrer">GitHub organization ↗</a>
-            <a href="https://github.com/DecemberReach/reach-to-be-reached" target="_blank" rel="noreferrer">OS source ↗</a>
-          </div>
+        <div class="footer-meta">
           <span>© {new Date().getFullYear()} December Reach</span>
+          <a href="https://github.com/DecemberReach" target="_blank" rel="noreferrer">GitHub organization ↗</a>
         </div>
       </footer>
     </div>

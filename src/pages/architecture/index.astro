@@ -6,24 +6,32 @@ import SiteLayout from "../../layouts/SiteLayout.astro";
   description="Architecture notes for reachOS, Fabric Dessert, FRT64, memory, devices, boot and display."
   current="architecture"
 >
-  <section class="page-hero">
-    <p class="eyebrow">02 / PLATFORM DOCUMENTATION</p>
+  <section class="page-intro">
+    <p class="page-category">December Reach / Platform</p>
     <h1>The platform,<br /><span>layer by layer.</span></h1>
-    <p class="lead">
-      This page records the architecture documented in the reachOS source:
-      the virtual hardware platform, its CPU boundary, memory and device model,
-      and the display path.
+    <p class="page-lead">
+      Architecture documented in the reachOS source: the virtual hardware
+      platform, its CPU boundary, memory and device model, and display path.
     </p>
   </section>
 
-  <section class="doc-section">
-    <header class="doc-label">
-      <span class="doc-number">01</span>
+  <nav class="section-pivot" aria-label="Architecture sections">
+    <a href="#names">Names</a>
+    <a href="#layout">Platform</a>
+    <a href="#boot">Boot and CPU</a>
+    <a href="#memory">Memory and devices</a>
+    <a href="#display">Display</a>
+    <a href="#references">References</a>
+  </nav>
+
+  <section class="document-section" id="names">
+    <header class="document-heading">
+      <span class="document-index">01</span>
       <h2>Names and responsibilities</h2>
     </header>
-    <div class="doc-content">
+    <div class="document-body">
       <p>These names describe related parts of the project, but they do not mean the same thing. In particular, the virtual hardware platform's CPU integration boundary and auroraADE's target architecture describe different layers.</p>
-      <table class="doc-table">
+      <table class="document-table">
         <tbody>
           <tr>
             <th><a href="https://github.com/DecemberReach/reach-to-be-reached" target="_blank" rel="noreferrer">reachOS</a></th>
@@ -46,14 +54,14 @@ import SiteLayout from "../../layouts/SiteLayout.astro";
     </div>
   </section>
 
-  <section class="doc-section">
-    <header class="doc-label">
-      <span class="doc-number">02</span>
+  <section class="document-section" id="layout">
+    <header class="document-heading">
+      <span class="document-index">02</span>
       <h2>Platform architecture</h2>
     </header>
-    <div class="doc-content">
+    <div class="document-body">
       <p>The source separates the browser-facing host shell from the Fabric Dessert platform runtime. The host provides integration with the browser; the platform code owns the virtual board and its subsystems.</p>
-      <table class="doc-table">
+      <table class="document-table">
         <tbody>
           <tr><th><code>src/app/</code></th><td>Angular host shell and the bridge between the browser application and platform runtime.</td></tr>
           <tr><th><code>src/fabric-dessert/</code></th><td>Platform runtime, lifecycle management and public export boundary.</td></tr>
@@ -64,16 +72,16 @@ import SiteLayout from "../../layouts/SiteLayout.astro";
           <tr><th><code>display/</code></th><td>Display device, framebuffer, system renderer, canvas backend and console font.</td></tr>
         </tbody>
       </table>
-      <div class="callout">The platform runtime is intended to remain independent of direct Angular and DOM dependencies. Browser integration belongs at the host boundary rather than inside device and memory models.</div>
+      <aside class="document-note">The platform runtime is intended to remain independent of direct Angular and DOM dependencies. Browser integration belongs at the host boundary rather than inside device and memory models.</aside>
     </div>
   </section>
 
-  <section class="doc-section">
-    <header class="doc-label">
-      <span class="doc-number">03</span>
+  <section class="document-section" id="boot">
+    <header class="document-heading">
+      <span class="document-index">03</span>
       <h2>Boot and CPU boundary</h2>
     </header>
-    <div class="doc-content">
+    <div class="document-body">
       <p>The documented reset path is a Fabric Dessert platform contract, not a generic description of every CPU's boot behavior.</p>
       <ol>
         <li>The board begins its reset sequence and resets the device bus while propagating the configured reset vector.</li>
@@ -86,12 +94,12 @@ import SiteLayout from "../../layouts/SiteLayout.astro";
     </div>
   </section>
 
-  <section class="doc-section">
-    <header class="doc-label">
-      <span class="doc-number">04</span>
+  <section class="document-section" id="memory">
+    <header class="document-heading">
+      <span class="document-index">04</span>
       <h2>Memory and devices</h2>
     </header>
-    <div class="doc-content">
+    <div class="document-body">
       <h3>Physical memory</h3>
       <p>The physical address space uses 64-bit <code>bigint</code> addresses. Sparse physical backing is allocated in 64 KiB chunks rather than eagerly allocating the entire configured RAM range.</p>
       <p>Region mapping includes conflict checks and access-boundary validation. Memory-mapped device access is dispatched through the address-space and device model.</p>
@@ -100,12 +108,12 @@ import SiteLayout from "../../layouts/SiteLayout.astro";
     </div>
   </section>
 
-  <section class="doc-section">
-    <header class="doc-label">
-      <span class="doc-number">05</span>
+  <section class="document-section" id="display">
+    <header class="document-heading">
+      <span class="document-index">05</span>
       <h2>Display pipeline</h2>
     </header>
-    <div class="doc-content">
+    <div class="document-body">
       <p>The documented display path assigns explicit responsibilities to the virtual device, pixel storage, rendering coordinator and browser-canvas adapter.</p>
       <ol>
         <li><strong>Display device.</strong> Exposes control registers and a framebuffer memory aperture through MMIO. The documented register magic value is <code>0x53494446</code>.</li>
@@ -114,16 +122,16 @@ import SiteLayout from "../../layouts/SiteLayout.astro";
         <li><strong>Canvas backend.</strong> Bridges the pixel buffer to the host canvas with deterministic 1:1 coordinate mapping, without interpolation or layout-driven scaling.</li>
         <li><strong>Console font.</strong> The documented default is <code>font_sun_8x16</code>, a 256-glyph, 4096-byte bitmap font for the bootloader and kernel console.</li>
       </ol>
-      <div class="callout">These are platform display contracts, not a screenshot of auroraADE or proof of a finished desktop session running on the platform.</div>
+      <aside class="document-note">These are platform display contracts, not a screenshot of auroraADE or proof of a finished desktop session running on the platform.</aside>
     </div>
   </section>
 
-  <section class="doc-section">
-    <header class="doc-label">
-      <span class="doc-number">06</span>
+  <section class="document-section" id="references">
+    <header class="document-heading">
+      <span class="document-index">06</span>
       <h2>Scope and references</h2>
     </header>
-    <div class="doc-content">
+    <div class="document-body">
       <p>This page documents architecture visible in the referenced reachOS source. It does not specify the implementation status of auroraADE's window manager, panel, dock, file manager or bundled applications, so it does not present those as completed features.</p>
       <ul>
         <li><a href="https://github.com/DecemberReach/reach-to-be-reached" target="_blank" rel="noreferrer">December Reach OS source collection</a> — current organization-level OS repository.</li>
