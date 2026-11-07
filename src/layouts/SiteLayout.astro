@@ -9,14 +9,13 @@ interface Props {
 }
 
 const { title, description, current } = Astro.props;
-const isHub = current === "hub";
 ---
 <!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content={isHub ? "#101010" : "#ffffff"} />
+    <meta name="theme-color" content="#101010" />
     <meta name="description" content={description} />
     <meta property="og:type" content="website" />
     <meta property="og:title" content={title} />
@@ -27,7 +26,7 @@ const isHub = current === "hub";
     <link rel="preload" href="/fonts/open-sans/open-sans-variable.ttf" as="font" type="font/ttf" crossorigin />
     <title>{title} · December Reach</title>
   </head>
-  <body class:list={{ "hub-theme": isHub }}>
+  <body class="site-theme-dark">
     <a class="skip-link" href="#main-content">Skip to content</a>
     <div class="site-shell">
       <header class="site-header">

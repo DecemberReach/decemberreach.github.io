@@ -2,6 +2,8 @@
 
 Official website for December Reach.
 
+Current website release: Reach Hub 1.0.
+
 The site is built with Astro 6 and custom CSS. It is separate from the operating-system source and the emulation runtime.
 
 ## Site structure
@@ -23,6 +25,12 @@ All operating-system projects are developed in the shared repository:
 https://github.com/DecemberReach/reach-to-be-reached
 
 Each OS is developed in its own directory within that repository. The project pages link to this shared source repository rather than separate per-OS repositories.
+
+## Website release
+
+- Release name: Reach Hub
+- Version: 1.0
+- Theme: unified dark visual system across all site pages
 
 ## Artwork
 
