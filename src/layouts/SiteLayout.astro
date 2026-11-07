@@ -1,0 +1,95 @@
+---
+import "../styles/global.css";
+
+interface Props {
+  title: string;
+  description: string;
+  current?: "home" | "architecture" | "devices" | "emulation";
+}
+
+const { title, description, current = "home" } = Astro.props;
+
+const navItems = [
+  { label: "Overview", href: "/", key: "home" },
+  { label: "Architecture", href: "/architecture/", key: "architecture" },
+  { label: "Devices", href: "/devices/", key: "devices" },
+  { label: "Emulation", href: "/emulation/", key: "emulation" },
+] as const;
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#151719" />
+    <meta name="description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={Astro.url.href} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="canonical" href={Astro.url.href} />
+    <title>{title} · December Reach</title>
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">Skip to content</a>
+    <div class="site-frame">
+      <header class="site-header">
+        <a class="brand" href="/" aria-label="December Reach home">
+          <img src="/logo.svg" alt="" width="38" height="38" />
+          <span class="brand-wordmark">DECEMBER <b>REACH</b></span>
+        </a>
+
+        <nav class="desktop-nav" aria-label="Main navigation">
+          {navItems.map((item) => (
+            <a
+              href={item.href}
+              class:list={["nav-link", { "is-active": current === item.key }]}
+              aria-current={current === item.key ? "page" : undefined}
+            >
+              {item.label}
+            </a>
+          ))}
+        </nav>
+
+        <a class="header-source" href="https://github.com/DecemberReach/reach-to-be-reached" target="_blank" rel="noreferrer">
+          OS source <span aria-hidden="true">↗</span>
+        </a>
+
+        <details class="mobile-nav">
+          <summary aria-label="Open navigation menu"><span>Menu</span><span class="menu-glyph" aria-hidden="true">＋</span></summary>
+          <nav aria-label="Mobile navigation">
+            {navItems.map((item) => (
+              <a href={item.href} aria-current={current === item.key ? "page" : undefined}>
+                {item.label}
+              </a>
+            ))}
+            <a href="https://github.com/DecemberReach/reach-to-be-reached" target="_blank" rel="noreferrer">OS source ↗</a>
+          </nav>
+        </details>
+      </header>
+
+      <main id="main-content">
+        <slot />
+      </main>
+
+      <footer class="site-footer">
+        <div class="footer-top">
+          <a class="brand brand-footer" href="/">
+            <img src="/logo.svg" alt="" width="30" height="30" />
+            <span class="brand-wordmark">DECEMBER <b>REACH</b></span>
+          </a>
+          <p>Operating systems, built to be reached.</p>
+        </div>
+        <div class="footer-bottom">
+          <span>Independent OS development</span>
+          <div>
+            <a href="https://github.com/DecemberReach" target="_blank" rel="noreferrer">GitHub organization ↗</a>
+            <a href="https://github.com/DecemberReach/reach-to-be-reached" target="_blank" rel="noreferrer">OS source ↗</a>
+          </div>
+          <span>© {new Date().getFullYear()} December Reach</span>
+        </div>
+      </footer>
+    </div>
+  </body>
+</html>

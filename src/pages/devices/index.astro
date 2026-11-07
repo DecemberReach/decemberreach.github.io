@@ -1,0 +1,46 @@
+---
+import SiteLayout from "../../layouts/SiteLayout.astro";
+---
+<SiteLayout
+  title="Device availability"
+  description="Published device integration status for auroraADE."
+  current="devices"
+>
+  <section class="page-hero">
+    <p class="eyebrow">03 / DEVICE STATUS</p>
+    <h1>Device availability.</h1>
+    <p class="lead">
+      The entries below preserve the previously published integration state
+      for auroraADE. They describe availability, not a promise of completed
+      hardware support.
+    </p>
+  </section>
+
+  <section class="doc-section">
+    <h2>Current status</h2>
+    <div class="doc-content">
+      <p>Device builds were not available in the previous project status page. The current published notes are retained here until the integration status is updated with new implementation evidence.</p>
+      <div class="status-list">
+        <div class="status-row">
+          <strong>Desktop</strong>
+          <p>Runtime integration pending. The browser runtime was not connected to a desktop build in the last published status.</p>
+          <span class="status-label">Pending</span>
+        </div>
+        <div class="status-row">
+          <strong>Mobile</strong>
+          <p>No mobile build was available in the last published status.</p>
+          <span class="status-label">Unavailable</span>
+        </div>
+      </div>
+      <div class="callout">These are preserved project notes from the previous site. Update this page when the actual device-build status changes.</div>
+    </div>
+  </section>
+
+  <section class="doc-section">
+    <h2>Platform target</h2>
+    <div class="doc-content">
+      <p>auroraADE's documented target architecture is x86_64. The wider Fabric Dessert CPU integration boundary is designed to accommodate ARM 32-bit, ARM 64-bit, x86 32-bit and x86 64-bit integrations; that broader boundary should not be confused with auroraADE's own target.</p>
+      <p><a href="/architecture/">Read the platform architecture →</a></p>
+    </div>
+  </section>
+</SiteLayout>

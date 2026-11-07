@@ -1,0 +1,117 @@
+---
+import SiteLayout from "../../layouts/SiteLayout.astro";
+---
+<SiteLayout
+  title="Platform architecture"
+  description="Architecture notes for reachOS, Fabric Dessert, FRT64, memory, devices, boot and display."
+  current="architecture"
+>
+  <section class="page-hero">
+    <p class="eyebrow">02 / PLATFORM DOCUMENTATION</p>
+    <h1>The platform, layer by layer.</h1>
+    <p class="lead">
+      This page records the architecture documented in the reachOS source:
+      the virtual hardware platform, its CPU boundary, memory and device model,
+      and the display path.
+    </p>
+  </section>
+
+  <section class="doc-section">
+    <h2>Names and responsibilities</h2>
+    <div class="doc-content">
+      <p>These names describe related parts of the project, but they do not mean the same thing. In particular, the virtual hardware platform's CPU integration boundary and auroraADE's target architecture describe different layers.</p>
+      <table class="doc-table">
+        <tbody>
+          <tr>
+            <th><a href="https://github.com/DecemberReach/reach-to-be-reached" target="_blank" rel="noreferrer">reachOS</a></th>
+            <td>Operating-system project and the wider platform context for the OS lineup.</td>
+          </tr>
+          <tr>
+            <th><a href="https://github.com/critical-dummy/reachOS" target="_blank" rel="noreferrer">Fabric Dessert</a></th>
+            <td>Virtual hardware platform and board architecture, including CPU boundaries, physical memory, device bus, boot substrate and display path.</td>
+          </tr>
+          <tr>
+            <th><a href="https://github.com/critical-dummy/reachOS/tree/main/src/fabric-dessert/arch/frt64" target="_blank" rel="noreferrer">FRT64</a></th>
+            <td>CPU integration boundary designed to accommodate ARM 32-bit, ARM 64-bit, x86 32-bit and x86 64-bit integrations. This does not claim that every ISA implementation is complete.</td>
+          </tr>
+          <tr>
+            <th>auroraADE</th>
+            <td>Aesthetic Desktop Environment. Its documented target architecture is x86_64, not every architecture available at the broader platform boundary.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="doc-section">
+    <h2>Platform architecture</h2>
+    <div class="doc-content">
+      <p>The source separates the browser-facing host shell from the Fabric Dessert platform runtime. The host provides integration with the browser; the platform code owns the virtual board and its subsystems.</p>
+      <table class="doc-table">
+        <tbody>
+          <tr><th><code>src/app/</code></th><td>Angular host shell and the bridge between the browser application and platform runtime.</td></tr>
+          <tr><th><code>src/fabric-dessert/</code></th><td>Platform runtime, lifecycle management and public export boundary.</td></tr>
+          <tr><th><code>board/</code></th><td>Board configuration and boot ROM/reset-vector contract.</td></tr>
+          <tr><th><code>arch/frt64/</code></th><td>CPU-boundary types and execution integration points.</td></tr>
+          <tr><th><code>memory/</code></th><td>Physical address space, memory backing and memory-access context.</td></tr>
+          <tr><th><code>device/</code></th><td>Device interfaces and the bus used to manage MMIO windows and interrupt lines.</td></tr>
+          <tr><th><code>display/</code></th><td>Display device, framebuffer, system renderer, canvas backend and console font.</td></tr>
+        </tbody>
+      </table>
+      <div class="callout">The platform runtime is intended to remain independent of direct Angular and DOM dependencies. Browser integration belongs at the host boundary rather than inside device and memory models.</div>
+    </div>
+  </section>
+
+  <section class="doc-section">
+    <h2>Boot and CPU boundary</h2>
+    <div class="doc-content">
+      <p>The documented reset path is a Fabric Dessert platform contract, not a generic description of every CPU's boot behavior.</p>
+      <ol>
+        <li>The board begins its reset sequence and resets the device bus while propagating the configured reset vector.</li>
+        <li>The primary boot CPU enters the reset state, with its program counter set to the configured Fabric Dessert reset vector.</li>
+        <li>Secondary CPUs are parked until future operating-system SMP bring-up.</li>
+        <li>Instruction fetch crosses the CPU boundary into physical address space and accesses Boot ROM with execute permissions enforced.</li>
+      </ol>
+      <p>The documented Boot ROM and reset vector at <code>0x00000000</code> are a Fabric Dessert board contract. They are not presented as an ISA-wide or Linux-specific rule.</p>
+      <p>FRT64 defines the CPU integration boundary. Its presence does not mean a complete instruction-set implementation for every listed architecture is supplied by the boundary module itself.</p>
+    </div>
+  </section>
+
+  <section class="doc-section">
+    <h2>Memory and devices</h2>
+    <div class="doc-content">
+      <h3>Physical memory</h3>
+      <p>The physical address space uses 64-bit <code>bigint</code> addresses. Sparse physical backing is allocated in 64 KiB chunks rather than eagerly allocating the entire configured RAM range.</p>
+      <p>Region mapping includes conflict checks and access-boundary validation. Memory-mapped device access is dispatched through the address-space and device model.</p>
+      <h3>Device bus</h3>
+      <p><code>DeviceBus</code> manages MMIO address windows, alignment, interrupt-vector assignments and device enumeration. Device interfaces provide a common boundary for controllers, timers, display devices and other peripherals.</p>
+    </div>
+  </section>
+
+  <section class="doc-section">
+    <h2>Display pipeline</h2>
+    <div class="doc-content">
+      <p>The documented display path assigns explicit responsibilities to the virtual device, pixel storage, rendering coordinator and browser-canvas adapter.</p>
+      <ol>
+        <li><strong>Display device.</strong> Exposes control registers and a framebuffer memory aperture through MMIO. The documented register magic value is <code>0x53494446</code>.</li>
+        <li><strong>Framebuffer.</strong> Uses a 1080 × 2424 pixel surface with RGBA8888 pixels, totalling 10,471,680 bytes of pixel storage.</li>
+        <li><strong>System renderer.</strong> Coordinates platform-side presentation and has no direct DOM or browser dependency.</li>
+        <li><strong>Canvas backend.</strong> Bridges the pixel buffer to the host canvas with deterministic 1:1 coordinate mapping, without interpolation or layout-driven scaling.</li>
+        <li><strong>Console font.</strong> The documented default is <code>font_sun_8x16</code>, a 256-glyph, 4096-byte bitmap font for the bootloader and kernel console.</li>
+      </ol>
+      <div class="callout">These are platform display contracts, not a screenshot of auroraADE or proof of a finished desktop session running on the platform.</div>
+    </div>
+  </section>
+
+  <section class="doc-section">
+    <h2>Scope and references</h2>
+    <div class="doc-content">
+      <p>This page documents architecture visible in the referenced reachOS source. It does not specify the implementation status of auroraADE's window manager, panel, dock, file manager or bundled applications, so it does not present those as completed features.</p>
+      <ul>
+        <li><a href="https://github.com/DecemberReach/reach-to-be-reached" target="_blank" rel="noreferrer">December Reach OS source collection</a> — current organization-level OS repository.</li>
+        <li><a href="https://github.com/critical-dummy/reachOS" target="_blank" rel="noreferrer">Fabric Dessert implementation reference</a> — source for the platform architecture documented on this page.</li>
+        <li><a href="https://github.com/critical-dummy/reachOS/blob/main/README.md" target="_blank" rel="noreferrer">Platform README</a> — architecture overview, reset topology and subsystem notes.</li>
+      </ul>
+    </div>
+  </section>
+</SiteLayout>
