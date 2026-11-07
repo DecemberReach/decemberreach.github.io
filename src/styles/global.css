@@ -143,6 +143,17 @@ button, summary { font: inherit; }
   font-size: .72rem;
 }
 
+/* The organization's identity line is content, not a micro-label. */
+.hero .eyebrow {
+  margin-bottom: 1.35rem;
+  font-family: var(--sans);
+  font-size: clamp(1.2rem, 1.75vw, 1.55rem);
+  font-weight: 400;
+  line-height: 1.35;
+  letter-spacing: -.025em;
+  text-transform: none;
+}
+
 .hero h1 {
   max-width: 900px;
   margin: 0;
