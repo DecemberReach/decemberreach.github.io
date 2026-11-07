@@ -2,7 +2,7 @@
 
 Official website for December Reach.
 
-Current website release: Reach Hub 1.0.
+Current website release: Reach Hub 1.1.
 
 The site is built with Astro 6 and custom CSS. It is separate from the operating-system source and the emulation runtime.
 
@@ -29,7 +29,7 @@ Each OS is developed in its own directory within that repository. The project pa
 ## Website release
 
 - Release name: Reach Hub
-- Version: 1.0
+- Version: 1.1
 - Theme: unified dark visual system across all site pages
 
 ## Artwork
