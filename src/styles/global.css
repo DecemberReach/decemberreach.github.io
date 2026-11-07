@@ -1613,7 +1613,7 @@ body.site-theme-dark {
   }
 }
 
-/* Desktop scrollbar: a compact handle that slides in from the right edge. */
+/* Edge navigation: slide-in scrollbar with direct controls and detected chapters. */
 .page-scrollbar {
   display: none;
 }
@@ -1633,7 +1633,7 @@ body.site-theme-dark {
     z-index: 1000;
     inset: 0 0 0 auto;
     display: block;
-    width: 14px;
+    width: 42px;
     height: 100vh;
     height: 100dvh;
     opacity: 0;
@@ -1642,7 +1642,6 @@ body.site-theme-dark {
     transition:
       transform .22s cubic-bezier(.2, .7, .2, 1),
       opacity .16s ease;
-    touch-action: none;
     user-select: none;
   }
 
@@ -1657,31 +1656,166 @@ body.site-theme-dark {
     pointer-events: none;
   }
 
+  .page-scrollbar-control {
+    position: absolute;
+    z-index: 5;
+    right: 3px;
+    display: grid;
+    width: 34px;
+    height: 34px;
+    place-items: center;
+    padding: 0;
+    border: 0;
+    background: #202020;
+    color: #e5e5e5;
+    cursor: pointer;
+    opacity: .92;
+    transition: background-color .12s ease, color .12s ease;
+  }
+
+  .page-scrollbar-control:hover {
+    background: #383838;
+    color: #fff;
+  }
+
+  .page-scrollbar-control:active {
+    background: #4b4b4b;
+  }
+
+  .page-scrollbar-top {
+    top: 3px;
+  }
+
+  .page-scrollbar-bottom {
+    bottom: 3px;
+  }
+
+  .page-scrollbar-arrow {
+    display: block;
+    width: 8px;
+    height: 8px;
+    border-top: 1.5px solid currentColor;
+    border-left: 1.5px solid currentColor;
+  }
+
+  .page-scrollbar-arrow-up {
+    transform: translateY(2px) rotate(45deg);
+  }
+
+  .page-scrollbar-arrow-down {
+    transform: translateY(-2px) rotate(225deg);
+  }
+
+  .page-scrollbar-rail {
+    position: absolute;
+    inset: 42px 0 42px;
+  }
+
+  .page-scrollbar-track {
+    position: absolute;
+    inset: 0 14px;
+    background: #2d2d2d;
+    cursor: pointer;
+  }
+
   .page-scrollbar-thumb {
     position: absolute;
+    z-index: 4;
     top: 0;
-    right: 3px;
-    width: 4px;
-    min-height: 28px;
-    background: #686868;
-    cursor: grab;
-    transition:
-      width .12s ease,
-      background-color .12s ease;
-  }
-
-  .page-scrollbar:hover .page-scrollbar-thumb {
-    right: 2px;
+    right: 11px;
     width: 6px;
-    background: #a3a3a3;
+    min-height: 36px;
+    background: #777;
+    cursor: grab;
+    touch-action: none;
+    transition: width .12s ease, background-color .12s ease;
   }
 
-  .page-scrollbar.is-dragging .page-scrollbar-thumb {
-    cursor: grabbing;
+  .page-scrollbar-thumb:hover,
+  .page-scrollbar-thumb:focus-visible {
+    width: 8px;
     background: #bdbdbd;
   }
 
-  .page-scrollbar:focus-visible {
+  .page-scrollbar.is-dragging .page-scrollbar-thumb {
+    width: 8px;
+    background: #e2e2e2;
+    cursor: grabbing;
+  }
+
+  .page-scrollbar-chapters {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+
+  .page-scrollbar-chapter-marker {
+    position: absolute;
+    z-index: 3;
+    left: 50%;
+    display: grid;
+    width: 20px;
+    height: 20px;
+    place-items: center;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+    pointer-events: auto;
+    transform: translate(-50%, -50%);
+  }
+
+  .page-scrollbar-chapter-marker::before {
+    display: block;
+    width: 5px;
+    height: 5px;
+    border: 1px solid #aaa;
+    background: #303030;
+    content: "";
+    transition: width .12s ease, height .12s ease, background-color .12s ease;
+  }
+
+  .page-scrollbar-chapter-marker:hover::before {
+    width: 8px;
+    height: 8px;
+    background: #d0d0d0;
+  }
+
+  .page-scrollbar-chapter-marker.is-active::before {
+    width: 8px;
+    height: 8px;
+    border-color: #fff;
+    background: #fff;
+  }
+
+  .page-scrollbar-current {
+    position: absolute;
+    z-index: 6;
+    top: 50%;
+    right: calc(100% + 8px);
+    display: none;
+    max-width: 190px;
+    overflow: hidden;
+    padding: 7px 10px;
+    background: #242424;
+    color: #f2f2f2;
+    font-size: 12px;
+    line-height: 16px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    opacity: 0;
+    transform: translate(8px, -50%);
+    transition: opacity .14s ease, transform .14s ease;
+    pointer-events: none;
+  }
+
+  .page-scrollbar.is-visible .page-scrollbar-current {
+    opacity: 1;
+    transform: translate(0, -50%);
+  }
+
+  .page-scrollbar-control:focus-visible,
+  .page-scrollbar-chapter-marker:focus-visible {
     outline: 2px solid #fff;
     outline-offset: -2px;
   }

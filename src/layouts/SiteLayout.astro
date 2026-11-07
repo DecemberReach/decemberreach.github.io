@@ -50,54 +50,82 @@ const { title, description, current } = Astro.props;
       </footer>
     </div>
 
-    <div
-      class="page-scrollbar"
-      role="scrollbar"
-      aria-label="Page scroll position"
-      aria-orientation="vertical"
-      aria-valuemin="0"
-      aria-valuemax="100"
-      aria-valuenow="0"
-      tabindex="0"
-    >
-      <div class="page-scrollbar-thumb" aria-hidden="true"></div>
-    </div>
+    <aside class="page-scrollbar" aria-label="Page navigation">
+      <button class="page-scrollbar-control page-scrollbar-top" type="button" data-scroll-control="top" aria-label="Scroll to top" title="Scroll to top">
+        <span class="page-scrollbar-arrow page-scrollbar-arrow-up" aria-hidden="true"></span>
+      </button>
+      <div class="page-scrollbar-rail">
+        <div class="page-scrollbar-track" aria-hidden="true"></div>
+        <div class="page-scrollbar-chapters" aria-label="Page chapters"></div>
+        <div
+          class="page-scrollbar-thumb"
+          role="scrollbar"
+          aria-label="Page scroll position"
+          aria-orientation="vertical"
+          aria-valuemin="0"
+          aria-valuemax="100"
+          aria-valuenow="0"
+          aria-valuetext="0 percent"
+          tabindex="0"
+        ></div>
+      </div>
+      <div class="page-scrollbar-current" aria-hidden="true"></div>
+      <button class="page-scrollbar-control page-scrollbar-bottom" type="button" data-scroll-control="bottom" aria-label="Scroll to bottom" title="Scroll to bottom">
+        <span class="page-scrollbar-arrow page-scrollbar-arrow-down" aria-hidden="true"></span>
+      </button>
+    </aside>
 
     <script>
       const scrollbar = document.querySelector(".page-scrollbar");
+      const rail = scrollbar?.querySelector(".page-scrollbar-rail");
+      const track = scrollbar?.querySelector(".page-scrollbar-track");
       const thumb = scrollbar?.querySelector(".page-scrollbar-thumb");
+      const chapterLayer = scrollbar?.querySelector(".page-scrollbar-chapters");
+      const currentChapterLabel = scrollbar?.querySelector(".page-scrollbar-current");
+      const topButton = scrollbar?.querySelector('[data-scroll-control="top"]');
+      const bottomButton = scrollbar?.querySelector('[data-scroll-control="bottom"]');
 
       if (
         scrollbar instanceof HTMLElement &&
+        rail instanceof HTMLElement &&
+        track instanceof HTMLElement &&
         thumb instanceof HTMLElement &&
+        chapterLayer instanceof HTMLElement &&
+        currentChapterLabel instanceof HTMLElement &&
+        topButton instanceof HTMLButtonElement &&
+        bottomButton instanceof HTMLButtonElement &&
         window.matchMedia("(hover: hover) and (pointer: fine)").matches
       ) {
-        const edgeRevealWidth = 16;
+        const edgeRevealWidth = 48;
+        const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
         let pointerNearEdge = false;
         let isDragging = false;
         let dragPointerId = null;
-        let dragStartY = 0;
-        let dragStartThumbTop = 0;
+        let dragPointerOffset = 0;
+        let chapters = [];
 
-        const measure = () => {
-          const scrollHeight = Math.max(
+        const getScrollMetrics = () => {
+          const documentHeight = Math.max(
             document.documentElement.scrollHeight,
             document.body.scrollHeight,
           );
           const viewportHeight = window.innerHeight;
-          const trackHeight = scrollbar.clientHeight;
-          const maxScrollTop = Math.max(scrollHeight - viewportHeight, 0);
+          const railHeight = rail.clientHeight;
+          const maxScrollTop = Math.max(documentHeight - viewportHeight, 0);
           const thumbHeight = Math.min(
-            trackHeight,
-            Math.max(28, trackHeight * (viewportHeight / scrollHeight)),
+            railHeight,
+            Math.max(36, railHeight * (viewportHeight / documentHeight)),
           );
-          const maxThumbTop = Math.max(trackHeight - thumbHeight, 0);
+          const maxThumbTop = Math.max(railHeight - thumbHeight, 0);
           const scrollTop = window.scrollY || document.documentElement.scrollTop;
           const thumbTop = maxScrollTop > 0
             ? (scrollTop / maxScrollTop) * maxThumbTop
             : 0;
 
           return {
+            documentHeight,
+            viewportHeight,
+            railHeight,
             maxScrollTop,
             thumbHeight,
             maxThumbTop,
@@ -106,11 +134,121 @@ const { title, description, current } = Astro.props;
           };
         };
 
+        const getHeadingPosition = (heading) =>
+          Math.max(
+            0,
+            heading.getBoundingClientRect().top + window.scrollY - 72,
+          );
+
+        const detectChapters = () => {
+          const headings = Array.from(
+            document.querySelectorAll("#main-content h1, #main-content h2"),
+          ).filter((heading) => {
+            const title = heading.textContent?.trim();
+            return Boolean(title) && heading.getClientRects().length > 0;
+          });
+
+          chapters = headings.map((heading, index) => {
+            if (!heading.id) {
+              heading.id = `scroll-chapter-${index + 1}`;
+            }
+
+            return {
+              heading,
+              id: heading.id,
+              title: heading.textContent?.trim().replace(/\\s+/g, " ") ?? "Untitled",
+              top: getHeadingPosition(heading),
+              marker: null,
+            };
+          });
+
+          const metrics = getScrollMetrics();
+          chapterLayer.replaceChildren();
+
+          chapters.forEach((chapter, index) => {
+            const marker = document.createElement("button");
+            marker.type = "button";
+            marker.className = "page-scrollbar-chapter-marker";
+            marker.setAttribute("aria-label", `Jump to ${chapter.title}`);
+            marker.title = `Click to scroll: ${chapter.title}`;
+            marker.dataset.chapterIndex = String(index);
+            marker.addEventListener("click", (event) => {
+              event.stopPropagation();
+              window.scrollTo({
+                top: chapter.top,
+                behavior: reducedMotion ? "auto" : "smooth",
+              });
+              scrollbar.classList.add("is-visible");
+            });
+            chapterLayer.append(marker);
+            chapter.marker = marker;
+          });
+
+          positionChapterMarkers(metrics);
+          updateCurrentChapter(metrics);
+        };
+
+        const positionChapterMarkers = (metrics) => {
+          chapters.forEach((chapter) => {
+            if (!(chapter.marker instanceof HTMLButtonElement)) return;
+
+            const progress = metrics.maxScrollTop > 0
+              ? Math.min(1, Math.max(0, chapter.top / metrics.maxScrollTop))
+              : 0;
+            const markerCenter =
+              progress * metrics.maxThumbTop + metrics.thumbHeight / 2;
+            chapter.marker.style.top = `${markerCenter}px`;
+          });
+        };
+
+        const updateCurrentChapter = (metrics) => {
+          if (!chapters.length) {
+            currentChapterLabel.textContent = "";
+            currentChapterLabel.style.display = "none";
+            return;
+          }
+
+          currentChapterLabel.style.display = "block";
+          const readingPosition = metrics.scrollTop + metrics.viewportHeight * 0.28;
+          let activeIndex = 0;
+
+          for (let index = 0; index < chapters.length; index += 1) {
+            if (chapters[index].top <= readingPosition) {
+              activeIndex = index;
+            } else {
+              break;
+            }
+          }
+
+          const active = chapters[activeIndex];
+          currentChapterLabel.textContent = active.title;
+          currentChapterLabel.title = active.title;
+          currentChapterLabel.style.top =
+            `${metrics.thumbTop + metrics.thumbHeight / 2}px`;
+
+          chapters.forEach((chapter, index) => {
+            chapter.marker?.classList.toggle("is-active", index === activeIndex);
+            chapter.marker?.setAttribute(
+              "aria-current",
+              index === activeIndex ? "location" : "false",
+            );
+          });
+
+          thumb.setAttribute(
+            "aria-valuetext",
+            `${Math.round(
+              metrics.maxScrollTop > 0
+                ? (metrics.scrollTop / metrics.maxScrollTop) * 100
+                : 0,
+            )} percent · ${active.title}`,
+          );
+        };
+
         const updateMetrics = () => {
-          const metrics = measure();
+          const metrics = getScrollMetrics();
           thumb.style.height = `${metrics.thumbHeight}px`;
           thumb.style.top = `${metrics.thumbTop}px`;
-          scrollbar.setAttribute(
+          thumb.setAttribute(
             "aria-valuenow",
             String(
               metrics.maxScrollTop > 0
@@ -122,85 +260,81 @@ const { title, description, current } = Astro.props;
           if (metrics.maxScrollTop <= 0) {
             scrollbar.classList.remove("is-visible");
           }
+
+          positionChapterMarkers(metrics);
+          updateCurrentChapter(metrics);
         };
 
-        window.addEventListener("scroll", updateMetrics, { passive: true });
-        window.addEventListener("resize", updateMetrics, { passive: true });
-        window.addEventListener("pageshow", updateMetrics);
+        const refreshChapters = () => {
+          chapters.forEach((chapter) => {
+            chapter.top = getHeadingPosition(chapter.heading);
+          });
+          updateMetrics();
+        };
 
-        const resizeObserver = new ResizeObserver(updateMetrics);
-        resizeObserver.observe(document.documentElement);
-        resizeObserver.observe(document.body);
-        updateMetrics();
+        const scrollToPosition = (top) => {
+          const maxScrollTop = getScrollMetrics().maxScrollTop;
+          window.scrollTo({
+            top: Math.min(maxScrollTop, Math.max(0, top)),
+            behavior: reducedMotion ? "auto" : "smooth",
+          });
+        };
 
-        window.addEventListener(
-          "pointermove",
-          (event) => {
-            if (isDragging && event.pointerId === dragPointerId) {
-              const metrics = measure();
-              const nextThumbTop = Math.min(
-                metrics.maxThumbTop,
-                Math.max(
-                  0,
-                  dragStartThumbTop + (event.clientY - dragStartY),
-                ),
-              );
-              const nextScrollTop = metrics.maxThumbTop > 0
-                ? (nextThumbTop / metrics.maxThumbTop) * metrics.maxScrollTop
-                : 0;
-
-              window.scrollTo({ top: nextScrollTop, behavior: "auto" });
-              scrollbar.classList.add("is-visible");
-              return;
-            }
-
-            if (event.pointerType !== "mouse") return;
-
-            pointerNearEdge = window.innerWidth - event.clientX <= edgeRevealWidth;
-            const pointerOnScrollbar =
-              event.target instanceof Node && scrollbar.contains(event.target);
-            const hasFocus = document.activeElement === scrollbar;
-
-            scrollbar.classList.toggle(
-              "is-visible",
-              pointerNearEdge || pointerOnScrollbar || hasFocus,
-            );
-          },
-          { passive: true },
+        topButton.addEventListener("click", () => scrollToPosition(0));
+        bottomButton.addEventListener("click", () =>
+          scrollToPosition(getScrollMetrics().maxScrollTop),
         );
 
-        scrollbar.addEventListener("pointerdown", (event) => {
-          if (event.button !== 0) return;
-
-          const metrics = measure();
+        track.addEventListener("click", (event) => {
+          const metrics = getScrollMetrics();
           if (metrics.maxScrollTop <= 0 || metrics.maxThumbTop <= 0) return;
 
-          const pointerOnThumb = event.target === thumb;
-          if (pointerOnThumb) {
-            dragStartThumbTop = metrics.thumbTop;
-          } else {
-            const bounds = scrollbar.getBoundingClientRect();
-            dragStartThumbTop = Math.min(
-              metrics.maxThumbTop,
-              Math.max(
-                0,
-                event.clientY - bounds.top - metrics.thumbHeight / 2,
-              ),
-            );
-            window.scrollTo({
-              top:
-                (dragStartThumbTop / metrics.maxThumbTop) *
-                metrics.maxScrollTop,
-              behavior: "auto",
-            });
-          }
+          const railBounds = rail.getBoundingClientRect();
+          const desiredThumbTop = Math.min(
+            metrics.maxThumbTop,
+            Math.max(
+              0,
+              event.clientY - railBounds.top - metrics.thumbHeight / 2,
+            ),
+          );
+          scrollToPosition(
+            (desiredThumbTop / metrics.maxThumbTop) * metrics.maxScrollTop,
+          );
+        });
 
+        thumb.addEventListener("pointerdown", (event) => {
+          if (event.button !== 0) return;
+
+          const metrics = getScrollMetrics();
+          if (metrics.maxScrollTop <= 0 || metrics.maxThumbTop <= 0) return;
+
+          const railBounds = rail.getBoundingClientRect();
+          dragPointerOffset =
+            event.clientY - railBounds.top - metrics.thumbTop;
           isDragging = true;
           dragPointerId = event.pointerId;
-          dragStartY = event.clientY;
-          scrollbar.setPointerCapture(event.pointerId);
+          thumb.setPointerCapture(event.pointerId);
           scrollbar.classList.add("is-visible", "is-dragging");
           event.preventDefault();
+        });
+
+        thumb.addEventListener("pointermove", (event) => {
+          if (!isDragging || event.pointerId !== dragPointerId) return;
+
+          const metrics = getScrollMetrics();
+          const railBounds = rail.getBoundingClientRect();
+          const nextThumbTop = Math.min(
+            metrics.maxThumbTop,
+            Math.max(
+              0,
+              event.clientY - railBounds.top - dragPointerOffset,
+            ),
+          );
+          const nextScrollTop = metrics.maxThumbTop > 0
+            ? (nextThumbTop / metrics.maxThumbTop) * metrics.maxScrollTop
+            : 0;
+
+          window.scrollTo({ top: nextScrollTop, behavior: "auto" });
         });
 
         const endDragging = (event) => {
@@ -210,26 +344,17 @@ const { title, description, current } = Astro.props;
           dragPointerId = null;
           scrollbar.classList.remove("is-dragging");
           updateMetrics();
-          if (!pointerNearEdge && document.activeElement !== scrollbar) {
+
+          if (!pointerNearEdge && !scrollbar.contains(document.activeElement)) {
             scrollbar.classList.remove("is-visible");
           }
         };
 
-        scrollbar.addEventListener("pointerup", endDragging);
-        scrollbar.addEventListener("pointercancel", endDragging);
-        scrollbar.addEventListener("lostpointercapture", endDragging);
+        thumb.addEventListener("pointerup", endDragging);
+        thumb.addEventListener("pointercancel", endDragging);
+        thumb.addEventListener("lostpointercapture", endDragging);
 
-        scrollbar.addEventListener("focus", () => {
-          scrollbar.classList.add("is-visible");
-        });
-
-        scrollbar.addEventListener("blur", () => {
-          if (!pointerNearEdge && !isDragging) {
-            scrollbar.classList.remove("is-visible");
-          }
-        });
-
-        scrollbar.addEventListener("keydown", (event) => {
+        thumb.addEventListener("keydown", (event) => {
           const lineStep = Math.max(48, window.innerHeight * 0.12);
           let nextScrollTop;
 
@@ -250,15 +375,72 @@ const { title, description, current } = Astro.props;
               nextScrollTop = 0;
               break;
             case "End":
-              nextScrollTop = document.documentElement.scrollHeight;
+              nextScrollTop = getScrollMetrics().maxScrollTop;
               break;
             default:
               return;
           }
 
           event.preventDefault();
-          window.scrollTo({ top: nextScrollTop, behavior: "auto" });
+          scrollToPosition(nextScrollTop);
         });
+
+        scrollbar.addEventListener("focusin", () => {
+          scrollbar.classList.add("is-visible");
+        });
+
+        scrollbar.addEventListener("focusout", (event) => {
+          if (
+            !pointerNearEdge &&
+            !scrollbar.contains(event.relatedTarget) &&
+            !isDragging
+          ) {
+            scrollbar.classList.remove("is-visible");
+          }
+        });
+
+        window.addEventListener(
+          "pointermove",
+          (event) => {
+            if (event.pointerType !== "mouse" || isDragging) return;
+
+            pointerNearEdge =
+              window.innerWidth - event.clientX <= edgeRevealWidth;
+            const pointerOnScrollbar =
+              event.target instanceof Node && scrollbar.contains(event.target);
+
+            scrollbar.classList.toggle(
+              "is-visible",
+              pointerNearEdge || pointerOnScrollbar ||
+                scrollbar.contains(document.activeElement),
+            );
+          },
+          { passive: true },
+        );
+
+        window.addEventListener("scroll", updateMetrics, { passive: true });
+        window.addEventListener("resize", refreshChapters, { passive: true });
+        window.addEventListener("pageshow", refreshChapters);
+
+        const resizeObserver = new ResizeObserver(refreshChapters);
+        resizeObserver.observe(document.documentElement);
+        resizeObserver.observe(document.body);
+
+        const mainContent = document.querySelector("#main-content");
+        if (mainContent) {
+          const mutationObserver = new MutationObserver(() => {
+            detectChapters();
+          });
+          mutationObserver.observe(mainContent, {
+            childList: true,
+            subtree: true,
+            attributes: true,
+            attributeFilter: ["hidden"],
+          });
+        }
+
+        detectChapters();
+        updateMetrics();
 
         window.addEventListener("blur", () => {
           isDragging = false;
