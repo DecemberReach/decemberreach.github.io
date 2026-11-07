@@ -31,9 +31,9 @@ Astro outputs the static site to \`dist/\`.
 
 ## Typography
 
-The site uses Selawik, Microsoft's open-source Segoe UI alternative, from the local \`public/fonts/selawik/\` directory. The font is distributed under the SIL Open Font License 1.1; its license is included as \`public/fonts/selawik/OFL.txt\`.
+The site uses the Open Sans variable font locally from `public/fonts/open-sans/`, including upright and italic styles. The font is distributed under the SIL Open Font License 1.1; its license is included as `public/fonts/open-sans/OFL.txt`.
 
-Selawik does not provide the Korean glyph coverage required by this site, so Korean text falls back to the platform's Korean sans-serif font.
+Open Sans does not provide the Korean glyph coverage required by this site, so Korean text falls back to the platform's Korean sans-serif font.
 
 ## Architecture notes
 
