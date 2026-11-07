@@ -1,35 +1,9 @@
 ---
 import SiteLayout from "../../layouts/SiteLayout.astro";
+import { projects, sharedOSRepository } from "../../data/projects";
 
-const sharedOSRepository = "https://github.com/DecemberReach/reach-to-be-reached";
-
-const projects = [
-  {
-    slug: "auroraADE",
-    name: "auroraADE",
-    category: "Operating system · x86_64",
-    summary: "A real x86_64 operating system project hosted in a browser.",
-    image: "https://images.unsplash.com/photo-1531764411937-45495415d84d?auto=format&fit=crop&w=1800&q=85",
-    imageAlt: "A turquoise lake surrounded by forested mountains",
-    featured: true
-  },
-  {
-    slug: "haloDOT",
-    name: "haloDOT",
-    category: "Operating system",
-    summary: "An operating system project developed by December Reach.",
-    image: "https://images.unsplash.com/photo-1465056836041-7f43ac27dcb5?auto=format&fit=crop&w=1100&q=80",
-    imageAlt: "A mountain range across a wide lake under an evening sky"
-  },
-  {
-    slug: "stellaOS",
-    name: "stellaOS",
-    category: "Television operating system",
-    summary: "A television operating system project from December Reach.",
-    image: "https://images.unsplash.com/photo-1516941072577-aecd44b927bf?auto=format&fit=crop&w=1100&q=80",
-    imageAlt: "A sunlit river canyon between steep mountain walls"
-  }
-];
+const featuredProject = projects[0];
+const otherProjects = projects.slice(1);
 ---
 <SiteLayout
   title="Projects"
@@ -47,14 +21,14 @@ const projects = [
     </header>
 
     <section class="software-featured-project" aria-labelledby="featured-project-title">
-      <a class="software-featured-art" href="/project/auroraADE/" aria-label="Explore auroraADE">
-        <img src={projects[0].image} alt={projects[0].imageAlt} fetchpriority="high" />
+      <a class="software-featured-art" href={"/project/" + featuredProject.slug + "/"} aria-label={"Explore " + featuredProject.name}>
+        <img src={featuredProject.image} alt={featuredProject.imageAlt} fetchpriority="high" />
       </a>
       <div class="software-featured-copy">
-        <p class="software-product-category">{projects[0].category}</p>
-        <h2 id="featured-project-title">{projects[0].name}</h2>
-        <p>{projects[0].summary}</p>
-        <a class="software-primary-link" href="/project/auroraADE/">Explore auroraADE</a>
+        <p class="software-product-category">{featuredProject.category}</p>
+        <h2 id="featured-project-title">{featuredProject.name}</h2>
+        <p>{featuredProject.summary}</p>
+        <a class="software-primary-link" href={"/project/" + featuredProject.slug + "/"}>Explore {featuredProject.name}</a>
       </div>
     </section>
 
@@ -67,7 +41,7 @@ const projects = [
       </div>
 
       <div class="software-directory-grid">
-        {projects.filter((project) => !project.featured).map((project) => (
+        {otherProjects.map((project) => (
           <a class="software-directory-card" href={"/project/" + project.slug + "/"} key={project.slug}>
             <img src={project.image} alt={project.imageAlt} loading="lazy" />
             <div class="software-directory-card-copy">
