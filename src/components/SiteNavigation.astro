@@ -11,7 +11,7 @@ const items = [
   { label: "Resources", href: "/resources/", key: "resources" }
 ] as const;
 ---
-<nav class="primary-nav" aria-label="Main navigation">
+<nav class="primary-nav site-navigation" aria-label="Main navigation">
   {items.map((item) => (
     <a
       href={item.href}
