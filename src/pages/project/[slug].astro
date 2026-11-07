@@ -1,51 +1,101 @@
 ---
 import SiteLayout from "../../layouts/SiteLayout.astro";
 
+type ProjectHighlight = {
+  title: string;
+  value: string;
+  description: string;
+};
+
 type Project = {
   slug: string;
   name: string;
   category: string;
-  target?: string;
+  summary: string;
+  description: string;
   image: string;
   imageAlt: string;
   photoPage: string;
   photographer: string;
+  facts: { label: string; value: string }[];
+  highlights: ProjectHighlight[];
 };
 
 const sharedOSRepository = "https://github.com/DecemberReach/reach-to-be-reached";
 
-export function getStaticPaths() {
-  const projects: Project[] = [
-    {
-      slug: "auroraADE",
-      name: "auroraADE",
-      category: "Desktop environment",
-      target: "x86_64",
-      image: "https://images.unsplash.com/photo-1531764411937-45495415d84d?auto=format&fit=crop&w=1400&q=80",
-      imageAlt: "Turquoise lake surrounded by forested mountains",
-      photoPage: "https://unsplash.com/photos/landscape-photography-of-lake-and-mountains-bXGUdxFeQUQ",
-      photographer: "Ryan Stone"
-    },
-    {
-      slug: "haloDOT",
-      name: "haloDOT",
-      category: "Operating system project",
-      image: "https://images.unsplash.com/photo-1465056836041-7f43ac27dcb5?auto=format&fit=crop&w=1400&q=80",
-      imageAlt: "Mountain range across a wide lake under a cloudy evening sky",
-      photoPage: "https://unsplash.com/photos/landscape-photography-of-lake-and-mountain-73F4pKoUkM0",
-      photographer: "Tobias Keller"
-    },
-    {
-      slug: "stellaOS",
-      name: "stellaOS",
-      category: "Television operating system",
-      image: "https://images.unsplash.com/photo-1516941072577-aecd44b927bf?auto=format&fit=crop&w=1400&q=80",
-      imageAlt: "A sunlit river canyon between steep mountain walls",
-      photoPage: "https://unsplash.com/photos/landscape-photography-of-mountain-and-lake-kyDyOHkIbC8",
-      photographer: "Marc-Olivier Jodoin"
-    }
-  ];
+const projects: Project[] = [
+  {
+    slug: "auroraADE",
+    name: "auroraADE",
+    category: "Operating system · x86_64",
+    summary: "A real x86_64 operating system project hosted in a browser.",
+    description:
+      "auroraADE runs a guest operating system written in C and Assembly. A TypeScript runtime provides the CPU, bus, and device environment, while WebGPU handles display output.",
+    image: "https://images.unsplash.com/photo-1531764411937-45495415d84d?auto=format&fit=crop&w=1800&q=85",
+    imageAlt: "A turquoise lake surrounded by forested mountains",
+    photoPage: "https://unsplash.com/photos/landscape-photography-of-lake-and-mountains-bXGUdxFeQUQ",
+    photographer: "Ryan Stone",
+    facts: [
+      { label: "Project type", value: "Operating system" },
+      { label: "Target architecture", value: "x86_64" },
+      { label: "Execution environment", value: "Browser-hosted" },
+      { label: "Display", value: "WebGPU" }
+    ],
+    highlights: [
+      {
+        title: "Guest operating system",
+        value: "C / Assembly",
+        description: "The guest OS is implemented separately from the browser runtime."
+      },
+      {
+        title: "Runtime",
+        value: "TypeScript",
+        description: "The runtime provides the CPU, bus, and device environment."
+      },
+      {
+        title: "Display",
+        value: "WebGPU",
+        description: "WebGPU is used for the display path."
+      }
+    ]
+  },
+  {
+    slug: "haloDOT",
+    name: "haloDOT",
+    category: "Operating system",
+    summary: "An operating system project developed by December Reach.",
+    description:
+      "haloDOT is maintained as a separate OS project in December Reach's shared source repository.",
+    image: "https://images.unsplash.com/photo-1465056836041-7f43ac27dcb5?auto=format&fit=crop&w=1800&q=85",
+    imageAlt: "A mountain range across a wide lake under an evening sky",
+    photoPage: "https://unsplash.com/photos/landscape-photography-of-lake-and-mountain-73F4pKoUkM0",
+    photographer: "Tobias Keller",
+    facts: [
+      { label: "Project type", value: "Operating system" },
+      { label: "Source", value: "Shared OS repository" }
+    ],
+    highlights: []
+  },
+  {
+    slug: "stellaOS",
+    name: "stellaOS",
+    category: "Television operating system",
+    summary: "A television operating system project from December Reach.",
+    description:
+      "stellaOS is maintained as a separate OS project in December Reach's shared source repository.",
+    image: "https://images.unsplash.com/photo-1516941072577-aecd44b927bf?auto=format&fit=crop&w=1800&q=85",
+    imageAlt: "A sunlit river canyon between steep mountain walls",
+    photoPage: "https://unsplash.com/photos/landscape-photography-of-mountain-and-lake-kyDyOHkIbC8",
+    photographer: "Marc-Olivier Jodoin",
+    facts: [
+      { label: "Project type", value: "Television operating system" },
+      { label: "Source", value: "Shared OS repository" }
+    ],
+    highlights: []
+  }
+];
 
+export function getStaticPaths() {
   return projects.map((project) => ({
     params: { slug: project.slug },
     props: { project }
@@ -57,48 +107,123 @@ interface Props {
 }
 
 const { project } = Astro.props;
+const relatedProjects = projects.filter((item) => item.slug !== project.slug);
 ---
 <SiteLayout
   title={project.name}
-  description={project.name + " · " + project.category + " · December Reach"}
+  description={project.summary + " · December Reach"}
+  current="projects"
 >
-  <div class="project-detail">
-    <section class="project-splash" aria-labelledby="project-title">
-      <img
-        class="project-splash-photo"
-        src={project.image}
-        alt={project.imageAlt}
-        fetchpriority="high"
-        style={"view-transition-name: project-" + project.slug}
-      />
-      <div class="project-splash-shade"></div>
-      <div class="project-splash-copy">
-        <h1 id="project-title">{project.name}</h1>
-        <span>{project.category}</span>
+  <div class="software-product">
+    <nav class="software-breadcrumb" aria-label="Breadcrumb">
+      <a href="/project/">Projects</a>
+      <span aria-hidden="true">/</span>
+      <span aria-current="page">{project.name}</span>
+    </nav>
+
+    <section class="software-product-hero" aria-labelledby="software-product-title">
+      <div class="software-product-copy">
+        <p class="software-product-category">{project.category}</p>
+        <h1 id="software-product-title">{project.name}</h1>
+        <p class="software-product-summary">{project.summary}</p>
+        <div class="software-product-actions">
+          <a class="software-primary-link" href={sharedOSRepository} target="_blank" rel="noreferrer">
+            View source repository
+          </a>
+          <a class="software-secondary-link" href="/project/">All projects</a>
+        </div>
       </div>
-      <a class="project-splash-credit" href={project.photoPage} target="_blank" rel="noreferrer">
-        Photo by {project.photographer} / Unsplash · Temporary artwork
+
+      <figure class="software-product-art">
+        <img
+          src={project.image}
+          alt={project.imageAlt}
+          fetchpriority="high"
+          style={"view-transition-name: project-" + project.slug}
+        />
+        <figcaption>
+          <a href={project.photoPage} target="_blank" rel="noreferrer">
+            Photo by {project.photographer} / Unsplash
+          </a>
+          <span>Temporary artwork</span>
+        </figcaption>
+      </figure>
+    </section>
+
+    <section class="software-product-overview" id="overview" aria-labelledby="software-overview-title">
+      <div class="software-section-heading">
+        <div>
+          <p class="software-section-kicker">Overview</p>
+          <h2 id="software-overview-title">About {project.name}</h2>
+        </div>
+        <p>{project.description}</p>
+      </div>
+
+      <div class="software-facts" aria-label="Project information">
+        {project.facts.map((fact) => (
+          <div class="software-fact">
+            <span>{fact.label}</span>
+            <strong>{fact.value}</strong>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    {project.highlights.length > 0 && (
+      <section class="software-capabilities" id="technical-details" aria-labelledby="software-capabilities-title">
+        <div class="software-section-heading">
+          <div>
+            <p class="software-section-kicker">Technical overview</p>
+            <h2 id="software-capabilities-title">How it is built</h2>
+          </div>
+          <p>Confirmed implementation details for {project.name}.</p>
+        </div>
+
+        <div class="software-capability-grid">
+          {project.highlights.map((item) => (
+            <article class="software-capability">
+              <span>{item.title}</span>
+              <h3>{item.value}</h3>
+              <p>{item.description}</p>
+            </article>
+          ))}
+        </div>
+      </section>
+    )}
+
+    <section class="software-source" aria-labelledby="software-source-title">
+      <div>
+        <p class="software-section-kicker">Source code</p>
+        <h2 id="software-source-title">Developed in one shared repository.</h2>
+        <p>Each operating-system project has its own development directory.</p>
+      </div>
+      <a href={sharedOSRepository} target="_blank" rel="noreferrer">
+        DecemberReach / reach-to-be-reached
       </a>
     </section>
 
-    <section class="project-facts" aria-label="Project information">
-      <div class="project-fact">
-        <span>Project type</span>
-        <strong>{project.category}</strong>
-      </div>
-      {project.target && (
-        <div class="project-fact">
-          <span>Target architecture</span>
-          <strong>{project.target}</strong>
+    <section class="software-related" aria-labelledby="software-related-title">
+      <div class="software-section-heading">
+        <div>
+          <p class="software-section-kicker">Explore</p>
+          <h2 id="software-related-title">More projects</h2>
         </div>
-      )}
-      <div class="project-fact">
-        <span>Shared OS source</span>
-        <a href={sharedOSRepository} target="_blank" rel="noreferrer">DecemberReach / reach-to-be-reached</a>
+        <a class="software-text-link" href="/project/">Browse all projects</a>
+      </div>
+
+      <div class="software-related-grid">
+        {relatedProjects.map((item) => (
+          <a class="software-related-card" href={"/project/" + item.slug + "/"} key={item.slug}>
+            <img src={item.image} alt={item.imageAlt} loading="lazy" />
+            <div>
+              <span>{item.category}</span>
+              <h3>{item.name}</h3>
+              <p>{item.summary}</p>
+              <strong>Explore project <span aria-hidden="true">→</span></strong>
+            </div>
+          </a>
+        ))}
       </div>
     </section>
-    <p class="project-source-note">All operating-system projects are developed in this repository, with a separate directory for each OS.</p>
-
-    <a class="project-back-link" href="/">Back to Hub</a>
   </div>
 </SiteLayout>

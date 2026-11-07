@@ -1,0 +1,93 @@
+---
+import SiteLayout from "../../layouts/SiteLayout.astro";
+
+const sharedOSRepository = "https://github.com/DecemberReach/reach-to-be-reached";
+
+const projects = [
+  {
+    slug: "auroraADE",
+    name: "auroraADE",
+    category: "Operating system · x86_64",
+    summary: "A real x86_64 operating system project hosted in a browser.",
+    image: "https://images.unsplash.com/photo-1531764411937-45495415d84d?auto=format&fit=crop&w=1800&q=85",
+    imageAlt: "A turquoise lake surrounded by forested mountains",
+    featured: true
+  },
+  {
+    slug: "haloDOT",
+    name: "haloDOT",
+    category: "Operating system",
+    summary: "An operating system project developed by December Reach.",
+    image: "https://images.unsplash.com/photo-1465056836041-7f43ac27dcb5?auto=format&fit=crop&w=1100&q=80",
+    imageAlt: "A mountain range across a wide lake under an evening sky"
+  },
+  {
+    slug: "stellaOS",
+    name: "stellaOS",
+    category: "Television operating system",
+    summary: "A television operating system project from December Reach.",
+    image: "https://images.unsplash.com/photo-1516941072577-aecd44b927bf?auto=format&fit=crop&w=1100&q=80",
+    imageAlt: "A sunlit river canyon between steep mountain walls"
+  }
+];
+---
+<SiteLayout
+  title="Projects"
+  description="Operating systems and software projects from December Reach."
+  current="projects"
+>
+  <div class="software-directory">
+    <header class="software-directory-heading">
+      <div>
+        <p class="software-section-kicker">December Reach</p>
+        <h1>Projects</h1>
+        <p>Operating systems and software developed by December Reach.</p>
+      </div>
+      <a href={sharedOSRepository} target="_blank" rel="noreferrer">Shared source repository</a>
+    </header>
+
+    <section class="software-featured-project" aria-labelledby="featured-project-title">
+      <a class="software-featured-art" href="/project/auroraADE/" aria-label="Explore auroraADE">
+        <img src={projects[0].image} alt={projects[0].imageAlt} fetchpriority="high" />
+      </a>
+      <div class="software-featured-copy">
+        <p class="software-product-category">{projects[0].category}</p>
+        <h2 id="featured-project-title">{projects[0].name}</h2>
+        <p>{projects[0].summary}</p>
+        <a class="software-primary-link" href="/project/auroraADE/">Explore auroraADE</a>
+      </div>
+    </section>
+
+    <section class="software-directory-list" aria-labelledby="all-projects-title">
+      <div class="software-section-heading">
+        <div>
+          <p class="software-section-kicker">Software</p>
+          <h2 id="all-projects-title">More projects</h2>
+        </div>
+      </div>
+
+      <div class="software-directory-grid">
+        {projects.filter((project) => !project.featured).map((project) => (
+          <a class="software-directory-card" href={"/project/" + project.slug + "/"} key={project.slug}>
+            <img src={project.image} alt={project.imageAlt} loading="lazy" />
+            <div class="software-directory-card-copy">
+              <span>{project.category}</span>
+              <h3>{project.name}</h3>
+              <p>{project.summary}</p>
+              <strong>Explore project <span aria-hidden="true">→</span></strong>
+            </div>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <section class="software-shared-source">
+      <div>
+        <p class="software-section-kicker">Development</p>
+        <h2>One repository. Separate OS projects.</h2>
+        <p>Each operating system is developed in its own directory inside the shared repository.</p>
+      </div>
+      <a href={sharedOSRepository} target="_blank" rel="noreferrer">Open repository <span aria-hidden="true">→</span></a>
+    </section>
+  </div>
+</SiteLayout>

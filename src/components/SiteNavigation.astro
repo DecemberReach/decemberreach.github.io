@@ -1,12 +1,13 @@
 ---
 interface Props {
-  current?: "hub" | "platform" | "resources";
+  current?: "hub" | "projects" | "platform" | "resources";
 }
 
 const { current } = Astro.props;
 
 const items = [
   { label: "Home", href: "/", key: "hub" },
+  { label: "Projects", href: "/project/", key: "projects" },
   { label: "Platform", href: "/platform/", key: "platform" },
   { label: "Resources", href: "/resources/", key: "resources" }
 ] as const;
