@@ -1,40 +1,18 @@
 @font-face {
-  font-family: "Selawik";
-  src: url("/fonts/selawik/selawkl.ttf") format("truetype");
+  font-family: "Open Sans";
+  src: url("/fonts/open-sans/open-sans-variable.ttf") format("truetype");
   font-style: normal;
-  font-weight: 300;
+  font-weight: 300 800;
+  font-stretch: 75% 100%;
   font-display: swap;
 }
 
 @font-face {
-  font-family: "Selawik";
-  src: url("/fonts/selawik/selawksl.ttf") format("truetype");
-  font-style: normal;
-  font-weight: 350;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "Selawik";
-  src: url("/fonts/selawik/selawk.ttf") format("truetype");
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "Selawik";
-  src: url("/fonts/selawik/selawksb.ttf") format("truetype");
-  font-style: normal;
-  font-weight: 600;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "Selawik";
-  src: url("/fonts/selawik/selawkb.ttf") format("truetype");
-  font-style: normal;
-  font-weight: 700;
+  font-family: "Open Sans";
+  src: url("/fonts/open-sans/open-sans-variable-italic.ttf") format("truetype");
+  font-style: italic;
+  font-weight: 300 800;
+  font-stretch: 75% 100%;
   font-display: swap;
 }
 
@@ -48,7 +26,7 @@
   --surface-hover: #e8f3fb;
   --blue: #0078d7;
   --blue-dark: #005a9e;
-  --sans: "Selawik", "Malgun Gothic", "Apple SD Gothic Neo", "Noto Sans CJK KR", sans-serif;
+  --sans: "Open Sans", "Malgun Gothic", "Apple SD Gothic Neo", "Noto Sans CJK KR", sans-serif;
   --mono: Consolas, "Courier New", monospace;
   font-family: var(--sans);
   font-synthesis: none;
