@@ -10,7 +10,7 @@ interface Props {
 const { title, description, current = "home" } = Astro.props;
 
 const navItems = [
-  { label: "Overview", href: "/", key: "home" },
+  { label: "Projects", href: "/", key: "home" },
   { label: "Architecture", href: "/architecture/", key: "architecture" },
   { label: "Devices", href: "/devices/", key: "devices" },
   { label: "Emulation", href: "/emulation/", key: "emulation" },
@@ -51,7 +51,7 @@ const navItems = [
             </a>
           ))}
           <a class="pivot-link source-link" href="https://github.com/DecemberReach/reach-to-be-reached" target="_blank" rel="noreferrer">
-            OS source <span aria-hidden="true">↗</span>
+            Source <span aria-hidden="true">↗</span>
           </a>
         </nav>
       </header>
@@ -61,12 +61,6 @@ const navItems = [
       </main>
 
       <footer class="site-footer">
-        <div class="footer-main">
-          <a class="brand footer-brand" href="/" aria-label="December Reach home">
-            <img src="/logo.svg" alt="" width="32" height="32" />
-            <span class="brand-wordmark">December Reach</span>
-          </a>
-        </div>
         <div class="footer-meta">
           <span>© {new Date().getFullYear()} December Reach</span>
           <a href="https://github.com/DecemberReach" target="_blank" rel="noreferrer">GitHub organization ↗</a>

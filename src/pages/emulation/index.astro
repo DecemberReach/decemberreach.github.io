@@ -2,27 +2,24 @@
 import SiteLayout from "../../layouts/SiteLayout.astro";
 ---
 <SiteLayout
-  title="Web emulation model"
-  description="How December Reach acquires real OS source and performs emulation in a JavaScript backend."
+  title="Emulation"
+  description="Source acquisition and server-side JavaScript emulation model for December Reach."
   current="emulation"
 >
   <section class="page-intro">
-    <p class="page-category">December Reach / Web emulation</p>
-    <h1>The web is the way in.<br /><span>Not the machine.</span></h1>
+    <h1>Emulation</h1>
     <p class="page-lead">
-      December Reach uses the website to acquire and preload OS source. The
-      actual emulation work belongs to the JavaScript backend, not to a
-      browser-side CPU simulator.
+      The website acquires and preloads operating-system source. The JavaScript
+      backend performs emulation; the browser provides access to the session.
     </p>
   </section>
 
   <section class="document-section emulation-overview">
     <header class="document-heading">
       <span class="document-index">01</span>
-      <h2>Three responsibilities</h2>
+      <h2>Execution path</h2>
     </header>
     <div class="document-body">
-      <p>Source preparation, system execution and web access are separate responsibilities. Keeping that boundary clear prevents the frontend from becoming a pretend emulator.</p>
       <div class="emulation-sequence">
         <article class="emulation-row">
           <span class="emulation-count">01</span>
@@ -44,7 +41,7 @@ import SiteLayout from "../../layouts/SiteLayout.astro";
           <span class="emulation-count">03</span>
           <div>
             <p class="emulation-role">Web access</p>
-            <h3>Reach the session</h3>
+            <h3>Session access</h3>
             <p>The browser is the access surface for the system. It is not the guest machine's execution host.</p>
           </div>
         </article>
@@ -55,10 +52,10 @@ import SiteLayout from "../../layouts/SiteLayout.astro";
   <section class="document-section">
     <header class="document-heading">
       <span class="document-index">02</span>
-      <h2>Why the split matters</h2>
+      <h2>Separation of responsibilities</h2>
     </header>
     <div class="document-body">
-      <p>The frontend and emulator are not interchangeable layers. The frontend is responsible for obtaining and preparing source. The JavaScript backend performs the emulation itself.</p>
+      <p>The frontend is responsible for obtaining and preparing source. The JavaScript backend performs the emulation itself.</p>
       <p>This keeps the guest operating system's execution model out of presentation code and allows the emulation runtime to evolve independently from the website interface.</p>
     </div>
   </section>
@@ -69,11 +66,10 @@ import SiteLayout from "../../layouts/SiteLayout.astro";
       <h2>Source repository</h2>
     </header>
     <div class="document-body">
-      <p>The OS source collection is maintained separately from this website.</p>
       <a class="metro-link" href="https://github.com/DecemberReach/reach-to-be-reached" target="_blank" rel="noreferrer">
-        Open reach-to-be-reached on GitHub <span aria-hidden="true">↗</span>
+        reach-to-be-reached <span aria-hidden="true">↗</span>
       </a>
-      <aside class="document-note">This repository contains the static Astro website. The JavaScript emulation service is a separate execution component and is not bundled into the GitHub Pages frontend.</aside>
+      <aside class="document-note">The JavaScript emulation service is a separate execution component and is not bundled into the GitHub Pages frontend.</aside>
     </div>
   </section>
 </SiteLayout>

@@ -2,27 +2,24 @@
 import SiteLayout from "../../layouts/SiteLayout.astro";
 ---
 <SiteLayout
-  title="Device availability"
-  description="Published device integration status for auroraADE."
+  title="Devices"
+  description="Published device integration notes for auroraADE."
   current="devices"
 >
   <section class="page-intro">
-    <p class="page-category">December Reach / Device status</p>
-    <h1>Device<br /><span>availability.</span></h1>
+    <h1>Devices</h1>
     <p class="page-lead">
-      The entries below preserve the previously published integration state
-      for auroraADE. They describe availability, not a promise of completed
-      hardware support.
+      Published device integration notes for auroraADE. The status below is
+      preserved from the previous project status page.
     </p>
   </section>
 
   <section class="document-section">
     <header class="document-heading">
       <span class="document-index">01</span>
-      <h2>Current status</h2>
+      <h2>Last published status</h2>
     </header>
     <div class="document-body">
-      <p>Device builds were not available in the previous project status page. The current published notes are retained here until the integration status is updated with new implementation evidence.</p>
       <div class="device-status-list">
         <div class="device-status-row">
           <h3>Desktop</h3>
@@ -35,7 +32,6 @@ import SiteLayout from "../../layouts/SiteLayout.astro";
           <strong class="status-word status-unavailable">Unavailable</strong>
         </div>
       </div>
-      <aside class="document-note">These are preserved project notes from the previous site. Update this page when the actual device-build status changes.</aside>
     </div>
   </section>
 
@@ -46,7 +42,7 @@ import SiteLayout from "../../layouts/SiteLayout.astro";
     </header>
     <div class="document-body">
       <p>auroraADE's documented target architecture is x86_64. The wider Fabric Dessert CPU integration boundary is designed to accommodate ARM 32-bit, ARM 64-bit, x86 32-bit and x86 64-bit integrations; that broader boundary should not be confused with auroraADE's own target.</p>
-      <a class="metro-link" href="/architecture/">Read the platform architecture <span aria-hidden="true">→</span></a>
+      <a class="metro-link" href="/architecture/">Architecture <span aria-hidden="true">→</span></a>
     </div>
   </section>
 </SiteLayout>
