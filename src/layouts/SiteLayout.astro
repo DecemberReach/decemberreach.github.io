@@ -4,13 +4,14 @@ import "../styles/global.css";
 interface Props {
   title: string;
   description: string;
-  current?: "projects" | "platform" | "resources";
+  current?: "hub" | "platform" | "resources";
+  hidePrimaryNav?: boolean;
 }
 
-const { title, description, current = "projects" } = Astro.props;
+const { title, description, current, hidePrimaryNav = false } = Astro.props;
 
 const navItems = [
-  { label: "Projects", href: "/", key: "projects" },
+  { label: "Hub", href: "/", key: "hub" },
   { label: "Platform", href: "/platform/", key: "platform" },
   { label: "Resources", href: "/resources/", key: "resources" },
 ] as const;
@@ -40,20 +41,22 @@ const navItems = [
           <span>December Reach</span>
         </a>
 
-        <nav class="primary-nav" aria-label="Main navigation">
-          {navItems.map((item) => (
-            <a
-              href={item.href}
-              class:list={["nav-link", { "is-active": current === item.key }]}
-              aria-current={current === item.key ? "page" : undefined}
-            >
-              {item.label}
+        {!hidePrimaryNav && (
+          <nav class="primary-nav" aria-label="Main navigation">
+            {navItems.map((item) => (
+              <a
+                href={item.href}
+                class:list={["nav-link", { "is-active": current === item.key }]}
+                aria-current={current === item.key ? "page" : undefined}
+              >
+                {item.label}
+              </a>
+            ))}
+            <a class="nav-link nav-source" href="https://github.com/DecemberReach" target="_blank" rel="noreferrer">
+              GitHub
             </a>
-          ))}
-          <a class="nav-link nav-source" href="https://github.com/DecemberReach" target="_blank" rel="noreferrer">
-            GitHub
-          </a>
-        </nav>
+          </nav>
+        )}
       </header>
 
       <main id="main-content">

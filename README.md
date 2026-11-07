@@ -2,20 +2,27 @@
 
 Official website for December Reach.
 
-The site is built with **Astro 6** and custom CSS. It is separate from the operating-system source and the emulation runtime.
+The site is built with Astro 6 and custom CSS. It is separate from the operating-system source and the emulation runtime.
 
 ## Site structure
 
-- \`/\` — project index.
-- \`/platform/\` — Fabric Dessert platform architecture.
-- \`/resources/\` — technical documentation and source repositories.
-- \`/devices/\` — published device integration status.
-- \`/emulation/\` — source acquisition and emulation responsibility model.
-- \`/architecture/\` — compatibility redirect to \`/platform/\`.
+- / — Hub with project and website-version catalogues.
+- /project/auroraADE/ — auroraADE project page.
+- /project/haloDOT/ — haloDOT project page.
+- /project/stellaOS/ — stellaOS project page.
+- /platform/ — Fabric Dessert platform architecture.
+- /resources/ — technical documentation and source repositories.
+- /devices/ — published device integration status.
+- /emulation/ — source acquisition and emulation responsibility model.
+- /architecture/ — compatibility redirect to /platform/.
+
+## Artwork
+
+Temporary landscape artwork is served from Unsplash. Each image links to its photographer's Unsplash photo page. The landscape photographs are not screenshots of the projects or their interfaces.
 
 ## Typography
 
-The site uses the Open Sans variable font locally from \`public/fonts/open-sans/\`, including upright and italic styles. The font is distributed under the SIL Open Font License 1.1; its license is included as \`public/fonts/open-sans/OFL.txt\`.
+The site uses the Open Sans variable font locally from public/fonts/open-sans/, including upright and italic styles. The font is distributed under the SIL Open Font License 1.1; its license is included as public/fonts/open-sans/OFL.txt.
 
 Korean text falls back to the platform's Korean sans-serif font.
 
@@ -23,19 +30,19 @@ Korean text falls back to the platform's Korean sans-serif font.
 
 Requirements: Node.js 22.12.0 or newer.
 
-\`\`\`sh
+```sh
 npm install
 npm run dev
-\`\`\`
+```
 
 ## Build
 
-\`\`\`sh
+```sh
 npm run build
 npm run preview
-\`\`\`
+```
 
-Astro outputs the static site to \`dist/\`.
+Astro outputs the static site to dist/.
 
 ## Architecture notes
 
@@ -53,4 +60,4 @@ Astro outputs the static site to \`dist/\`.
 
 ## Deployment
 
-The GitHub Actions workflow in \`.github/workflows/deploy.yml\` builds the Astro site and publishes \`dist/\` to GitHub Pages. In the repository settings, set **Pages → Build and deployment → Source** to **GitHub Actions**.
+The GitHub Actions workflow in .github/workflows/deploy.yml builds the Astro site and publishes dist/ to GitHub Pages. In repository settings, set Pages → Build and deployment → Source to GitHub Actions.

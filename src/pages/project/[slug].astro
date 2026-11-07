@@ -1,0 +1,106 @@
+---
+import SiteLayout from "../../layouts/SiteLayout.astro";
+
+type Project = {
+  slug: string;
+  name: string;
+  category: string;
+  target?: string;
+  repository?: string;
+  image: string;
+  imageAlt: string;
+  photoPage: string;
+  photographer: string;
+};
+
+const projects: Project[] = [
+  {
+    slug: "auroraADE",
+    name: "auroraADE",
+    category: "Desktop environment",
+    target: "x86_64",
+    repository: "https://github.com/critical-dummy/auroraADE-AI-Development-Test",
+    image: "https://images.unsplash.com/photo-1531764411937-45495415d84d?auto=format&fit=crop&w=1400&q=80",
+    imageAlt: "Turquoise lake surrounded by forested mountains",
+    photoPage: "https://unsplash.com/photos/landscape-photography-of-lake-and-mountains-bXGUdxFeQUQ",
+    photographer: "Ryan Stone"
+  },
+  {
+    slug: "haloDOT",
+    name: "haloDOT",
+    category: "Operating system project",
+    image: "https://images.unsplash.com/photo-1465056836041-7f43ac27dcb5?auto=format&fit=crop&w=1400&q=80",
+    imageAlt: "Mountain range across a wide lake under a cloudy evening sky",
+    photoPage: "https://unsplash.com/photos/landscape-photography-of-lake-and-mountain-73F4pKoUkM0",
+    photographer: "Tobias Keller"
+  },
+  {
+    slug: "stellaOS",
+    name: "stellaOS",
+    category: "Television operating system",
+    image: "https://images.unsplash.com/photo-1516941072577-aecd44b927bf?auto=format&fit=crop&w=1400&q=80",
+    imageAlt: "A sunlit river canyon between steep mountain walls",
+    photoPage: "https://unsplash.com/photos/landscape-photography-of-mountain-and-lake-kyDyOHkIbC8",
+    photographer: "Marc-Olivier Jodoin"
+  }
+];
+
+export function getStaticPaths() {
+  return projects.map((project) => ({
+    params: { slug: project.slug },
+    props: { project }
+  }));
+}
+
+interface Props {
+  project: Project;
+}
+
+const { project } = Astro.props;
+---
+<SiteLayout
+  title={project.name}
+  description={project.name + " · " + project.category + " · December Reach"}
+>
+  <div class="project-detail">
+    <section class="project-splash" aria-labelledby="project-title">
+      <img
+        class="project-splash-photo"
+        src={project.image}
+        alt={project.imageAlt}
+        fetchpriority="high"
+        style={"view-transition-name: project-" + project.slug}
+      />
+      <div class="project-splash-shade"></div>
+      <div class="project-splash-copy">
+        <p>DECEMBER REACH / PROJECTS</p>
+        <h1 id="project-title">{project.name}</h1>
+        <span>{project.category}</span>
+      </div>
+      <a class="project-splash-credit" href={project.photoPage} target="_blank" rel="noreferrer">
+        Photo by {project.photographer} / Unsplash · Temporary artwork
+      </a>
+    </section>
+
+    <section class="project-facts" aria-label="Project information">
+      <div class="project-fact">
+        <span>Project type</span>
+        <strong>{project.category}</strong>
+      </div>
+      {project.target && (
+        <div class="project-fact">
+          <span>Target architecture</span>
+          <strong>{project.target}</strong>
+        </div>
+      )}
+      {project.repository && (
+        <div class="project-fact">
+          <span>Development repository</span>
+          <a href={project.repository} target="_blank" rel="noreferrer">Open repository</a>
+        </div>
+      )}
+    </section>
+
+    <a class="project-back-link" href="/">Back to Hub</a>
+  </div>
+</SiteLayout>
