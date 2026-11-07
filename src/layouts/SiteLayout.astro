@@ -4,16 +4,15 @@ import "../styles/global.css";
 interface Props {
   title: string;
   description: string;
-  current?: "projects" | "architecture" | "devices" | "emulation";
+  current?: "projects" | "platform" | "resources";
 }
 
 const { title, description, current = "projects" } = Astro.props;
 
 const navItems = [
   { label: "Projects", href: "/", key: "projects" },
-  { label: "Architecture", href: "/architecture/", key: "architecture" },
-  { label: "Devices", href: "/devices/", key: "devices" },
-  { label: "Emulation", href: "/emulation/", key: "emulation" },
+  { label: "Platform", href: "/platform/", key: "platform" },
+  { label: "Resources", href: "/resources/", key: "resources" },
 ] as const;
 ---
 <!doctype html>
@@ -51,8 +50,8 @@ const navItems = [
               {item.label}
             </a>
           ))}
-          <a class="nav-link nav-source" href="https://github.com/DecemberReach/reach-to-be-reached" target="_blank" rel="noreferrer">
-            Source
+          <a class="nav-link nav-source" href="https://github.com/DecemberReach" target="_blank" rel="noreferrer">
+            GitHub
           </a>
         </nav>
       </header>
@@ -66,10 +65,7 @@ const navItems = [
           <img src="/logo.svg" alt="" width="28" height="28" />
           <span>December Reach</span>
         </div>
-        <div class="footer-meta">
-          <span>© {new Date().getFullYear()} December Reach</span>
-          <a href="https://github.com/DecemberReach" target="_blank" rel="noreferrer">GitHub organization</a>
-        </div>
+        <a class="footer-link" href="https://github.com/DecemberReach" target="_blank" rel="noreferrer">GitHub organization</a>
       </footer>
     </div>
   </body>

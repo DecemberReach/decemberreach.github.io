@@ -1,0 +1,59 @@
+---
+import SiteLayout from "../../layouts/SiteLayout.astro";
+---
+<SiteLayout
+  title="Resources"
+  description="Technical documentation and source repositories from December Reach."
+  current="resources"
+>
+  <header class="page-heading">
+    <p class="page-context">December Reach</p>
+    <h1>Resources</h1>
+  </header>
+
+  <section class="resource-section">
+    <div class="section-heading">
+      <h2>Documentation</h2>
+    </div>
+    <div class="resource-directory">
+      <a class="resource-entry" href="/platform/">
+        <span class="resource-type">Platform</span>
+        <h3>Architecture</h3>
+        <p>Fabric Dessert, FRT64, physical memory, device bus, display and boot contract.</p>
+      </a>
+      <a class="resource-entry" href="/devices/">
+        <span class="resource-type">auroraADE</span>
+        <h3>Devices</h3>
+        <p>Published device integration status for desktop and mobile targets.</p>
+      </a>
+      <a class="resource-entry" href="/emulation/">
+        <span class="resource-type">Execution model</span>
+        <h3>Emulation</h3>
+        <p>Operating-system source acquisition, backend emulation and browser session access.</p>
+      </a>
+    </div>
+  </section>
+
+  <section class="resource-section repository-section">
+    <div class="section-heading">
+      <h2>Repositories</h2>
+    </div>
+    <div class="repository-directory">
+      <a class="repository-entry" href="https://github.com/DecemberReach/reach-to-be-reached" target="_blank" rel="noreferrer">
+        <span class="repository-owner">DecemberReach</span>
+        <strong>reach-to-be-reached</strong>
+        <span class="repository-purpose">Operating-system source collection</span>
+      </a>
+      <a class="repository-entry" href="https://github.com/critical-dummy/reachOS" target="_blank" rel="noreferrer">
+        <span class="repository-owner">critical-dummy</span>
+        <strong>reachOS</strong>
+        <span class="repository-purpose">Fabric Dessert implementation reference</span>
+      </a>
+      <a class="repository-entry" href="https://github.com/critical-dummy/auroraADE-AI-Development-Test" target="_blank" rel="noreferrer">
+        <span class="repository-owner">critical-dummy</span>
+        <strong>auroraADE-AI-Development-Test</strong>
+        <span class="repository-purpose">auroraADE development repository</span>
+      </a>
+    </div>
+  </section>
+</SiteLayout>

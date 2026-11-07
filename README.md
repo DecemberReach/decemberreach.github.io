@@ -4,6 +4,21 @@ Official website for December Reach.
 
 The site is built with **Astro 6** and custom CSS. It is separate from the operating-system source and the emulation runtime.
 
+## Site structure
+
+- \`/\` — project index.
+- \`/platform/\` — Fabric Dessert platform architecture.
+- \`/resources/\` — technical documentation and source repositories.
+- \`/devices/\` — published device integration status.
+- \`/emulation/\` — source acquisition and emulation responsibility model.
+- \`/architecture/\` — compatibility redirect to \`/platform/\`.
+
+## Typography
+
+The site uses the Open Sans variable font locally from \`public/fonts/open-sans/\`, including upright and italic styles. The font is distributed under the SIL Open Font License 1.1; its license is included as \`public/fonts/open-sans/OFL.txt\`.
+
+Korean text falls back to the platform's Korean sans-serif font.
+
 ## Development
 
 Requirements: Node.js 22.12.0 or newer.
@@ -22,22 +37,8 @@ npm run preview
 
 Astro outputs the static site to \`dist/\`.
 
-## Site structure
-
-- \`/\` — organization projects, platform overview, documentation and repositories.
-- \`/architecture/\` — reachOS and Fabric Dessert architecture notes.
-- \`/devices/\` — published device integration notes for auroraADE.
-- \`/emulation/\` — source acquisition and emulation responsibility model.
-
-## Typography
-
-The site uses the Open Sans variable font locally from `public/fonts/open-sans/`, including upright and italic styles. The font is distributed under the SIL Open Font License 1.1; its license is included as `public/fonts/open-sans/OFL.txt`.
-
-Open Sans does not provide the Korean glyph coverage required by this site, so Korean text falls back to the platform's Korean sans-serif font.
-
 ## Architecture notes
 
-- The website documents the source-acquisition and access model.
 - OS source is acquired and preloaded before a session is started.
 - The JavaScript backend is responsible for emulation and execution.
 - The browser frontend does not emulate the guest CPU, memory, or devices.

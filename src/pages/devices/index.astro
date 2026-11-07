@@ -4,46 +4,36 @@ import SiteLayout from "../../layouts/SiteLayout.astro";
 <SiteLayout
   title="Devices"
   description="Published device integration notes for auroraADE."
-  current="devices"
 >
   <header class="page-heading">
-    <p class="page-context">December Reach / Documentation</p>
+    <p class="page-context">Resources / auroraADE</p>
     <h1>Devices</h1>
-    <p class="page-lead">Published device integration notes for auroraADE.</p>
+    <p class="page-lead">Published device integration status for auroraADE.</p>
   </header>
 
-  <section class="document-section" id="status">
-    <header class="document-heading">
-      <h2>Integration status</h2>
+  <section class="device-report">
+    <header class="device-report-heading">
+      <h2>Last published status</h2>
+      <p>These entries are preserved from the previous project status page. They are not live build or device checks.</p>
     </header>
-    <div class="document-body">
-      <p class="document-intro">These entries preserve the last published project status. They are not live build or device checks.</p>
-      <dl class="status-list">
-        <div class="status-row">
-          <dt>
-            <span class="status-name">Desktop</span>
-            <span class="status-value">Pending</span>
-          </dt>
-          <dd>Runtime integration pending. The browser runtime was not connected to a desktop build in the last published status.</dd>
-        </div>
-        <div class="status-row">
-          <dt>
-            <span class="status-name">Mobile</span>
-            <span class="status-value">Unavailable</span>
-          </dt>
-          <dd>No mobile build was available in the last published status.</dd>
-        </div>
-      </dl>
+    <div class="device-report-grid">
+      <article class="device-report-card">
+        <span class="device-platform">Desktop</span>
+        <strong class="device-status">Pending</strong>
+        <p>Runtime integration pending. The browser runtime was not connected to a desktop build in the last published status.</p>
+      </article>
+      <article class="device-report-card">
+        <span class="device-platform">Mobile</span>
+        <strong class="device-status">Unavailable</strong>
+        <p>No mobile build was available in the last published status.</p>
+      </article>
     </div>
   </section>
 
-  <section class="document-section" id="target">
-    <header class="document-heading">
-      <h2>Platform target</h2>
-    </header>
-    <div class="document-body">
-      <p>auroraADE's documented target architecture is x86_64. The wider Fabric Dessert CPU integration boundary is designed to accommodate ARM 32-bit, ARM 64-bit, x86 32-bit and x86 64-bit integrations; that broader boundary should not be confused with auroraADE's own target.</p>
-      <a class="text-link" href="/architecture/">Architecture documentation</a>
-    </div>
+  <section class="device-target">
+    <h2>Target architecture</h2>
+    <strong>x86_64</strong>
+    <p>auroraADE's documented target architecture. The wider Fabric Dessert CPU integration boundary is a separate platform-level capability.</p>
+    <a class="text-link" href="/platform/">Platform architecture</a>
   </section>
 </SiteLayout>

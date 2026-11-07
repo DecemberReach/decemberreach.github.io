@@ -1,0 +1,103 @@
+---
+import SiteLayout from "../../layouts/SiteLayout.astro";
+---
+<SiteLayout
+  title="Platform"
+  description="Fabric Dessert platform architecture and hardware subsystems for reachOS."
+  current="platform"
+>
+  <header class="page-heading">
+    <p class="page-context">December Reach / reachOS</p>
+    <h1>Platform</h1>
+    <p class="page-lead">Fabric Dessert is the virtual hardware platform and board architecture designed for reachOS.</p>
+  </header>
+
+  <section class="platform-map-section" aria-labelledby="architecture-map-title">
+    <div class="section-heading">
+      <h2 id="architecture-map-title">Architecture map</h2>
+    </div>
+    <div class="architecture-map">
+      <div class="host-layer">
+        <div class="layer-label">Host environment</div>
+        <div class="host-node">
+          <strong>Browser</strong>
+          <span>Host environment</span>
+        </div>
+        <div class="host-node">
+          <strong>Angular shell</strong>
+          <code>src/app/</code>
+        </div>
+      </div>
+
+      <div class="runtime-connector" aria-hidden="true"></div>
+
+      <div class="runtime-layer">
+        <div class="runtime-heading">
+          <div>
+            <span class="layer-label">Platform runtime</span>
+            <h3>Fabric Dessert</h3>
+          </div>
+          <code>src/fabric-dessert/</code>
+        </div>
+        <div class="runtime-nodes">
+          <div class="runtime-node"><strong>Board</strong><span>Platform topology</span></div>
+          <div class="runtime-node"><strong>FRT64</strong><span>CPU boundary</span></div>
+          <div class="runtime-node"><strong>Memory</strong><span>Physical address space</span></div>
+          <div class="runtime-node"><strong>Device bus</strong><span>MMIO and IRQ lines</span></div>
+          <div class="runtime-node"><strong>Display</strong><span>Framebuffer and renderer</span></div>
+        </div>
+      </div>
+    </div>
+    <p class="architecture-caption">The host shell integrates the browser environment. The Fabric Dessert runtime owns the virtual board and its subsystems.</p>
+  </section>
+
+  <section class="platform-section" id="frt64">
+    <div class="section-heading">
+      <h2>FRT64</h2>
+      <p>CPU integration boundary</p>
+    </div>
+    <div class="architecture-set">
+      <div class="architecture-unit"><span>ARM</span><strong>32-bit</strong></div>
+      <div class="architecture-unit"><span>ARM</span><strong>64-bit</strong></div>
+      <div class="architecture-unit"><span>x86</span><strong>32-bit</strong></div>
+      <div class="architecture-unit"><span>x86</span><strong>64-bit</strong></div>
+    </div>
+    <p class="section-copy">FRT64 provides the integration boundary for these CPU architectures. This boundary does not imply that a complete instruction-set implementation for every architecture is included.</p>
+  </section>
+
+  <section class="platform-section platform-specs" id="subsystems">
+    <div class="section-heading">
+      <h2>Subsystems</h2>
+    </div>
+    <div class="spec-grid">
+      <article class="spec-item spec-memory">
+        <span class="spec-label">Physical memory</span>
+        <strong>64-bit</strong>
+        <p><code>bigint</code> physical addressing with sparse 64 KiB backing chunks.</p>
+      </article>
+      <article class="spec-item">
+        <span class="spec-label">Device bus</span>
+        <strong>MMIO</strong>
+        <p><code>DeviceBus</code> manages address windows, alignment, interrupt lines and device enumeration.</p>
+      </article>
+      <article class="spec-item spec-display">
+        <span class="spec-label">Framebuffer</span>
+        <strong>1080 × 2424</strong>
+        <p>RGBA8888 pixel format · 10,471,680 bytes of pixel storage.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="platform-section boot-section" id="boot">
+    <div class="section-heading">
+      <h2>Boot contract</h2>
+    </div>
+    <ol class="boot-sequence">
+      <li><span class="boot-step">01</span><div><strong>Board reset</strong><p>Device bus reset and reset-vector propagation.</p></div></li>
+      <li><span class="boot-step">02</span><div><strong>Primary CPU</strong><p>Enters RESET state with its program counter set to the configured platform reset vector.</p></div></li>
+      <li><span class="boot-step">03</span><div><strong>Secondary CPUs</strong><p>Remain parked until operating-system SMP bring-up.</p></div></li>
+      <li><span class="boot-step">04</span><div><strong>Instruction fetch</strong><p>Crosses the CPU boundary into physical address space and accesses Boot ROM with execute permissions enforced.</p></div></li>
+    </ol>
+    <aside class="document-note">Boot ROM and reset vector at <code>0x00000000</code> are Fabric Dessert board contracts, not ISA-wide or Linux-specific rules.</aside>
+  </section>
+</SiteLayout>

@@ -3,108 +3,42 @@ import SiteLayout from "../layouts/SiteLayout.astro";
 ---
 <SiteLayout
   title="Projects"
-  description="Operating-system projects, platform components and source repositories from December Reach."
+  description="Operating-system projects from December Reach."
   current="projects"
 >
-  <section class="hub-heading" aria-labelledby="page-title">
-    <div>
-      <h1 id="page-title">December Reach</h1>
-      <p class="hub-subtitle">Operating systems</p>
-    </div>
-  </section>
+  <header class="page-heading projects-heading">
+    <p class="page-context">December Reach</p>
+    <h1>Projects</h1>
+  </header>
 
-  <section class="hub-section" aria-labelledby="projects-title">
-    <header class="hub-section-heading">
-      <h2 id="projects-title">Projects</h2>
-    </header>
-    <div class="project-tiles">
-      <a class="project-tile project-tile-link" href="https://github.com/critical-dummy/auroraADE-AI-Development-Test" target="_blank" rel="noreferrer">
-        <span class="project-kind">Desktop environment</span>
-        <span class="project-name">auroraADE</span>
-        <span class="project-detail">x86_64 target</span>
-      </a>
-      <article class="project-tile">
-        <span class="project-kind">Operating system project</span>
-        <span class="project-name">haloDOT</span>
-      </article>
-      <article class="project-tile">
-        <span class="project-kind">Television operating system</span>
-        <span class="project-name">stellaOS</span>
-      </article>
-    </div>
-  </section>
-
-  <div class="hub-columns">
-    <section class="hub-section" aria-labelledby="platform-title">
-      <header class="hub-section-heading">
-        <h2 id="platform-title">Platform</h2>
-        <a href="/architecture/">Architecture</a>
-      </header>
-      <dl class="info-list">
-        <div class="info-row">
-          <dt>Fabric Dessert</dt>
-          <dd>Virtual hardware platform and board architecture for reachOS.</dd>
-        </div>
-        <div class="info-row">
-          <dt>FRT64</dt>
-          <dd>CPU integration boundary for ARM32, ARM64, x86_32 and x86_64.</dd>
-        </div>
-        <div class="info-row">
-          <dt>Physical memory</dt>
-          <dd>64-bit BigInt addressing with sparse 64 KiB backing chunks.</dd>
-        </div>
-        <div class="info-row">
-          <dt>Device bus</dt>
-          <dd>MMIO windows, alignment, interrupt lines and device enumeration.</dd>
-        </div>
-        <div class="info-row">
-          <dt>Display</dt>
-          <dd>1080 × 2424 RGBA8888 framebuffer.</dd>
-        </div>
-      </dl>
-    </section>
-
-    <section class="hub-section" aria-labelledby="documentation-title">
-      <header class="hub-section-heading">
-        <h2 id="documentation-title">Documentation</h2>
-      </header>
-      <div class="resource-list">
-        <a class="resource-row" href="/architecture/">
-          <span class="resource-name">Architecture</span>
-          <span class="resource-description">Platform, CPU boundary, memory, devices and display.</span>
-        </a>
-        <a class="resource-row" href="/devices/">
-          <span class="resource-name">Devices</span>
-          <span class="resource-description">Published integration notes for desktop and mobile targets.</span>
-        </a>
-        <a class="resource-row" href="/emulation/">
-          <span class="resource-name">Emulation</span>
-          <span class="resource-description">Source acquisition, backend execution and browser access.</span>
-        </a>
+  <section class="project-board" aria-label="Operating-system projects">
+    <article class="project-tile">
+      <div class="project-topline">
+        <span class="project-category">Desktop environment</span>
+        <span class="project-target">x86_64</span>
       </div>
-    </section>
-  </div>
+      <div class="project-bottom">
+        <h2>auroraADE</h2>
+        <a class="project-repository" href="https://github.com/critical-dummy/auroraADE-AI-Development-Test" target="_blank" rel="noreferrer">Development repository</a>
+      </div>
+    </article>
 
-  <section class="hub-section repositories" aria-labelledby="repositories-title">
-    <header class="hub-section-heading">
-      <h2 id="repositories-title">Repositories</h2>
-    </header>
-    <div class="repository-list">
-      <a class="repository-row" href="https://github.com/DecemberReach/reach-to-be-reached" target="_blank" rel="noreferrer">
-        <span class="repository-name">reach-to-be-reached</span>
-        <span class="repository-owner">DecemberReach</span>
-        <span class="repository-description">Operating-system source collection</span>
-      </a>
-      <a class="repository-row" href="https://github.com/critical-dummy/reachOS" target="_blank" rel="noreferrer">
-        <span class="repository-name">reachOS</span>
-        <span class="repository-owner">critical-dummy</span>
-        <span class="repository-description">Fabric Dessert implementation reference</span>
-      </a>
-      <a class="repository-row" href="https://github.com/critical-dummy/auroraADE-AI-Development-Test" target="_blank" rel="noreferrer">
-        <span class="repository-name">auroraADE-AI-Development-Test</span>
-        <span class="repository-owner">critical-dummy</span>
-        <span class="repository-description">auroraADE development repository</span>
-      </a>
-    </div>
+    <article class="project-tile project-tile-neutral">
+      <div class="project-topline">
+        <span class="project-category">Operating system project</span>
+      </div>
+      <div class="project-bottom">
+        <h2>haloDOT</h2>
+      </div>
+    </article>
+
+    <article class="project-tile project-tile-blue">
+      <div class="project-topline">
+        <span class="project-category">Television operating system</span>
+      </div>
+      <div class="project-bottom">
+        <h2>stellaOS</h2>
+      </div>
+    </article>
   </section>
 </SiteLayout>
