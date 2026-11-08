@@ -162,4 +162,78 @@ const photos = {
       });
     });
   </script>
+
+  <script>
+    const projectLaunchTiles = Array.from(document.querySelectorAll(".hub-tile[href^='/project/']"));
+    const launchReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+    projectLaunchTiles.forEach((tile) => {
+      tile.addEventListener("click", (event) => {
+        if (
+          event.defaultPrevented ||
+          event.button !== 0 ||
+          event.metaKey || event.ctrlKey || event.shiftKey || event.altKey ||
+          tile.target === "_blank" ||
+          tile.hasAttribute("download") ||
+          launchReducedMotion.matches
+        ) return;
+
+        const destination = new URL(tile.href, window.location.href);
+        if (destination.origin !== window.location.origin) return;
+
+        const bounds = tile.getBoundingClientRect();
+        if (!bounds.width || !bounds.height) return;
+
+        event.preventDefault();
+        const overlay = document.createElement("div");
+        overlay.className = "project-launch-overlay";
+        overlay.setAttribute("aria-hidden", "true");
+
+        const plane = tile.cloneNode(true);
+        plane.classList.add("project-launch-plane");
+        plane.removeAttribute("href");
+        plane.removeAttribute("tabindex");
+        plane.querySelectorAll("[id]").forEach((element) => element.removeAttribute("id"));
+        plane.querySelectorAll("a, button").forEach((element) => {
+          element.removeAttribute("href");
+          element.removeAttribute("tabindex");
+        });
+
+        Object.assign(plane.style, {
+          left: `${bounds.left}px`,
+          top: `${bounds.top}px`,
+          width: `${bounds.width}px`,
+          height: `${bounds.height}px`,
+          "--launch-x": `${window.innerWidth / 2 - bounds.left - bounds.width / 2}px`,
+          "--launch-y": `${window.innerHeight / 2 - bounds.top - bounds.height / 2}px`,
+          "--launch-scale-x": String(window.innerWidth / bounds.width),
+          "--launch-scale-y": String(window.innerHeight / bounds.height),
+        });
+
+        overlay.append(plane);
+        document.body.append(overlay);
+        document.documentElement.classList.add("project-launching");
+        document.body.classList.add("project-launching");
+
+        let navigated = false;
+        const navigate = () => {
+          if (navigated) return;
+          navigated = true;
+          try {
+            sessionStorage.setItem("dr-project-launch-enter", "1");
+          } catch {
+            // Navigation still works when session storage is unavailable.
+          }
+          window.location.assign(destination.href);
+        };
+
+        plane.addEventListener("animationend", (animationEvent) => {
+          if (animationEvent.animationName === "project-plane-launch") navigate();
+        }, { once: true });
+
+        window.setTimeout(navigate, 1300);
+      });
+    });
+  </script>
+
 </SiteLayout>
