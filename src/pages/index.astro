@@ -189,24 +189,37 @@ const photos = {
         overlay.className = "project-launch-overlay";
         overlay.setAttribute("aria-hidden", "true");
 
+        const stage = document.createElement("div");
+        stage.className = "project-launch-stage";
+
         const plane = document.createElement("div");
         plane.className = "project-launch-plane";
-        plane.setAttribute("aria-hidden", "true");
 
-        const front = tile.cloneNode(true);
-        front.classList.add("project-launch-front");
-        front.removeAttribute("href");
-        front.removeAttribute("tabindex");
-        front.querySelectorAll("[id]").forEach((element) => element.removeAttribute("id"));
-        front.querySelectorAll("a, button").forEach((element) => {
-          element.removeAttribute("href");
-          element.removeAttribute("tabindex");
+        // Copy only the tile's visible contents. Do not copy the tile's
+        // isolation/stacking context into the 3D face.
+        const front = document.createElement("div");
+        front.className = "project-launch-front";
+        Array.from(tile.children).forEach((child) => {
+          front.append(child.cloneNode(true));
         });
+
+        const projectName =
+          tile.querySelector(".hub-tile-caption strong")?.textContent?.trim() ||
+          "December Reach";
 
         const back = document.createElement("div");
         back.className = "project-launch-back";
         back.setAttribute("aria-hidden", "true");
 
+        const backKicker = document.createElement("span");
+        backKicker.className = "project-launch-back-kicker";
+        backKicker.textContent = "DECEMBER REACH";
+
+        const backTitle = document.createElement("strong");
+        backTitle.className = "project-launch-back-title";
+        backTitle.textContent = projectName;
+
+        back.append(backKicker, backTitle);
         plane.append(front, back);
 
         Object.assign(plane.style, {
@@ -220,7 +233,8 @@ const photos = {
           "--launch-scale-y": String(window.innerHeight / bounds.height),
         });
 
-        overlay.append(plane);
+        stage.append(plane);
+        overlay.append(stage);
         document.body.append(overlay);
         document.documentElement.classList.add("project-launching");
         document.body.classList.add("project-launching");
@@ -241,7 +255,7 @@ const photos = {
           if (animationEvent.animationName === "project-plane-launch") navigate();
         }, { once: true });
 
-        window.setTimeout(navigate, 1500);
+        window.setTimeout(navigate, 1800);
       });
     });
   </script>
