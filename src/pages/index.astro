@@ -189,15 +189,25 @@ const photos = {
         overlay.className = "project-launch-overlay";
         overlay.setAttribute("aria-hidden", "true");
 
-        const plane = tile.cloneNode(true);
-        plane.classList.add("project-launch-plane");
-        plane.removeAttribute("href");
-        plane.removeAttribute("tabindex");
-        plane.querySelectorAll("[id]").forEach((element) => element.removeAttribute("id"));
-        plane.querySelectorAll("a, button").forEach((element) => {
+        const plane = document.createElement("div");
+        plane.className = "project-launch-plane";
+        plane.setAttribute("aria-hidden", "true");
+
+        const front = tile.cloneNode(true);
+        front.classList.add("project-launch-front");
+        front.removeAttribute("href");
+        front.removeAttribute("tabindex");
+        front.querySelectorAll("[id]").forEach((element) => element.removeAttribute("id"));
+        front.querySelectorAll("a, button").forEach((element) => {
           element.removeAttribute("href");
           element.removeAttribute("tabindex");
         });
+
+        const back = document.createElement("div");
+        back.className = "project-launch-back";
+        back.setAttribute("aria-hidden", "true");
+
+        plane.append(front, back);
 
         Object.assign(plane.style, {
           left: `${bounds.left}px`,
@@ -231,7 +241,7 @@ const photos = {
           if (animationEvent.animationName === "project-plane-launch") navigate();
         }, { once: true });
 
-        window.setTimeout(navigate, 1300);
+        window.setTimeout(navigate, 1500);
       });
     });
   </script>
