@@ -74,6 +74,18 @@ const buildId = import.meta.env.PUBLIC_BUILD_ID ?? "local";
       });
   })();
 </script>
+  
+<script is:inline>
+  try {
+    if (sessionStorage.getItem("dr-project-launch-enter") === "1") {
+      sessionStorage.removeItem("dr-project-launch-enter");
+      document.documentElement.classList.add("project-launch-enter");
+    }
+  } catch {
+    // The destination page remains usable when session storage is unavailable.
+  }
+</script>
+
   </head>
   <body class="site-theme-dark">
     <a class="skip-link" href="#main-content">Skip to content</a>
