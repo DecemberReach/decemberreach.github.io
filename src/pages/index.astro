@@ -199,6 +199,9 @@ const photos = {
         // isolation/stacking context into the 3D face.
         const front = document.createElement("div");
         front.className = "project-launch-front";
+        if (tile.classList.contains("hub-tile-feature")) {
+          front.classList.add("is-feature");
+        }
         Array.from(tile.children).forEach((child) => {
           front.append(child.cloneNode(true));
         });
