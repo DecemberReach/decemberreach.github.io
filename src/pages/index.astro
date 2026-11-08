@@ -230,11 +230,23 @@ const photos = {
           top: `${bounds.top}px`,
           width: `${bounds.width}px`,
           height: `${bounds.height}px`,
-          "--launch-x": `${window.innerWidth / 2 - bounds.left - bounds.width / 2}px`,
-          "--launch-y": `${window.innerHeight / 2 - bounds.top - bounds.height / 2}px`,
-          "--launch-scale-x": String(window.innerWidth / bounds.width),
-          "--launch-scale-y": String(window.innerHeight / bounds.height),
         });
+        plane.style.setProperty(
+          "--launch-x",
+          `${window.innerWidth / 2 - bounds.left - bounds.width / 2}px`,
+        );
+        plane.style.setProperty(
+          "--launch-y",
+          `${window.innerHeight / 2 - bounds.top - bounds.height / 2}px`,
+        );
+        plane.style.setProperty(
+          "--launch-scale-x",
+          String(window.innerWidth / bounds.width),
+        );
+        plane.style.setProperty(
+          "--launch-scale-y",
+          String(window.innerHeight / bounds.height),
+        );
 
         stage.append(plane);
         overlay.append(stage);
