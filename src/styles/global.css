@@ -2495,7 +2495,7 @@ body.site-theme-dark {
   margin: 0;
   transform-origin: center center;
   transform-style: preserve-3d;
-  will-change: transform, opacity;
+  will-change: transform;
   animation: project-plane-launch 1500ms cubic-bezier(.38, .02, .18, 1) both;
 }
 
@@ -2571,30 +2571,31 @@ body.site-theme-dark {
 
 @keyframes project-plane-launch {
   0% {
-    opacity: 1;
     transform: translate3d(0, 0, 0) scale(1) rotateY(0deg);
   }
   58% {
-    opacity: 1;
     transform:
       translate3d(var(--launch-x), var(--launch-y), 0)
       scale(var(--launch-scale-x), var(--launch-scale-y))
       rotateY(-180deg);
   }
   76% {
-    opacity: 1;
     transform:
       translate3d(var(--launch-x), var(--launch-y), 0)
       scale(var(--launch-scale-x), var(--launch-scale-y))
       rotateY(-180deg);
   }
   100% {
-    opacity: 0;
     transform:
       translate3d(var(--launch-x), var(--launch-y), 0)
       scale(var(--launch-scale-x), var(--launch-scale-y))
       rotateY(-180deg);
   }
+}
+
+@keyframes project-launch-back-fade {
+  0%, 76% { opacity: 1; }
+  100% { opacity: 0; }
 }
 
 @keyframes project-launch-backdrop {
