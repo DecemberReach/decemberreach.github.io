@@ -2551,6 +2551,7 @@ body.site-theme-dark {
   background:
     radial-gradient(circle at 50% 42%, #e4e4e4 0%, #b8b8ba 48%, #88888b 100%);
   color: #161616;
+  animation: project-launch-back-fade 1500ms linear both;
   text-align: center;
   box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .45);
 }
