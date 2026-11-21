@@ -94,20 +94,36 @@ export const projects: Project[] = [
   {
     slug: "solsticeARC",
     name: "solsticeARC",
-    category: "Automotive infotainment · Web",
-    summary: "A browser-based automotive infotainment concept for in-vehicle displays.",
+    category: "Automotive operating system · x86_64",
+    summary: "An x86_64 automotive operating system implemented entirely in JavaScript and hosted in a browser.",
     description:
-      "solsticeARC explores a web-based infotainment environment for landscape-oriented in-vehicle displays. Its planned interface brings navigation, media playback, and connected-device features together. Capabilities that require privileged vehicle or mobile-system access will depend on supported browser APIs or a separate integration layer.",
+      "solsticeARC is an automotive operating system for landscape-oriented in-vehicle displays. Its system implementation is built with JavaScript throughout and targets the x86_64 architecture. The browser provides its execution environment, while navigation, media playback, and connected-device integration form its automotive experience. Access to privileged vehicle or mobile-system capabilities depends on supported browser APIs or a separate integration layer.",
     image: "https://images.unsplash.com/photo-1756195343491-edaf2df4499b?auto=format&fit=crop&w=1800&q=85",
     imageAlt: "A car dashboard display combining navigation and music playback",
     photoPage: "https://unsplash.com/photos/car-dashboard-displaying-navigation-and-music-apps-I3cOqvPflbU",
     photographer: "Vadym Kudriavtsev",
     facts: [
-      { label: "Project type", value: "Automotive infotainment" },
-      { label: "Platform", value: "Web browser" },
-      { label: "Target display", value: "In-vehicle touchscreen" },
-      { label: "Stage", value: "Concept" }
+      { label: "Project type", value: "Automotive operating system" },
+      { label: "Target architecture", value: "x86_64" },
+      { label: "System implementation", value: "JavaScript" },
+      { label: "Execution environment", value: "Browser-hosted" }
     ],
-    highlights: []
+    highlights: [
+      {
+        title: "System implementation",
+        value: "JavaScript",
+        description: "The operating-system implementation is built with JavaScript throughout."
+      },
+      {
+        title: "Target architecture",
+        value: "x86_64",
+        description: "The project targets the x86_64 architecture."
+      },
+      {
+        title: "Execution environment",
+        value: "Browser",
+        description: "The system runs in a browser-hosted environment."
+      }
+    ]
   }
 ];
