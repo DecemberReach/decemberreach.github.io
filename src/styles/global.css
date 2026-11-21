@@ -2638,39 +2638,44 @@ body.project-launching {
   }
 }
 
-/* Windows 8.1 / WinJS-inspired page transitions.
-   Move the page content as one composited surface: no per-section layers or fades. */
-html.page-transition-enter #main-content {
-  animation: dr-page-enter 130ms cubic-bezier(.16, .9, .25, 1) both;
+/* Windows 8.1 / WinJS-inspired staggered page transitions.
+   Each page-level region moves in sequence. No opacity or fade animation. */
+html.page-transition-enter .page-transition-region {
+  animation: dr-page-region-enter 170ms cubic-bezier(.15, .85, .25, 1) both;
+  animation-delay: calc(var(--dr-page-region-order, 0) * 46ms);
 }
 
-html.page-transition-enter[data-page-transition-direction="back"] #main-content {
-  animation-name: dr-page-enter-back;
+html.page-transition-enter[data-page-transition-direction="back"] .page-transition-region {
+  animation-name: dr-page-region-enter-back;
 }
 
 html.page-transition-leave #main-content {
-  animation: dr-page-exit 90ms cubic-bezier(.3, 0, .8, .2) both;
   pointer-events: none;
 }
 
-@keyframes dr-page-enter {
-  from { transform: translate3d(-28px, 0, 0); }
+html.page-transition-leave .page-transition-region {
+  animation: dr-page-region-exit 130ms cubic-bezier(.4, 0, .8, .2) both;
+  animation-delay: calc(var(--dr-page-region-exit-order, 0) * 34ms);
+}
+
+@keyframes dr-page-region-enter {
+  from { transform: translate3d(-26px, 0, 0); }
   to { transform: translate3d(0, 0, 0); }
 }
 
-@keyframes dr-page-enter-back {
-  from { transform: translate3d(24px, 0, 0); }
+@keyframes dr-page-region-enter-back {
+  from { transform: translate3d(22px, 0, 0); }
   to { transform: translate3d(0, 0, 0); }
 }
 
-@keyframes dr-page-exit {
+@keyframes dr-page-region-exit {
   from { transform: translate3d(0, 0, 0); }
-  to { transform: translate3d(14px, 0, 0); }
+  to { transform: translate3d(16px, 0, 0); }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  html.page-transition-enter #main-content,
-  html.page-transition-leave #main-content {
+  html.page-transition-enter .page-transition-region,
+  html.page-transition-leave .page-transition-region {
     animation: none !important;
     transform: none;
   }
