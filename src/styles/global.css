@@ -2641,8 +2641,8 @@ body.project-launching {
 /* Windows 8.1 / WinJS-inspired staggered page transitions.
    Each page-level region moves in sequence. No opacity or fade animation. */
 html.page-transition-enter .page-transition-region {
-  animation: dr-page-region-enter 170ms cubic-bezier(.15, .85, .25, 1) both;
-  animation-delay: calc(var(--dr-page-region-order, 0) * 46ms);
+  animation: dr-page-region-enter 240ms cubic-bezier(.15, .85, .25, 1) both;
+  animation-delay: calc(var(--dr-page-region-order, 0) * 72ms);
 }
 
 html.page-transition-enter[data-page-transition-direction="back"] .page-transition-region {
@@ -2654,8 +2654,8 @@ html.page-transition-leave #main-content {
 }
 
 html.page-transition-leave .page-transition-region {
-  animation: dr-page-region-exit 130ms cubic-bezier(.4, 0, .8, .2) both;
-  animation-delay: calc(var(--dr-page-region-exit-order, 0) * 34ms);
+  animation: dr-page-region-exit 190ms cubic-bezier(.4, 0, .8, .2) both;
+  animation-delay: calc(var(--dr-page-region-exit-order, 0) * 52ms);
 }
 
 @keyframes dr-page-region-enter {
