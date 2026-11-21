@@ -98,10 +98,10 @@ export const projects: Project[] = [
     summary: "An x86_64 automotive operating system implemented entirely in JavaScript and hosted in a browser.",
     description:
       "solsticeARC is an automotive operating system for landscape-oriented in-vehicle displays. Its system implementation is built with JavaScript throughout and targets the x86_64 architecture. The browser provides its execution environment, while navigation, media playback, and connected-device integration form its automotive experience. Access to privileged vehicle or mobile-system capabilities depends on supported browser APIs or a separate integration layer.",
-    image: "https://images.unsplash.com/photo-1756195343491-edaf2df4499b?auto=format&fit=crop&w=1800&q=85",
-    imageAlt: "A car dashboard display combining navigation and music playback",
-    photoPage: "https://unsplash.com/photos/car-dashboard-displaying-navigation-and-music-apps-I3cOqvPflbU",
-    photographer: "Vadym Kudriavtsev",
+    image: "https://images.unsplash.com/photo-1748499429963-85c58cb2b95e?auto=format&fit=crop&w=1800&q=85",
+    imageAlt: "A mountain landscape, lake, and walking trail beneath a clear blue sky",
+    photoPage: "https://unsplash.com/photos/mountain-landscape-with-a-lake-and-clear-blue-sky-aJzQJ_oP-tY",
+    photographer: "Fabian Jones",
     facts: [
       { label: "Project type", value: "Automotive operating system" },
       { label: "Target architecture", value: "x86_64" },
