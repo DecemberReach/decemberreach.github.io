@@ -2641,7 +2641,7 @@ body.project-launching {
 /* Windows 8.1 / WinJS-inspired page transitions.
    Shared site chrome stays still; page regions enter in reading order. */
 :root {
-  --dr-page-transition-offset: 100px;
+  --dr-page-transition-distance: 100px;
 }
 
 html.page-transition-enter .page-transition-region {
@@ -2663,7 +2663,7 @@ html.page-transition-leave #main-content {
 @keyframes dr-page-region-enter {
   from {
     opacity: 0;
-    transform: translate3d(0, var(--dr-page-transition-offset), 0);
+    transform: translate3d(calc(-1 * var(--dr-page-transition-distance)), 0, 0);
   }
   to {
     opacity: 1;
@@ -2674,7 +2674,7 @@ html.page-transition-leave #main-content {
 @keyframes dr-page-region-enter-back {
   from {
     opacity: 0;
-    transform: translate3d(0, -55px, 0);
+    transform: translate3d(55px, 0, 0);
   }
   to {
     opacity: 1;
@@ -2689,13 +2689,13 @@ html.page-transition-leave #main-content {
   }
   to {
     opacity: 0;
-    transform: translate3d(0, -24px, 0);
+    transform: translate3d(24px, 0, 0);
   }
 }
 
 @media (max-width: 640px) {
   :root {
-    --dr-page-transition-offset: 64px;
+    --dr-page-transition-distance: 64px;
   }
 }
 
