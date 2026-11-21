@@ -579,87 +579,34 @@ const buildId = import.meta.env.PUBLIC_BUILD_ID ?? "local";
         const pageRoot = document.documentElement;
         const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 
-        if (!(main instanceof HTMLElement)) return;
+        if (!(main instanceof HTMLElement) || reducedMotion.matches) return;
 
-        const regionClass = "page-transition-region";
-        let regions = [];
         let isLeaving = false;
-
-        const prepareRegions = () => {
-          main.querySelectorAll("." + regionClass).forEach((region) => {
-            region.classList.remove(regionClass);
-            region.style.removeProperty("--dr-page-region-order");
-          });
-
-          const getVisibleChildren = (parent) =>
-            Array.from(parent.children).filter((element) => {
-              if (!(element instanceof HTMLElement) || element.hidden) return false;
-              const style = window.getComputedStyle(element);
-              return style.display !== "none" && style.visibility !== "hidden";
-            });
-
-          // Some routes render their content directly inside <main>; others
-          // use one outer page wrapper. Descend through single-child wrappers
-          // until the actual page-level regions are found.
-          let targets = getVisibleChildren(main);
-          while (targets.length === 1) {
-            const nested = getVisibleChildren(targets[0]);
-            if (nested.length <= 1) break;
-            targets = nested;
-          }
-
-          if (targets.length === 0) targets = [main];
-
-          targets.forEach((region, index) => {
-            if (!(region instanceof HTMLElement)) return;
-            region.classList.add(regionClass);
-            region.style.setProperty(
-              "--dr-page-region-order",
-              String(Math.min(index, 4)),
-            );
-          });
-
-          return targets.filter((region) => region instanceof HTMLElement);
-        };
 
         const clearEntrance = () => {
           pageRoot.classList.remove("page-transition-enter");
           pageRoot.removeAttribute("data-page-transition-direction");
-          regions.forEach((region) => {
-            region.classList.remove(regionClass);
-            region.style.removeProperty("--dr-page-region-order");
-          });
         };
 
         const watchEntrance = () => {
-          if (!regions.length) {
+          const direction =
+            pageRoot.dataset.pageTransitionDirection === "back" ? "back" : "forward";
+          const expectedAnimation =
+            direction === "back" ? "dr-page-enter-back" : "dr-page-enter";
+
+          const handleAnimationEnd = (event) => {
+            if (event.target !== main || event.animationName !== expectedAnimation) return;
+            main.removeEventListener("animationend", handleAnimationEnd);
             clearEntrance();
-            return;
-          }
+          };
 
-          const lastRegion = regions[regions.length - 1];
-          const expectedAnimation = pageRoot.dataset.pageTransitionDirection === "back"
-            ? "dr-page-region-enter-back"
-            : "dr-page-region-enter";
-
-          lastRegion.addEventListener("animationend", (event) => {
-            if (
-              event.target === lastRegion &&
-              event.animationName === expectedAnimation
-            ) {
-              clearEntrance();
-            }
-          }, { once: true });
-
-          // Keep the page usable if an animation is interrupted by browser lifecycle events.
+          main.addEventListener("animationend", handleAnimationEnd);
           window.setTimeout(() => {
-            if (pageRoot.classList.contains("page-transition-enter")) {
-              clearEntrance();
-            }
-          }, 1100);
+            main.removeEventListener("animationend", handleAnimationEnd);
+            clearEntrance();
+          }, 350);
         };
 
-        regions = prepareRegions();
         if (pageRoot.classList.contains("page-transition-enter")) {
           watchEntrance();
         }
@@ -674,6 +621,7 @@ const buildId = import.meta.env.PUBLIC_BUILD_ID ?? "local";
 
           const anchor = event.target.closest("a[href]");
           if (!(anchor instanceof HTMLAnchorElement)) return;
+
           if (isLeaving) {
             event.preventDefault();
             return;
@@ -683,8 +631,7 @@ const buildId = import.meta.env.PUBLIC_BUILD_ID ?? "local";
             anchor.hasAttribute("download") ||
             (anchor.target && anchor.target !== "_self") ||
             anchor.relList.contains("external") ||
-            anchor.closest(".hub-tile[href^='/project/']") ||
-            reducedMotion.matches
+            anchor.closest(".hub-tile[href^='/project/']")
           ) return;
 
           let destination;
@@ -730,24 +677,25 @@ const buildId = import.meta.env.PUBLIC_BUILD_ID ?? "local";
             window.location.assign(destination.href);
           };
 
-          main.addEventListener("animationend", (animationEvent) => {
+          const handleExit = (animationEvent) => {
             if (
               animationEvent.target === main &&
               animationEvent.animationName === "dr-page-exit"
             ) {
+              main.removeEventListener("animationend", handleExit);
               navigate();
             }
-          }, { once: true });
+          };
 
-          window.setTimeout(navigate, 260);
+          main.addEventListener("animationend", handleExit);
+          window.setTimeout(navigate, 145);
         });
 
         window.addEventListener("pageshow", (event) => {
-          if (!event.persisted || reducedMotion.matches) return;
+          if (!event.persisted) return;
 
           pageRoot.classList.remove("page-transition-leave", "page-transition-enter");
           main.removeAttribute("aria-busy");
-          regions = prepareRegions();
           pageRoot.dataset.pageTransitionDirection = "back";
 
           window.requestAnimationFrame(() => {
