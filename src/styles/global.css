@@ -2639,10 +2639,10 @@ body.project-launching {
 }
 
 /* Windows 8.1 / WinJS-inspired staggered page transitions.
-   Each page-level region moves in sequence. No opacity or fade animation. */
+   Longer, eased horizontal movement with sequential page-level regions. */
 html.page-transition-enter .page-transition-region {
-  animation: dr-page-region-enter 240ms cubic-bezier(.15, .85, .25, 1) both;
-  animation-delay: calc(var(--dr-page-region-order, 0) * 72ms);
+  animation: dr-page-region-enter 420ms cubic-bezier(.65, 0, .35, 1) both;
+  animation-delay: calc(var(--dr-page-region-order, 0) * 90ms);
 }
 
 html.page-transition-enter[data-page-transition-direction="back"] .page-transition-region {
@@ -2654,23 +2654,23 @@ html.page-transition-leave #main-content {
 }
 
 html.page-transition-leave .page-transition-region {
-  animation: dr-page-region-exit 190ms cubic-bezier(.4, 0, .8, .2) both;
-  animation-delay: calc(var(--dr-page-region-exit-order, 0) * 52ms);
+  animation: dr-page-region-exit 340ms cubic-bezier(.65, 0, .35, 1) both;
+  animation-delay: calc(var(--dr-page-region-exit-order, 0) * 70ms);
 }
 
 @keyframes dr-page-region-enter {
-  from { transform: translate3d(-26px, 0, 0); }
+  from { transform: translate3d(-80px, 0, 0); }
   to { transform: translate3d(0, 0, 0); }
 }
 
 @keyframes dr-page-region-enter-back {
-  from { transform: translate3d(22px, 0, 0); }
+  from { transform: translate3d(64px, 0, 0); }
   to { transform: translate3d(0, 0, 0); }
 }
 
 @keyframes dr-page-region-exit {
   from { transform: translate3d(0, 0, 0); }
-  to { transform: translate3d(16px, 0, 0); }
+  to { transform: translate3d(48px, 0, 0); }
 }
 
 @media (prefers-reduced-motion: reduce) {
