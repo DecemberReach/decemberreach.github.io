@@ -84,7 +84,7 @@ const buildId = import.meta.env.PUBLIC_BUILD_ID ?? "local";
         }
       };
 
-      // Do not compete with document loading or the page-entry transition.
+      // Let the document finish loading before checking for a newer deployment.
       window.setTimeout(scheduleIdleCheck, 1200);
     };
 
@@ -104,24 +104,8 @@ const buildId = import.meta.env.PUBLIC_BUILD_ID ?? "local";
       sessionStorage.removeItem("dr-project-launch-enter");
       pageRoot.classList.add("project-launch-enter");
     }
-
-    const pendingPageTransition = JSON.parse(
-      sessionStorage.getItem("dr-page-transition") || "null",
-    );
-    sessionStorage.removeItem("dr-page-transition");
-
-    const currentLocation = window.location.pathname + window.location.search;
-    if (
-      pendingPageTransition &&
-      pendingPageTransition.destination === currentLocation &&
-      !window.matchMedia("(prefers-reduced-motion: reduce)").matches
-    ) {
-      pageRoot.dataset.pageTransitionDirection =
-        pendingPageTransition.direction || "forward";
-      pageRoot.classList.add("page-transition-enter");
-    }
   } catch {
-    // The destination page remains usable when session storage is unavailable.
+    // The project page remains available when session storage is unavailable.
   }
 </script>
 
@@ -594,202 +578,6 @@ const buildId = import.meta.env.PUBLIC_BUILD_ID ?? "local";
         });
       }
     </script>
-    <script is:inline>
-      (() => {
-        const main = document.getElementById("main-content");
-        const pageRoot = document.documentElement;
-        const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
-
-        if (!(main instanceof HTMLElement) || reducedMotion.matches) return;
-
-        const regionClass = "page-transition-region";
-        const entranceDuration = 140;
-        const entranceStagger = 18;
-        const exitDuration = 105;
-        const exitStagger = 12;
-        let regions = [];
-        let isLeaving = false;
-
-        const getVisibleChildren = (parent) =>
-          Array.from(parent.children).filter((element) => {
-            if (!(element instanceof HTMLElement) || element.hidden) return false;
-            const style = window.getComputedStyle(element);
-            return style.display !== "none" && style.visibility !== "hidden";
-          });
-
-        const prepareRegions = () => {
-          main.querySelectorAll("." + regionClass).forEach((region) => {
-            region.classList.remove(regionClass);
-            region.style.removeProperty("--dr-page-region-order");
-            region.style.removeProperty("--dr-page-region-exit-order");
-          });
-
-          // Resolve the actual page-level sections whether they sit directly
-          // in <main> or inside one or more single-child layout wrappers.
-          let targets = getVisibleChildren(main);
-          while (targets.length === 1) {
-            const nested = getVisibleChildren(targets[0]);
-            if (nested.length <= 1) break;
-            targets = nested;
-          }
-
-          if (targets.length === 0) targets = [main];
-
-          const visibleRegions = targets.filter(
-            (region) => region instanceof HTMLElement,
-          );
-
-          visibleRegions.forEach((region, index) => {
-            region.classList.add(regionClass);
-            region.style.setProperty("--dr-page-region-order", String(index));
-            region.style.setProperty(
-              "--dr-page-region-exit-order",
-              String(visibleRegions.length - index - 1),
-            );
-          });
-
-          return visibleRegions;
-        };
-
-        const clearEntrance = () => {
-          pageRoot.classList.remove("page-transition-enter");
-          pageRoot.removeAttribute("data-page-transition-direction");
-        };
-
-        const watchEntrance = () => {
-          if (!regions.length) {
-            clearEntrance();
-            return;
-          }
-
-          const lastRegion = regions[regions.length - 1];
-          const expectedAnimation =
-            pageRoot.dataset.pageTransitionDirection === "back"
-              ? "dr-page-region-enter-back"
-              : "dr-page-region-enter";
-
-          const finishEntrance = (event) => {
-            if (
-              event &&
-              (event.target !== lastRegion ||
-                event.animationName !== expectedAnimation)
-            ) return;
-
-            lastRegion.removeEventListener("animationend", finishEntrance);
-            clearEntrance();
-          };
-
-          lastRegion.addEventListener("animationend", finishEntrance);
-          window.setTimeout(
-            () => finishEntrance(),
-            entranceDuration + entranceStagger * (regions.length - 1) + 120,
-          );
-        };
-
-        regions = prepareRegions();
-
-        if (pageRoot.classList.contains("page-transition-enter")) {
-          watchEntrance();
-        }
-
-        document.addEventListener("click", (event) => {
-          if (
-            event.defaultPrevented ||
-            event.button !== 0 ||
-            event.metaKey || event.ctrlKey || event.shiftKey || event.altKey ||
-            !(event.target instanceof Element)
-          ) return;
-
-          const anchor = event.target.closest("a[href]");
-          if (!(anchor instanceof HTMLAnchorElement)) return;
-
-          if (isLeaving) {
-            event.preventDefault();
-            return;
-          }
-
-          if (
-            anchor.hasAttribute("download") ||
-            (anchor.target && anchor.target !== "_self") ||
-            anchor.relList.contains("external") ||
-            anchor.closest(".hub-tile[href^='/project/']")
-          ) return;
-
-          let destination;
-          try {
-            destination = new URL(anchor.href, window.location.href);
-          } catch {
-            return;
-          }
-
-          if (
-            destination.origin !== window.location.origin ||
-            destination.protocol !== window.location.protocol
-          ) return;
-
-          const currentLocation =
-            window.location.pathname + window.location.search;
-          const nextLocation = destination.pathname + destination.search;
-          if (currentLocation === nextLocation) return;
-
-          event.preventDefault();
-          isLeaving = true;
-
-          try {
-            sessionStorage.setItem(
-              "dr-page-transition",
-              JSON.stringify({
-                destination: nextLocation,
-                direction: "forward",
-              }),
-            );
-          } catch {
-            // Navigation still works when session storage is unavailable.
-          }
-
-          clearEntrance();
-          pageRoot.classList.add("page-transition-leave");
-          main.setAttribute("aria-busy", "true");
-
-          let navigated = false;
-          const navigate = () => {
-            if (navigated) return;
-            navigated = true;
-            window.location.assign(destination.href);
-          };
-
-          const firstRegion = regions[0];
-          const handleExit = (animationEvent) => {
-            if (
-              animationEvent.target !== firstRegion ||
-              animationEvent.animationName !== "dr-page-region-exit"
-            ) return;
-
-            firstRegion.removeEventListener("animationend", handleExit);
-            navigate();
-          };
-
-          firstRegion?.addEventListener("animationend", handleExit);
-          window.setTimeout(
-            navigate,
-            exitDuration + exitStagger * (regions.length - 1) + 100,
-          );
-        });
-
-        window.addEventListener("pageshow", (event) => {
-          if (!event.persisted) return;
-
-          pageRoot.classList.remove("page-transition-leave", "page-transition-enter");
-          main.removeAttribute("aria-busy");
-          regions = prepareRegions();
-          pageRoot.dataset.pageTransitionDirection = "back";
-
-          window.requestAnimationFrame(() => {
-            pageRoot.classList.add("page-transition-enter");
-            watchEntrance();
-          });
-        });
-      })();
-    </script>
+    
   </body>
 </html>
