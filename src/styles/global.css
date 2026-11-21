@@ -2641,7 +2641,7 @@ body.project-launching {
 /* Windows 8.1 / WinJS-inspired staggered page transitions.
    Longer, eased horizontal movement with sequential page-level regions. */
 html.page-transition-enter .page-transition-region {
-  animation: dr-page-region-enter 420ms cubic-bezier(.65, 0, .35, 1) both;
+  animation: dr-page-region-enter 420ms ease-out both;
   animation-delay: calc(var(--dr-page-region-order, 0) * 90ms);
 }
 
@@ -2654,7 +2654,7 @@ html.page-transition-leave #main-content {
 }
 
 html.page-transition-leave .page-transition-region {
-  animation: dr-page-region-exit 340ms cubic-bezier(.65, 0, .35, 1) both;
+  animation: dr-page-region-exit 340ms ease-in both;
   animation-delay: calc(var(--dr-page-region-exit-order, 0) * 70ms);
 }
 
