@@ -2639,65 +2639,39 @@ body.project-launching {
 }
 
 /* Windows 8.1 / WinJS-inspired page transitions.
-   Animate every detected page region horizontally, without opacity changes. */
-:root {
-  --dr-page-transition-distance: 48px;
+   Move the page content as one composited surface: no per-section layers or fades. */
+html.page-transition-enter #main-content {
+  animation: dr-page-enter 130ms cubic-bezier(.16, .9, .25, 1) both;
 }
 
-html.page-transition-enter .page-transition-region {
-  animation: dr-page-region-enter 260ms cubic-bezier(.1, .85, .2, 1) both;
-  animation-delay: calc(var(--dr-page-region-order, 0) * 24ms);
-  will-change: transform;
-}
-
-html.page-transition-enter[data-page-transition-direction="back"] .page-transition-region {
-  animation-name: dr-page-region-enter-back;
+html.page-transition-enter[data-page-transition-direction="back"] #main-content {
+  animation-name: dr-page-enter-back;
 }
 
 html.page-transition-leave #main-content {
-  animation: dr-page-exit 150ms cubic-bezier(.4, 0, 1, 1) both;
+  animation: dr-page-exit 90ms cubic-bezier(.3, 0, .8, .2) both;
   pointer-events: none;
-  will-change: transform;
 }
 
-@keyframes dr-page-region-enter {
-  from {
-    transform: translate3d(calc(-1 * var(--dr-page-transition-distance)), 0, 0);
-  }
-  to {
-    transform: translate3d(0, 0, 0);
-  }
+@keyframes dr-page-enter {
+  from { transform: translate3d(-28px, 0, 0); }
+  to { transform: translate3d(0, 0, 0); }
 }
 
-@keyframes dr-page-region-enter-back {
-  from {
-    transform: translate3d(36px, 0, 0);
-  }
-  to {
-    transform: translate3d(0, 0, 0);
-  }
+@keyframes dr-page-enter-back {
+  from { transform: translate3d(24px, 0, 0); }
+  to { transform: translate3d(0, 0, 0); }
 }
 
 @keyframes dr-page-exit {
-  from {
-    transform: translate3d(0, 0, 0);
-  }
-  to {
-    transform: translate3d(24px, 0, 0);
-  }
-}
-
-@media (max-width: 640px) {
-  :root {
-    --dr-page-transition-distance: 36px;
-  }
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(14px, 0, 0); }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  html.page-transition-enter .page-transition-region,
+  html.page-transition-enter #main-content,
   html.page-transition-leave #main-content {
     animation: none !important;
     transform: none;
-    will-change: auto;
   }
 }
