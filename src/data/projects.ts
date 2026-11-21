@@ -94,7 +94,7 @@ export const projects: Project[] = [
   {
     slug: "solsticeARC",
     name: "solsticeARC",
-    category: "Automotive operating system · x86_64",
+    category: "Automotive operating system",
     summary: "An x86_64 automotive operating system implemented entirely in JavaScript and hosted in a browser.",
     description:
       "solsticeARC is an automotive operating system for landscape-oriented in-vehicle displays. Its system implementation is built with JavaScript throughout and targets the x86_64 architecture. The browser provides its execution environment, while navigation, media playback, and connected-device integration form its automotive experience. Access to privileged vehicle or mobile-system capabilities depends on supported browser APIs or a separate integration layer.",
