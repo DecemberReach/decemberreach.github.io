@@ -591,17 +591,24 @@ const buildId = import.meta.env.PUBLIC_BUILD_ID ?? "local";
             region.style.removeProperty("--dr-page-region-order");
           });
 
-          const page = main.firstElementChild;
-          const visibleChildren = page
-            ? Array.from(page.children).filter((element) => {
-                if (!(element instanceof HTMLElement) || element.hidden) return false;
-                return window.getComputedStyle(element).display !== "none";
-              })
-            : [];
+          const getVisibleChildren = (parent) =>
+            Array.from(parent.children).filter((element) => {
+              if (!(element instanceof HTMLElement) || element.hidden) return false;
+              const style = window.getComputedStyle(element);
+              return style.display !== "none" && style.visibility !== "hidden";
+            });
 
-          const targets = visibleChildren.length > 1
-            ? visibleChildren
-            : [page || main];
+          // Some routes render their content directly inside <main>; others
+          // use one outer page wrapper. Descend through single-child wrappers
+          // until the actual page-level regions are found.
+          let targets = getVisibleChildren(main);
+          while (targets.length === 1) {
+            const nested = getVisibleChildren(targets[0]);
+            if (nested.length <= 1) break;
+            targets = nested;
+          }
+
+          if (targets.length === 0) targets = [main];
 
           targets.forEach((region, index) => {
             if (!(region instanceof HTMLElement)) return;
