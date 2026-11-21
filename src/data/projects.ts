@@ -90,5 +90,24 @@ export const projects: Project[] = [
       { label: "Source", value: "Shared OS repository" }
     ],
     highlights: []
+  },
+  {
+    slug: "solsticeARC",
+    name: "solsticeARC",
+    category: "Automotive infotainment · Web",
+    summary: "A browser-based automotive infotainment concept for in-vehicle displays.",
+    description:
+      "solsticeARC explores a web-based infotainment environment for landscape-oriented in-vehicle displays. Its planned interface brings navigation, media playback, and connected-device features together. Capabilities that require privileged vehicle or mobile-system access will depend on supported browser APIs or a separate integration layer.",
+    image: "https://images.unsplash.com/photo-1773065558261-792b9d779fb1?auto=format&fit=crop&w=1800&q=85",
+    imageAlt: "A car navigation display showing a map and music player",
+    photoPage: "https://unsplash.com/photos/car-navigation-screen-showing-map-and-music-player-QJdSPs-CFxw",
+    photographer: "Seungmin Yoon",
+    facts: [
+      { label: "Project type", value: "Automotive infotainment" },
+      { label: "Platform", value: "Web browser" },
+      { label: "Target display", value: "In-vehicle touchscreen" },
+      { label: "Stage", value: "Concept" }
+    ],
+    highlights: []
   }
 ];
