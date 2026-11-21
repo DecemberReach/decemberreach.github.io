@@ -49,29 +49,50 @@ const buildId = import.meta.env.PUBLIC_BUILD_ID ?? "local";
 
     if (!currentBuildId || currentBuildId === "local") return;
 
-    fetch(`${currentUrl.pathname}${currentUrl.search}`, {
-      cache: "no-cache",
-      credentials: "same-origin",
-      headers: { Accept: "text/html" },
-    })
-      .then((response) => response.ok ? response.text() : null)
-      .then((html) => {
-        if (!html) return;
-
-        const latestDocument = new DOMParser().parseFromString(html, "text/html");
-        const latestBuildId = latestDocument
-          .querySelector('meta[name="site-build-id"]')
-          ?.getAttribute("content");
-
-        if (!latestBuildId || latestBuildId === currentBuildId) return;
-
-        const refreshedUrl = new URL(window.location.href);
-        refreshedUrl.searchParams.set(refreshParameter, latestBuildId);
-        window.location.replace(refreshedUrl.href);
+    const checkLatestBuild = () => {
+      fetch(`${currentUrl.pathname}${currentUrl.search}`, {
+        cache: "no-cache",
+        credentials: "same-origin",
+        headers: { Accept: "text/html" },
       })
-      .catch(() => {
-        // Keep the current page available when the freshness check cannot reach the site.
-      });
+        .then((response) => response.ok ? response.text() : null)
+        .then((html) => {
+          if (!html) return;
+
+          const latestDocument = new DOMParser().parseFromString(html, "text/html");
+          const latestBuildId = latestDocument
+            .querySelector('meta[name="site-build-id"]')
+            ?.getAttribute("content");
+
+          if (!latestBuildId || latestBuildId === currentBuildId) return;
+
+          const refreshedUrl = new URL(window.location.href);
+          refreshedUrl.searchParams.set(refreshParameter, latestBuildId);
+          window.location.replace(refreshedUrl.href);
+        })
+        .catch(() => {
+          // Keep the current page available when the freshness check cannot reach the site.
+        });
+    };
+
+    const scheduleFreshnessCheck = () => {
+      const scheduleIdleCheck = () => {
+        if ("requestIdleCallback" in window) {
+          window.requestIdleCallback(checkLatestBuild, { timeout: 3500 });
+        } else {
+          window.setTimeout(checkLatestBuild, 1600);
+        }
+      };
+
+      // Do not compete with document loading or the page-entry transition.
+      window.setTimeout(scheduleIdleCheck, 1200);
+    };
+
+    if (document.readyState === "complete") {
+      scheduleFreshnessCheck();
+    } else {
+      window.addEventListener("load", scheduleFreshnessCheck, { once: true });
+    }
   })();
 </script>
   
