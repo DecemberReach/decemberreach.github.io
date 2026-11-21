@@ -2639,15 +2639,15 @@ body.project-launching {
 }
 
 /* Windows 8.1 / WinJS-inspired page transitions.
-   Shared site chrome stays still; page regions enter in reading order. */
+   Animate every detected page region horizontally, without opacity changes. */
 :root {
-  --dr-page-transition-distance: 100px;
+  --dr-page-transition-distance: 48px;
 }
 
 html.page-transition-enter .page-transition-region {
-  animation: dr-page-region-enter 520ms cubic-bezier(.1, .72, .2, 1) both;
-  animation-delay: calc(var(--dr-page-region-order, 0) * 80ms);
-  will-change: transform, opacity;
+  animation: dr-page-region-enter 260ms cubic-bezier(.1, .85, .2, 1) both;
+  animation-delay: calc(var(--dr-page-region-order, 0) * 24ms);
+  will-change: transform;
 }
 
 html.page-transition-enter[data-page-transition-direction="back"] .page-transition-region {
@@ -2655,47 +2655,41 @@ html.page-transition-enter[data-page-transition-direction="back"] .page-transiti
 }
 
 html.page-transition-leave #main-content {
-  animation: dr-page-exit 210ms cubic-bezier(.4, 0, 1, 1) both;
+  animation: dr-page-exit 150ms cubic-bezier(.4, 0, 1, 1) both;
   pointer-events: none;
-  will-change: transform, opacity;
+  will-change: transform;
 }
 
 @keyframes dr-page-region-enter {
   from {
-    opacity: 0;
     transform: translate3d(calc(-1 * var(--dr-page-transition-distance)), 0, 0);
   }
   to {
-    opacity: 1;
     transform: translate3d(0, 0, 0);
   }
 }
 
 @keyframes dr-page-region-enter-back {
   from {
-    opacity: 0;
-    transform: translate3d(55px, 0, 0);
+    transform: translate3d(36px, 0, 0);
   }
   to {
-    opacity: 1;
     transform: translate3d(0, 0, 0);
   }
 }
 
 @keyframes dr-page-exit {
   from {
-    opacity: 1;
     transform: translate3d(0, 0, 0);
   }
   to {
-    opacity: 0;
     transform: translate3d(24px, 0, 0);
   }
 }
 
 @media (max-width: 640px) {
   :root {
-    --dr-page-transition-distance: 64px;
+    --dr-page-transition-distance: 36px;
   }
 }
 
@@ -2703,7 +2697,6 @@ html.page-transition-leave #main-content {
   html.page-transition-enter .page-transition-region,
   html.page-transition-leave #main-content {
     animation: none !important;
-    opacity: 1;
     transform: none;
     will-change: auto;
   }
