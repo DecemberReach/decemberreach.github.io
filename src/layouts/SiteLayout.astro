@@ -77,9 +77,27 @@ const buildId = import.meta.env.PUBLIC_BUILD_ID ?? "local";
   
 <script is:inline>
   try {
+    const pageRoot = document.documentElement;
+
     if (sessionStorage.getItem("dr-project-launch-enter") === "1") {
       sessionStorage.removeItem("dr-project-launch-enter");
-      document.documentElement.classList.add("project-launch-enter");
+      pageRoot.classList.add("project-launch-enter");
+    }
+
+    const pendingPageTransition = JSON.parse(
+      sessionStorage.getItem("dr-page-transition") || "null",
+    );
+    sessionStorage.removeItem("dr-page-transition");
+
+    const currentLocation = window.location.pathname + window.location.search;
+    if (
+      pendingPageTransition &&
+      pendingPageTransition.destination === currentLocation &&
+      !window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    ) {
+      pageRoot.dataset.pageTransitionDirection =
+        pendingPageTransition.direction || "forward";
+      pageRoot.classList.add("page-transition-enter");
     }
   } catch {
     // The destination page remains usable when session storage is unavailable.
@@ -554,6 +572,183 @@ const buildId = import.meta.env.PUBLIC_BUILD_ID ?? "local";
           scrollbar.classList.remove("is-visible", "is-dragging");
         });
       }
+    </script>
+    <script is:inline>
+      (() => {
+        const main = document.getElementById("main-content");
+        const pageRoot = document.documentElement;
+        const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+
+        if (!(main instanceof HTMLElement)) return;
+
+        const regionClass = "page-transition-region";
+        let regions = [];
+        let isLeaving = false;
+
+        const prepareRegions = () => {
+          main.querySelectorAll("." + regionClass).forEach((region) => {
+            region.classList.remove(regionClass);
+            region.style.removeProperty("--dr-page-region-order");
+          });
+
+          const page = main.firstElementChild;
+          const visibleChildren = page
+            ? Array.from(page.children).filter((element) => {
+                if (!(element instanceof HTMLElement) || element.hidden) return false;
+                return window.getComputedStyle(element).display !== "none";
+              })
+            : [];
+
+          const targets = visibleChildren.length > 1
+            ? visibleChildren
+            : [page || main];
+
+          targets.forEach((region, index) => {
+            if (!(region instanceof HTMLElement)) return;
+            region.classList.add(regionClass);
+            region.style.setProperty(
+              "--dr-page-region-order",
+              String(Math.min(index, 4)),
+            );
+          });
+
+          return targets.filter((region) => region instanceof HTMLElement);
+        };
+
+        const clearEntrance = () => {
+          pageRoot.classList.remove("page-transition-enter");
+          pageRoot.removeAttribute("data-page-transition-direction");
+          regions.forEach((region) => {
+            region.classList.remove(regionClass);
+            region.style.removeProperty("--dr-page-region-order");
+          });
+        };
+
+        const watchEntrance = () => {
+          if (!regions.length) {
+            clearEntrance();
+            return;
+          }
+
+          const lastRegion = regions[regions.length - 1];
+          const expectedAnimation = pageRoot.dataset.pageTransitionDirection === "back"
+            ? "dr-page-region-enter-back"
+            : "dr-page-region-enter";
+
+          lastRegion.addEventListener("animationend", (event) => {
+            if (
+              event.target === lastRegion &&
+              event.animationName === expectedAnimation
+            ) {
+              clearEntrance();
+            }
+          }, { once: true });
+
+          // Keep the page usable if an animation is interrupted by browser lifecycle events.
+          window.setTimeout(() => {
+            if (pageRoot.classList.contains("page-transition-enter")) {
+              clearEntrance();
+            }
+          }, 1100);
+        };
+
+        regions = prepareRegions();
+        if (pageRoot.classList.contains("page-transition-enter")) {
+          watchEntrance();
+        }
+
+        document.addEventListener("click", (event) => {
+          if (
+            event.defaultPrevented ||
+            event.button !== 0 ||
+            event.metaKey || event.ctrlKey || event.shiftKey || event.altKey ||
+            !(event.target instanceof Element)
+          ) return;
+
+          const anchor = event.target.closest("a[href]");
+          if (!(anchor instanceof HTMLAnchorElement)) return;
+          if (isLeaving) {
+            event.preventDefault();
+            return;
+          }
+
+          if (
+            anchor.hasAttribute("download") ||
+            (anchor.target && anchor.target !== "_self") ||
+            anchor.relList.contains("external") ||
+            anchor.closest(".hub-tile[href^='/project/']") ||
+            reducedMotion.matches
+          ) return;
+
+          let destination;
+          try {
+            destination = new URL(anchor.href, window.location.href);
+          } catch {
+            return;
+          }
+
+          if (
+            destination.origin !== window.location.origin ||
+            destination.protocol !== window.location.protocol
+          ) return;
+
+          const currentLocation =
+            window.location.pathname + window.location.search;
+          const nextLocation = destination.pathname + destination.search;
+          if (currentLocation === nextLocation) return;
+
+          event.preventDefault();
+          isLeaving = true;
+
+          try {
+            sessionStorage.setItem(
+              "dr-page-transition",
+              JSON.stringify({
+                destination: nextLocation,
+                direction: "forward",
+              }),
+            );
+          } catch {
+            // Navigation still works when session storage is unavailable.
+          }
+
+          pageRoot.classList.remove("page-transition-enter");
+          pageRoot.classList.add("page-transition-leave");
+          main.setAttribute("aria-busy", "true");
+
+          let navigated = false;
+          const navigate = () => {
+            if (navigated) return;
+            navigated = true;
+            window.location.assign(destination.href);
+          };
+
+          main.addEventListener("animationend", (animationEvent) => {
+            if (
+              animationEvent.target === main &&
+              animationEvent.animationName === "dr-page-exit"
+            ) {
+              navigate();
+            }
+          }, { once: true });
+
+          window.setTimeout(navigate, 260);
+        });
+
+        window.addEventListener("pageshow", (event) => {
+          if (!event.persisted || reducedMotion.matches) return;
+
+          pageRoot.classList.remove("page-transition-leave", "page-transition-enter");
+          main.removeAttribute("aria-busy");
+          regions = prepareRegions();
+          pageRoot.dataset.pageTransitionDirection = "back";
+
+          window.requestAnimationFrame(() => {
+            pageRoot.classList.add("page-transition-enter");
+            watchEntrance();
+          });
+        });
+      })();
     </script>
   </body>
 </html>
